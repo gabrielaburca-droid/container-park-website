@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="800" viewBox="0 0 1600 800">
+  <rect width="1600" height="800" fill="#3a3a3a"/>
+  <rect width="1600" height="800" fill="url(#stripes)" opacity="0.25"/>
+  <defs>
+    <pattern id="stripes" width="40" height="40" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <rect width="20" height="40" fill="#555555"/>
+    </pattern>
+  </defs>
+  <text x="800" y="380" font-family="Helvetica, Arial, sans-serif" font-size="42" font-weight="700" fill="#f2f2f2" text-anchor="middle">MISSING IMAGE</text>
+  <text x="800" y="430" font-family="Helvetica, Arial, sans-serif" font-size="20" fill="#cccccc" text-anchor="middle">Placeholder — hero photo not available locally</text>
+</svg>

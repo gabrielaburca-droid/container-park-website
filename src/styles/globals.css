@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Native smooth scrolling for in-page anchor links (e.g. the homepage
+   Hero's "Scroll to Discover" -> #discover, see HomeHero.tsx). */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+}
+
+/* Safety net: headings default to the display font/weight even if a
+   component is missing an explicit font-display class. Bebas Neue is
+   naturally condensed and has no true bold cut, so it's tuned tighter
+   than Inter's default line-height/tracking to read as editorial display
+   type rather than stretched or loose. Explicit utility classes on a
+   given element (font-sans, tracking-*, leading-*) still win via
+   specificity — this is a fallback, not an override.
+   h1 keeps its own line-height (0.95, unchanged); h2-h6 are pinned to
+   line-height: 1 sitewide per an explicit design rule — don't override it
+   with a per-component leading-* utility. */
+h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: normal;
+  text-transform: uppercase;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: uppercase;
+}
+
+/* Hides the browser's native scrollbar on an otherwise still-scrollable
+   element (e.g. ui/Carousel.tsx's track) — purely visual, doesn't affect
+   scroll functionality or layout/overflow behavior. */
+.no-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* legacy Edge/IE */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chromium/Safari */
+}
+
+/* Slow, continuous rotation for the "PLAY VIDEO" ring on hover (see
+   ui/VideoPlayer.tsx) — a plain `transition` only animates once from a
+   start to an end state and then stops; a real @keyframes + `animation`
+   is what keeps it spinning smoothly for as long as the button is
+   hovered. Applied via Tailwind's arbitrary animate-[...] syntax, which
+   just needs a matching keyframe name to exist somewhere in the loaded
+   CSS — it doesn't have to be a Tailwind-builtin one. */
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Stat strip (home/StatStrip.tsx) item dividers — hand-authored, not a
+   Tailwind divide-* utility. The color comes from a CSS custom property
+   set via an inline `style` attribute on the element (see StatStrip.tsx),
+   not written literally here, because this project's CSS build pipeline
+   normalizes any color value that appears in an actual .css file
+   (Tailwind utility, arbitrary value, or plain hand-written rule alike)
+   to 8-bit hex-alpha, e.g. rgba(0,0,0,0.1) -> #0000001a (~0.102 alpha) —
+   visually identical but not the exact rgba(0, 0, 0, 0.1) string
+   requested. Inline `style` attributes aren't processed by that
+   pipeline, so referencing the color via var() here is what lets the
+   literal value survive untouched. Only active at sm:+ (640px), matching
+   where the stat strip's grid is genuinely a single row — see the
+   comment in StatStrip.tsx for why dividers are skipped below that. */
+@media (min-width: 640px) {
+  .stat-strip-divider > :not([hidden]) ~ :not([hidden]) {
+    border-left: 1px solid var(--stat-divider-color);
+  }
+}

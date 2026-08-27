@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="320" viewBox="0 0 480 320">
+  <rect width="480" height="320" fill="#dcdcdc"/>
+  <rect width="480" height="320" fill="url(#stripes)" opacity="0.35"/>
+  <defs>
+    <pattern id="stripes" width="24" height="24" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <rect width="12" height="24" fill="#bdbdbd"/>
+    </pattern>
+  </defs>
+  <text x="240" y="150" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#666666" text-anchor="middle">MISSING IMAGE</text>
+  <text x="240" y="176" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#888888" text-anchor="middle">photo not available locally</text>
+</svg>

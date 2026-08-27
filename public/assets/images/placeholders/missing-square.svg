@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+  <rect width="600" height="600" fill="#dcdcdc"/>
+  <rect width="600" height="600" fill="url(#stripes)" opacity="0.35"/>
+  <defs>
+    <pattern id="stripes" width="30" height="30" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <rect width="15" height="30" fill="#bdbdbd"/>
+    </pattern>
+  </defs>
+  <text x="300" y="290" font-family="Helvetica, Arial, sans-serif" font-size="24" font-weight="700" fill="#666666" text-anchor="middle">MISSING</text>
+  <text x="300" y="322" font-family="Helvetica, Arial, sans-serif" font-size="24" font-weight="700" fill="#666666" text-anchor="middle">IMAGE</text>
+</svg>
