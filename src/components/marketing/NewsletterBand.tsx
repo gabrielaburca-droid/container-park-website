@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useFormSubmit } from "@/components/forms/useFormSubmit";
 import { FormStatusMessage } from "@/components/forms/FormStatusMessage";
 import { Button } from "@/components/ui/Button";
-import { CARD_TITLE_CLASSES } from "@/lib/ui/typography";
+import { SECTION_HEADING_CLASSES } from "@/lib/ui/typography";
 
 export function NewsletterBand() {
   const { status, handleSubmit } = useFormSubmit("newsletter");
@@ -24,7 +24,7 @@ export function NewsletterBand() {
             className="h-9 w-auto shrink-0"
           />
           <div>
-            <h2 className={`${CARD_TITLE_CLASSES} text-lime-foreground`}>Join the VIP List</h2>
+            <h2 className={`${SECTION_HEADING_CLASSES} text-lime-foreground`}>Join the VIP List</h2>
             <p className="mt-1 text-sm text-lime-foreground">
               Get exclusive offers sent straight to your inbox!
             </p>

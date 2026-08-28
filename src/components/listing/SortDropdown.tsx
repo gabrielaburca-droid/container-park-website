@@ -1,3 +1,5 @@
+import { FILTER_TAB_CLASSES } from "@/lib/ui/typography";
+
 interface SortOption {
   value: string;
   label: string;
@@ -9,10 +11,12 @@ interface SortDropdownProps {
   onChange: (value: string) => void;
 }
 
-// TODO: NEEDS CONFIRMATION — no sort options were shown open in the source
-// design; `options` is passed in empty from ListingTemplate until real
-// values are confirmed. Selecting a value currently has no effect on the
-// grid (see ListingTemplate).
+// Sort options are wired up per-page (see ListingTemplate.tsx's
+// SORT_OPTIONS + sorting logic) — this component is just the control.
+// Typography reuses FILTER_TAB_CLASSES, the same constant
+// CategoryFilterPills uses, so "Sort by" stays visually consistent with
+// the filter pills next to it rather than a second, slightly-different
+// label style.
 export function SortDropdown({ options, value, onChange }: SortDropdownProps) {
   return (
     <div>
@@ -23,7 +27,7 @@ export function SortDropdown({ options, value, onChange }: SortDropdownProps) {
         id="sort-by"
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="border border-border bg-white px-4 py-2 text-xs font-medium uppercase tracking-wide"
+        className={`border border-border bg-white px-4 py-2 ${FILTER_TAB_CLASSES}`}
       >
         <option value="">Sort by</option>
         {options.map((option) => (

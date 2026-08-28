@@ -1,63 +1,64 @@
+import Image from "next/image";
+import { ReviewReactions } from "./ReviewReactions";
+
 export interface Review {
   id: string;
   authorName: string;
   date: string;
-  rating: number;
+  /** Optional — a small number of real reviews on the live site show no
+   * star rating at all (the reviewer never selected one); an honest
+   * "unrated" omits the star row below rather than guessing a value. */
+  rating?: number;
   title: string;
   body: string;
   reactions?: { interesting: number; lol: number; love: number };
 }
 
-// CLICK: reaction buttons render as static, disabled counters — voting
-// logic is intentionally NOT implemented. Reviews have no backing Sanity
-// schema and no confirmed public-write/moderation model yet (major
-// architecture gap, see CLAUDE.md / Figma spec).
+// CLICK: the reaction row (see ReviewReactions.tsx) is real, working
+// client-side state — each click bumps that review's own count
+// immediately, no page reload. It's still not persisted anywhere (no
+// `review` Sanity schema or public-write backend yet — see CLAUDE.md); the
+// counts shown are real, scraped starting values from the live site, only
+// mutated in the browser from here.
 export function ReviewCard({ review }: { review: Review }) {
   return (
-    <li className="border-b border-border py-6">
-      <div className="flex items-center gap-3">
-        <span aria-hidden="true" className="h-8 w-8 shrink-0 rounded-full bg-lime" />
-        <div>
-          <p className="text-sm font-semibold">{review.authorName}</p>
-          <p className="text-xs text-muted">{review.date}</p>
+    <li className="bg-[#FCFCFC] p-6">
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex items-center gap-3">
+          {/* Real project asset (public/assets/images/all/user.svg) — a
+              generic reviewer avatar, not a specific person's photo (the
+              data source has no per-reviewer image), same role as e.g.
+              ui/MapPlaceholder's pin icon. */}
+          <Image
+            src="/assets/images/all/user.svg"
+            alt=""
+            width={40}
+            height={40}
+            className="h-10 w-10 shrink-0 rounded-full"
+          />
+          <div>
+            <p className="text-sm font-semibold">{review.authorName}</p>
+            <p className="text-xs text-muted">{review.date}</p>
+          </div>
         </div>
+        {typeof review.rating === "number" && (
+          <p className="shrink-0 text-rating" aria-label={`${review.rating} out of 5 stars`}>
+            <span aria-hidden="true">
+              {"★".repeat(Math.round(review.rating))}
+              {"☆".repeat(5 - Math.round(review.rating))}
+            </span>
+          </p>
+        )}
       </div>
-      <p className="mt-2 text-rating" aria-label={`${review.rating} out of 5 stars`}>
-        <span aria-hidden="true">
-          {"★".repeat(Math.round(review.rating))}
-          {"☆".repeat(5 - Math.round(review.rating))}
-        </span>
-      </p>
-      <h4 className="mt-2 font-sans font-semibold">{review.title}</h4>
-      <p className="mt-1 text-sm text-muted">{review.body}</p>
-      <div className="mt-3 flex flex-wrap gap-3 text-xs">
-        <button
-          type="button"
-          disabled
-          aria-disabled="true"
-          title="Not yet implemented — see CLAUDE.md reviews gap"
-          className="border border-border px-3 py-1 opacity-60"
-        >
-          Interesting? {review.reactions?.interesting ?? 0}
-        </button>
-        <button
-          type="button"
-          disabled
-          aria-disabled="true"
-          title="Not yet implemented — see CLAUDE.md reviews gap"
-          className="border border-border px-3 py-1 opacity-60"
-        >
-          LOL {review.reactions?.lol ?? 0}
-        </button>
-        <button
-          type="button"
-          disabled
-          aria-disabled="true"
-          title="Not yet implemented — see CLAUDE.md reviews gap"
-          className="border border-border px-3 py-1 opacity-60"
-        >
-          Love {review.reactions?.love ?? 0}
-        </button>
+      {/* normal-case overrides the sitewide h1-h6 uppercase default (see
+          globals.css) — review titles are real, verbatim user-submitted
+          text, not a UI label, so they must render in their original
+          case, not forced uppercase. */}
+      <h4 className="mt-4 font-sans font-bold normal-case">{review.title}</h4>
+      <p className="mt-2 text-sm text-muted">{review.body}</p>
+      <div className="mt-4 border-t border-border pt-4">
+        <p className="text-sm font-bold">Was this review …?</p>
+        <ReviewReactions reviewId={review.id} reactions={review.reactions} />
       </div>
     </li>
   );

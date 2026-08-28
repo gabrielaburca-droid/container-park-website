@@ -42,6 +42,13 @@ export type BusinessCategory = "shop" | "eat-drink" | "entertainment" | "attract
 
 export interface Business {
   _id: string;
+  /** Sanity's own standard system field (ISO datetime), present on every
+   * real document automatically — used for "Newest Added" sorting (see
+   * templates/ListingTemplate.tsx). Optional here because the mock data
+   * layer has no real creation timestamps to report (not invented — see
+   * data/mock/businesses.ts); once real Sanity content is connected this
+   * populates itself with no query changes needed. */
+  _createdAt?: string;
   name: string;
   slug: { current: string };
   categories: BusinessCategory[];
@@ -67,6 +74,13 @@ export interface Business {
   rating?: number;
   reviewCount?: number;
   badgeLabel?: string;
+  /** Short tagline shown over the card image (see business/BusinessCard.tsx)
+   * — real per-listing copy from the live site's own listing cards, not a
+   * generic category label. Falls back to the business name on the live
+   * site when no distinct tagline was set there; transcribed as-is. */
+  tagline?: string;
+  /** Whether this listing shows the live site's "Claimed" badge. */
+  claimed?: boolean;
 }
 
 export interface RelatedBusinessRef {

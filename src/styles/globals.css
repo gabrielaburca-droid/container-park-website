@@ -68,6 +68,22 @@ h6 {
   }
 }
 
+/* One-shot crossfade for the gallery lightbox (see ui/ImageLightbox.tsx) —
+   applied via Tailwind's arbitrary animate-[...] syntax, same mechanism as
+   spin-slow above. A plain `transition` needs a later, separate style
+   change to animate from; this needs to animate immediately on its own
+   the moment a new image mounts (React keys the image by index, so
+   navigating remounts it fresh), which is exactly what a self-starting
+   @keyframes animation does without any state/effect needed to trigger it. */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /* Stat strip (home/StatStrip.tsx) item dividers — hand-authored, not a
    Tailwind divide-* utility. The color comes from a CSS custom property
    set via an inline `style` attribute on the element (see StatStrip.tsx),

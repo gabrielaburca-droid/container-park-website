@@ -14,22 +14,42 @@ export interface Partner {
 // in the Figma footer export.
 //
 // `link` values are the verified destinations transcribed directly from
-// the current live site's own footer partner strip
-// (https://downtowncontainerpark.com/ — the "middle"/"flex-gall" section of
-// its rendered HTML), not invented. Four of the eleven logo assets have no
-// matching entry in that strip (Oasis at Gold Spike, 701 Bridger, Gold
-// Spike, The Bar) — their `link` is intentionally left unset rather than
-// guessed; Footer.tsx renders those logos unlinked (no href) instead of a
-// placeholder/dead link.
+// real, existing sources — not invented:
+//  - the current live site's own footer partner strip
+//    (https://downtowncontainerpark.com/ — the "middle"/"flex-gall" section
+//    of its rendered HTML), and
+//  - the DTP real-estate portfolio page (https://dtplv.com/real-estate/,
+//    itself one of these verified partner links), whose own footer logo
+//    gallery confirmed "701 Bridger" and "The Bar" both link to the DTP
+//    parent site (https://dtplv.com) rather than a dedicated property
+//    domain — a real, existing destination, not a placeholder.
+//
+// "Oasis at Gold Spike" (logo-partner01.png) had no matching entry in
+// either source and was removed from this list entirely at the user's
+// request, rather than rendered unlinked — the asset file itself is
+// untouched in case a real link surfaces later.
+//
+// "Gold Spike" (logo-partner03.png) has the same problem — no verified
+// link in either source — and is still in this list, still rendered
+// unlinked by Footer.tsx (see PartnerLogo), because removing it wasn't
+// part of that request. Flagging it here since it's the one remaining
+// logo without a real destination.
 //
 // "Corduroy" was previously mistranscribed as "Cornbury" here (no logo
 // asset existed yet to check against) — corrected now that the real logo
 // confirms the name.
 export const PARTNERS: Partner[] = [
-  { name: "Oasis at Gold Spike", logoUrl: "/assets/images/all/logo-partner01.png" },
-  { name: "701 Bridger", logoUrl: "/assets/images/all/logo-partner02.png" },
+  {
+    name: "701 Bridger",
+    logoUrl: "/assets/images/all/logo-partner02.png",
+    link: "https://dtplv.com",
+  },
   { name: "Gold Spike", logoUrl: "/assets/images/all/logo-partner03.png" },
-  { name: "The Bar", logoUrl: "/assets/images/all/logo-partner04.png" },
+  {
+    name: "The Bar",
+    logoUrl: "/assets/images/all/logo-partner04.png",
+    link: "https://dtplv.com",
+  },
   {
     name: "Explore DTLV",
     logoUrl: "/assets/images/all/logo-partner05.png",

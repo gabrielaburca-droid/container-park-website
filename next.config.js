@@ -13,6 +13,17 @@ const nextConfig = {
         protocol: "https",
         hostname: "cdn.sanity.io",
       },
+      // TEMPORARY — the live site's own WP Engine media host. Business
+      // gallery photos are real images pulled live from each business's
+      // actual listing page (see data/mock/businesses.ts) rather than
+      // downloaded and committed locally — there are ~230 of them across
+      // the real businesses, too many to vendor into this repo for a
+      // still-unconnected-to-Sanity phase. Safe to remove once real
+      // gallery assets are migrated into Sanity.
+      {
+        protocol: "https",
+        hostname: "containerpark.wpenginepowered.com",
+      },
     ],
     // TEMPORARY — enables next/image to serve the local placeholder SVGs
     // under public/assets/images/placeholders/ (used by the temporary mock

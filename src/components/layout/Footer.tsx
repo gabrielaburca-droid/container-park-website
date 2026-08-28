@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import type { SiteSettings } from "@/lib/sanity/types";
 import { PARTNERS } from "@/data/partners";
+import { FOOTER_HEADING_CLASSES } from "@/lib/ui/typography";
 
 const FALLBACK_EXPLORE = [
   { label: "Shop", url: "/shop" },
@@ -70,8 +71,6 @@ const SOCIAL_ICON_LABELS: {
   },
 ];
 
-const COLUMN_HEADING_CLASSES = "font-sans text-xs font-medium uppercase tracking-wide";
-
 export function Footer({ settings }: { settings: SiteSettings | null }) {
   const exploreLinks = FALLBACK_EXPLORE;
   const usefulLinks = settings?.footerLinks?.length ? settings.footerLinks : FALLBACK_USEFUL_LINKS;
@@ -80,7 +79,13 @@ export function Footer({ settings }: { settings: SiteSettings | null }) {
   return (
     <footer className="bg-gradient-to-r from-footer-background to-lime/15">
       <div className="mx-auto grid max-w-container grid-cols-1 gap-x-10 gap-y-10 px-4 py-14 sm:grid-cols-2 lg:grid-cols-[1.3fr_0.8fr_0.9fr_2fr] lg:gap-x-12 lg:py-16">
-        <div>
+        {/* text-center on mobile only, restored to left at sm:+ — the logo
+            Link is inline-block so text-align centers it directly; the
+            social-icons row below is its own flex container, which needs
+            its own justify-center since a flex item's position is governed
+            by its container's justify-content, not an ancestor's
+            text-align. */}
+        <div className="text-center sm:text-left">
           <Link href="/" className="inline-block">
             <Image
               src={FOOTER_LOGO_SRC}
@@ -90,7 +95,7 @@ export function Footer({ settings }: { settings: SiteSettings | null }) {
               className="h-14 w-auto"
             />
           </Link>
-          <div className="mt-5 flex gap-2">
+          <div className="mt-5 flex justify-center gap-2 sm:justify-start">
             {SOCIAL_ICON_LABELS.map(({ key, label, iconSrc, iconWidth, iconHeight }) => {
               const href = socialLinks?.[key];
               if (!href) return null;
@@ -99,7 +104,7 @@ export function Footer({ settings }: { settings: SiteSettings | null }) {
                   key={key}
                   href={href}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                   aria-label={label}
                   className="flex h-10 w-10 items-center justify-center bg-lime"
                 >
@@ -119,9 +124,19 @@ export function Footer({ settings }: { settings: SiteSettings | null }) {
         <FooterColumn title="Explore" links={exploreLinks} />
         <FooterColumn title="Useful Links" links={usefulLinks} />
 
-        <div>
-          <h4 className={COLUMN_HEADING_CLASSES}>Our Partners</h4>
-          <ul className="mt-5 grid grid-cols-3 items-center gap-x-6 gap-y-6 sm:grid-cols-4 lg:grid-cols-6">
+        <div className="text-center sm:text-left">
+          <h4 className={FOOTER_HEADING_CLASSES}>Our Partners</h4>
+          {/* flex-wrap, not grid — a grid's `gap` only measures space
+              between equal-width tracks, and each logo is narrower than
+              its track, so the real gap between logo edges would end up
+              much bigger than the 10px specified. flex-wrap sizes each
+              item to its own logo (no shared track width), so `gap-2.5`
+              here is the true, exact 10px space between every logo.
+              justify-center (mobile only, sm:justify-start restores the
+              original) for the same reason as the social-icons row above
+              — text-align on the ancestor doesn't reach into a flex
+              container's own item positioning. */}
+          <ul className="mt-5 flex flex-wrap items-center justify-center gap-2.5 sm:justify-start">
             {PARTNERS.map((partner) => (
               <li key={partner.name} className="flex h-9 items-center">
                 <PartnerLogo partner={partner} />
@@ -166,7 +181,7 @@ function PartnerLogo({ partner }: { partner: (typeof PARTNERS)[number] }) {
   }
 
   return (
-    <a href={partner.link} target="_blank" rel="noreferrer" aria-label={partner.name}>
+    <a href={partner.link} target="_blank" rel="noopener noreferrer" aria-label={partner.name}>
       {logo}
     </a>
   );
@@ -180,8 +195,8 @@ function FooterColumn({
   links: { label: string; url?: string }[];
 }) {
   return (
-    <div>
-      <h4 className={COLUMN_HEADING_CLASSES}>{title}</h4>
+    <div className="text-center sm:text-left">
+      <h4 className={FOOTER_HEADING_CLASSES}>{title}</h4>
       <ul className="mt-5 space-y-3 text-sm">
         {links.map((link) =>
           link.url ? (

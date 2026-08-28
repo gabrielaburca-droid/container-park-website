@@ -4,9 +4,12 @@ import type { Business, EventDoc, PageDoc, SiteSettings } from "./types";
 // NOTE: rating/reviewCount/badgeLabel are NOT selected here — they don't
 // exist on the `business` document yet (see TODO: SCHEMA GAP in
 // src/lib/sanity/types.ts). Add them to this projection once the schema is
-// extended.
+// extended. `_createdAt` is different — it's Sanity's own standard system
+// field, already real on every document today, so it's selected here
+// already (used for "Newest Added" sorting — see templates/ListingTemplate.tsx).
 const businessListProjection = `{
   _id,
+  _createdAt,
   name,
   slug,
   categories,

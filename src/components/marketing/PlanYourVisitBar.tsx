@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Button } from "@/components/ui/Button";
-import { CARD_TITLE_CLASSES, EYEBROW_CLASSES } from "@/lib/ui/typography";
+import { CARD_TITLE_CLASSES, EYEBROW_CLASSES, SECTION_HEADING_CLASSES } from "@/lib/ui/typography";
 import type { Address, DayHours } from "@/lib/sanity/types";
 
 interface PlanYourVisitBarProps {
@@ -34,15 +34,22 @@ export function PlanYourVisitBar({
   restaurantHours = [],
 }: PlanYourVisitBarProps) {
   return (
-    <section className="border-b border-border bg-gradient-to-r from-[#F5F5F5] to-background">
-      <div className="mx-auto grid max-w-container grid-cols-1 divide-y divide-border px-4 py-10 sm:py-12 lg:grid-cols-[1.3fr_1fr_1fr_1fr] lg:divide-y-0">
-        <div className="pb-8 lg:pb-0 lg:pr-10">
+    // No border-b / divide-y on mobile (removed instead of just hidden, so
+    // there's no stray 0-width rule left behind) — both restored at sm:
+    // and up so tablet/desktop are pixel-identical to before.
+    <section className="bg-gradient-to-r from-[#F5F5F5] to-background sm:border-b sm:border-border">
+      <div className="mx-auto grid max-w-container grid-cols-1 px-4 py-10 sm:divide-y sm:divide-border sm:py-12 lg:grid-cols-[1.3fr_1fr_1fr_1fr] lg:divide-y-0">
+        {/* text-center on mobile only — the three icon columns below are
+            already centered unconditionally at every breakpoint; this is
+            the one block (eyebrow/heading/button) that was left-aligned
+            before, so it's the only one that needs a responsive change. */}
+        <div className="pb-8 text-center sm:text-left lg:pb-0 lg:pr-10">
           <p className={EYEBROW_CLASSES}>Plan Your Visit</p>
-          <h3 className="mt-2 font-display text-3xl uppercase sm:text-4xl">
+          <h2 className={`mt-2 ${SECTION_HEADING_CLASSES}`}>
             Easy to Get Here.
             <br />
             Hard to Leave.
-          </h3>
+          </h2>
           {directionsUrl && (
             <div className="mt-6">
               <Button href={directionsUrl} variant="filled">

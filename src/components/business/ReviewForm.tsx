@@ -5,6 +5,7 @@ import { TextField, TextareaField } from "@/components/forms/fields";
 import { Button } from "@/components/ui/Button";
 import { useFormSubmit } from "@/components/forms/useFormSubmit";
 import { FormStatusMessage } from "@/components/forms/FormStatusMessage";
+import { CARD_TITLE_CLASSES } from "@/lib/ui/typography";
 
 // Reviews have no backing Sanity schema and no confirmed public-write/
 // moderation model yet (a real architecture decision, not a simple field
@@ -22,57 +23,69 @@ export function ReviewForm() {
   const { status, handleSubmit } = useFormSubmit("review");
 
   return (
-    <form onSubmit={handleSubmit} className="mt-8 space-y-4 border-t border-border pt-8">
-      <h3 className="font-display text-lg uppercase">Rate Us and Write a Review</h3>
+    <div className="mt-8 border-t border-border pt-8">
+      {/* 30px desktop — reusing CARD_TITLE_CLASSES, the same constant every
+          other 30px-desktop heading on the site already shares, rather
+          than a one-off size. */}
+      <h3 className={CARD_TITLE_CLASSES}>Rate Us and Write a Review</h3>
 
-      <fieldset>
-        <legend className="text-sm font-medium">Your rating</legend>
-        <div className="mt-1 flex gap-1" role="radiogroup" aria-label="Star rating">
-          {[1, 2, 3, 4, 5].map((star) => (
-            <button
-              key={star}
-              type="button"
-              role="radio"
-              aria-checked={rating === star}
-              aria-label={`${star} star${star === 1 ? "" : "s"}`}
-              onClick={() => setRating(star)}
-              className="text-2xl text-rating"
-            >
-              <span aria-hidden="true">{star <= rating ? "★" : "☆"}</span>
-            </button>
-          ))}
+      {/* The whole form lives inside this light-grey box — same #FCFCFC
+          fill as the individual review cards above (see ReviewCard.tsx),
+          not a new/different grey. Padding ramps 4/6/8
+          (16px/24px/32px) mobile/tablet/desktop. */}
+      <form
+        onSubmit={handleSubmit}
+        className="mt-6 space-y-4 bg-[#FCFCFC] p-4 sm:p-6 lg:p-8"
+      >
+        <fieldset>
+          <legend className="text-sm font-medium">Your rating</legend>
+          <div className="mt-1 flex gap-1" role="radiogroup" aria-label="Star rating">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <button
+                key={star}
+                type="button"
+                role="radio"
+                aria-checked={rating === star}
+                aria-label={`${star} star${star === 1 ? "" : "s"}`}
+                onClick={() => setRating(star)}
+                className="text-2xl text-rating"
+              >
+                <span aria-hidden="true">{star <= rating ? "★" : "☆"}</span>
+              </button>
+            ))}
+          </div>
+          <input type="hidden" name="rating" value={rating} />
+        </fieldset>
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <TextField label="Name" name="name" required />
+          {/* TODO: CONFIRM SECOND FIELD LABEL — see file-level note above. */}
+          <TextField
+            label="Name"
+            name="nameOrEmail"
+            type="email"
+            placeholder="mail@website.com"
+            required
+          />
         </div>
-        <input type="hidden" name="rating" value={rating} />
-      </fieldset>
-
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        <TextField label="Name" name="name" required />
-        {/* TODO: CONFIRM SECOND FIELD LABEL — see file-level note above. */}
         <TextField
-          label="Name"
-          name="nameOrEmail"
-          type="email"
-          placeholder="mail@website.com"
-          required
+          label="Title"
+          name="title"
+          placeholder="Example: It was an awesome experience to be there"
         />
-      </div>
-      <TextField
-        label="Title"
-        name="title"
-        placeholder="Example: It was an awesome experience to be there"
-      />
-      <TextareaField
-        label="Review"
-        name="review"
-        placeholder="Tip: A great review covers food, service, and ambiance. Got recommendations for your favorite dishes and drinks, or something everyone should try here? Include that too! And remember"
-      />
-      <Button type="submit" disabled={status === "submitting"}>
-        {status === "submitting" ? "Submitting..." : "Submit Review"}
-      </Button>
-      <FormStatusMessage
-        status={status}
-        successMessage="Thanks for your feedback — reviews aren't published live on the site yet."
-      />
-    </form>
+        <TextareaField
+          label="Review"
+          name="review"
+          placeholder="Tip: A great review covers food, service, and ambiance. Got recommendations for your favorite dishes and drinks, or something everyone should try here? Include that too! And remember"
+        />
+        <Button type="submit" disabled={status === "submitting"}>
+          {status === "submitting" ? "Submitting..." : "Submit Review"}
+        </Button>
+        <FormStatusMessage
+          status={status}
+          successMessage="Thanks for your feedback — reviews aren't published live on the site yet."
+        />
+      </form>
+    </div>
   );
 }

@@ -36,7 +36,14 @@ export function VideoFeature({
         aria-hidden="true"
         className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/30 to-transparent"
       />
-      <div className="relative z-10 mx-auto w-full max-w-container px-4">
+      {/* Mobile-only: text-center cascades to the eyebrow/heading text and
+          also horizontally centers the play button below (an inline-block
+          <button>, per VideoPlayer.tsx, so it responds to its container's
+          text-align like any other inline content) — one class covers
+          every text element without touching each individually.
+          sm:text-left restores the existing left-aligned layout at
+          tablet/desktop unchanged. */}
+      <div className="relative z-10 mx-auto w-full max-w-container px-4 text-center sm:text-left">
         <p className={EYEBROW_CLASSES}>{eyebrow}</p>
         <h2 className={`mt-2 ${SECTION_HEADING_CLASSES}`}>{heading}</h2>
         <div className="mt-8">

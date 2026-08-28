@@ -22,7 +22,13 @@ export default async function AttractionsPage() {
 
   return (
     <>
-      <ListingTemplate title="Attractions" businesses={businesses} filterOptions={FILTER_OPTIONS} />
+      <ListingTemplate
+        eyebrow="Downtown"
+        title="Attractions"
+        heroImageUrl="/assets/images/all/attraction-hero.jpg"
+        businesses={businesses}
+        filterOptions={FILTER_OPTIONS}
+      />
       <PageBottom settings={settings} />
     </>
   );

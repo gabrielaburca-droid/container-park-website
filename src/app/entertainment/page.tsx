@@ -24,6 +24,7 @@ export default async function EntertainmentPage() {
     <>
       <ListingTemplate
         title="Entertainment"
+        heroImageUrl="/assets/images/all/live-music-category-thumb.jpg"
         businesses={businesses}
         filterOptions={FILTER_OPTIONS}
       />

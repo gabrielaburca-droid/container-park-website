@@ -72,6 +72,11 @@ export function FeatureCarousel({ slides = DEFAULT_SLIDES }: { slides?: FeatureC
           ariaLabel="Ways to have fun at Downtown Container Park"
           bleedRight
           loop
+          // 20px above the track, specific to this slider only (see
+          // trackWrapperClassName on Carousel) — every other gap/spacing
+          // value (including the mobile 10px inter-slide gap) is
+          // untouched, inherited as-is from the shared component.
+          trackWrapperClassName="mt-5"
           heading={
             <SectionHeading eyebrow="Discover the Park" heading="So Many Ways to Have Fun" />
           }

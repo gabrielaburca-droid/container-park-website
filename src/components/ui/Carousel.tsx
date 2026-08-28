@@ -37,6 +37,11 @@ interface CarouselProps {
    * slider rather than above it. Off by default (preserves the existing
    * heading-row layout for other consumers). */
   arrowsOverlay?: boolean;
+  /** Extra classes on the wrapper around the arrows+track (the element
+   * right below the heading/arrows row) — e.g. spacing above the track
+   * for one specific consumer, without changing the default for every
+   * other Carousel instance. Empty by default. */
+  trackWrapperClassName?: string;
 }
 
 // CAROUSEL BEHAVIOR NEEDS CONFIRMATION — autoplay and exact slide count
@@ -52,6 +57,7 @@ export function Carousel({
   bleedRight = false,
   loop = false,
   arrowsOverlay = false,
+  trackWrapperClassName = "",
 }: CarouselProps) {
   const trackRef = useRef<HTMLDivElement>(null);
   const settleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -108,7 +114,12 @@ export function Carousel({
     }
 
     const card = track.querySelector<HTMLElement>("[data-carousel-slide]");
-    const cardWidth = card ? card.offsetWidth + 24 : track.clientWidth * 0.8;
+    // Reads the track's real, current gap (10px on mobile, 24px at sm:+ —
+    // see the track's className below) instead of hardcoding one value,
+    // so "advance by exactly one card" stays accurate at every breakpoint
+    // rather than drifting now that the gap itself is responsive.
+    const gap = parseFloat(getComputedStyle(track).columnGap || "0");
+    const cardWidth = card ? card.offsetWidth + gap : track.clientWidth * 0.8;
     track.scrollBy({ left: direction * cardWidth, behavior: "smooth" });
   }
 
@@ -149,7 +160,7 @@ export function Carousel({
           absolutely positioned and don't contribute to its flow height),
           so top-1/2 on the arrows centers them against the cards
           specifically — not the taller heading+track region above. */}
-      <div className="relative mt-8">
+      <div className={`relative ${trackWrapperClassName}`.trim()}>
         {arrowsOverlay && (
           <>
             {/* Arrows straddle the track's edge (partially outside the
@@ -185,7 +196,7 @@ export function Carousel({
         )}
         <div
           ref={trackRef}
-          className={`no-scrollbar flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth pb-2 ${
+          className={`no-scrollbar flex snap-x snap-mandatory gap-[10px] overflow-x-auto scroll-smooth pb-2 sm:gap-6 ${
             bleedRight
               ? "mr-[calc(-1*max(1rem,calc((100vw-var(--container-max))/2+1rem)))] pr-4"
               : ""
