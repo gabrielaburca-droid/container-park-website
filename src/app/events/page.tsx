@@ -17,11 +17,20 @@ export default async function EventsPage() {
 
   return (
     <>
+      {/* `large` mode reuses the same big Hero treatment already
+          established for the category listing pages (Shop, Eat & Drink,
+          etc.) rather than inventing a new one. No `badgeLabel` here (by
+          explicit instruction) — this page's Hero shows only the H1/
+          accent/description over the real hero image, no eyebrow/label
+          above the H1. PageHero itself is untouched: every other consumer
+          that still passes `badgeLabel` (Business Detail's tagline badge,
+          etc.) is unaffected. */}
       <PageHero
-        eyebrow="Events"
         title="EVENTS"
         titleAccent="LIVE DOWNTOWN"
         description="One destination. Endless experiences."
+        imageUrl="/assets/images/all/hero-events.jpg"
+        large
       />
       <Container>
         <div className="py-12">

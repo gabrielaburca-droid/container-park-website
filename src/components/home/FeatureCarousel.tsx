@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Carousel } from "@/components/ui/Carousel";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Container } from "@/components/ui/Container";
-import { CARD_IMAGE_HOVER_CLASSES } from "@/lib/ui/cardImageHover";
+import { CARD_IMAGE_HOVER_CLASSES, CARD_IMAGE_OVERLAY_CLASSES } from "@/lib/ui/cardImageHover";
 import { CARD_TITLE_CLASSES } from "@/lib/ui/typography";
 
 export interface FeatureCarouselSlide {
@@ -101,6 +101,12 @@ export function FeatureCarousel({ slides = DEFAULT_SLIDES }: { slides?: FeatureC
                     className={`object-cover ${CARD_IMAGE_HOVER_CLASSES}`}
                   />
                 )}
+                {/* Sits between the image and the permanent legibility
+                    gradient below it — on hover the two blend into one
+                    slightly-deeper darken, while the title/subtitle/arrow
+                    (both z-10 above everything here) stay exactly as crisp
+                    as always. */}
+                <div aria-hidden="true" className={CARD_IMAGE_OVERLAY_CLASSES} />
                 <div
                   aria-hidden="true"
                   className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent"

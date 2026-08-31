@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { FILTER_TAB_CLASSES } from "@/lib/ui/typography";
 
 interface EventFilterBarProps {
@@ -13,7 +14,7 @@ interface EventFilterBarProps {
 const TABS = [
   { id: "all", label: "All Events" },
   { id: "recurring", label: "Recurring Events" },
-  { id: "special", label: "Special Events" },
+  { id: "featured", label: "Featured Events" },
 ];
 
 const DATE_FILTERS = [
@@ -30,7 +31,7 @@ const DATE_FILTERS = [
 // used instead (NEEDS CONFIRMATION whether a custom picker widget is
 // actually required).
 // ACTIVE: tabs use an underline (confirmed), date pills use filled-lime
-// (confirmed).
+// (confirmed). Day-of-week filtering was removed by explicit instruction.
 export function EventFilterBar({
   activeTab,
   onTabChange,
@@ -63,61 +64,67 @@ export function EventFilterBar({
         </div>
       </div>
 
-      <form
-        role="search"
-        onSubmit={(event) => {
-          event.preventDefault();
-          onSearchSubmit();
-        }}
-        className="flex gap-2"
-      >
-        <label htmlFor="event-search" className="sr-only">
-          What event are you looking for?
-        </label>
-        <input
-          id="event-search"
-          type="search"
-          value={search}
-          onChange={(event) => onSearchChange(event.target.value)}
-          placeholder="What event are you looking for?"
-          className="w-full max-w-sm border border-border px-4 py-2 text-sm focus:border-lime focus:outline-none"
-        />
-        <button
-          type="submit"
-          aria-label="Search events"
-          className="bg-lime px-4 py-2 text-lime-foreground"
+      {/* Desktop: search on the left, date filters on the right, one row.
+          Mobile: stacks naturally (flex-col), each control staying
+          full-width and usable rather than squeezing together. */}
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+        <form
+          role="search"
+          onSubmit={(event) => {
+            event.preventDefault();
+            onSearchSubmit();
+          }}
+          className="flex gap-2"
         >
-          <span aria-hidden="true">🔍</span>
-        </button>
-      </form>
-
-      <div className="flex flex-wrap gap-2">
-        {DATE_FILTERS.map((filter) => (
-          <button
-            key={filter.id}
-            type="button"
-            onClick={() => onDateFilterChange(filter.id)}
-            aria-pressed={activeDateFilter === filter.id}
-            className={`px-4 py-2 ${FILTER_TAB_CLASSES} ${
-              activeDateFilter === filter.id
-                ? "bg-lime text-lime-foreground"
-                : "border border-border text-foreground"
-            }`}
-          >
-            {filter.label}
-          </button>
-        ))}
-        <label
-          className={`flex items-center gap-2 border border-border px-4 py-2 ${FILTER_TAB_CLASSES}`}
-        >
-          Select Date
+          <label htmlFor="event-search" className="sr-only">
+            What event are you looking for?
+          </label>
           <input
-            type="date"
-            onChange={(event) => onDateFilterChange(event.target.value)}
-            className="bg-transparent"
-            aria-label="Select a specific date"
+            id="event-search"
+            type="search"
+            value={search}
+            onChange={(event) => onSearchChange(event.target.value)}
+            placeholder="What event are you looking for?"
+            className="w-full max-w-sm border border-border px-4 py-2 text-sm focus:border-lime focus:outline-none"
           />
-        </label>
+          <button
+            type="submit"
+            aria-label="Search events"
+            className="flex items-center justify-center bg-lime px-4 py-2"
+          >
+            {/* Real project asset (public/assets/images/all/search-icon.svg) */}
+            <Image src="/assets/images/all/search-icon.svg" alt="" width={16} height={16} />
+          </button>
+        </form>
+
+        <div className="flex flex-wrap gap-2">
+          {DATE_FILTERS.map((filter) => (
+            <button
+              key={filter.id}
+              type="button"
+              onClick={() => onDateFilterChange(filter.id)}
+              aria-pressed={activeDateFilter === filter.id}
+              className={`px-4 py-2 ${FILTER_TAB_CLASSES} ${
+                activeDateFilter === filter.id
+                  ? "bg-lime text-lime-foreground"
+                  : "border border-border text-foreground"
+              }`}
+            >
+              {filter.label}
+            </button>
+          ))}
+          <label
+            className={`flex items-center gap-2 border border-border px-4 py-2 ${FILTER_TAB_CLASSES}`}
+          >
+            Select Date
+            <input
+              type="date"
+              onChange={(event) => onDateFilterChange(event.target.value)}
+              className="bg-transparent"
+              aria-label="Select a specific date"
+            />
+          </label>
+        </div>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { urlForImage } from "@/lib/sanity/image";
 import { Button } from "@/components/ui/Button";
-import { CARD_IMAGE_HOVER_CLASSES } from "@/lib/ui/cardImageHover";
+import { CARD_IMAGE_HOVER_CLASSES, CARD_IMAGE_OVERLAY_CLASSES } from "@/lib/ui/cardImageHover";
 import { CARD_TITLE_CLASSES } from "@/lib/ui/typography";
 import type { EventDoc } from "@/lib/sanity/types";
 
@@ -40,6 +40,15 @@ export function EventCard({ event, className = "" }: EventCardProps) {
   const day = date.toLocaleDateString("en-US", { day: "2-digit" });
   const month = date.toLocaleDateString("en-US", { month: "short" }).toUpperCase();
 
+  // Events with no detail page of their own on the live site (e.g. one
+  // linked straight to an external ticketing page from the live archive)
+  // link straight out via `externalUrl` instead of an invented internal
+  // /events/[slug] page — see EventDoc.externalUrl.
+  const isExternal = Boolean(event.externalUrl);
+  const linkProps = isExternal
+    ? { href: event.externalUrl as string, target: "_blank", rel: "noopener noreferrer" }
+    : { href: `/events/${event.slug.current}` };
+
   return (
     // list-none is required directly here (not just on the parent <ul>):
     // when this card sits in Carousel's plain <div> track (no <ul>
@@ -48,7 +57,7 @@ export function EventCard({ event, className = "" }: EventCardProps) {
     // unsuppressed.
     <li className={`list-none h-full border border-border ${className}`.trim()}>
       <Link
-        href={`/events/${event.slug.current}`}
+        {...linkProps}
         className="group flex h-full flex-col focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
       >
         <div className="relative aspect-[3/2] overflow-hidden bg-border">
@@ -60,6 +69,10 @@ export function EventCard({ event, className = "" }: EventCardProps) {
               className={`object-cover ${CARD_IMAGE_HOVER_CLASSES}`}
             />
           )}
+          {/* Above the image, below the date badge (DOM order) — the badge
+              stays fully crisp/legible on hover instead of darkening along
+              with the photo. */}
+          <div aria-hidden="true" className={CARD_IMAGE_OVERLAY_CLASSES} />
           {/* Fixed size and flush to the image's top-right corner
               (top-0 right-0, no inset) — anchored to/overlapping the
               image rather than floating above it with a gap. Day is

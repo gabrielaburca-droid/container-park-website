@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import Image from "next/image";
 
 export interface AccordionItem {
   id: string;
@@ -14,7 +15,8 @@ interface AccordionProps {
 }
 
 // ANIMATION: NEEDS CONFIRMATION — no transition/motion is visible in the
-// source design; panels toggle instantly (no slide/fade).
+// source design; panels toggle instantly (no slide/fade) — only the
+// arrow's own rotation animates.
 // INTERACTION: NEEDS CONFIRMATION whether this should be single-open
 // (opening one closes the others) or multi-open. The design shows exactly
 // one item expanded and three collapsed, which is suggestive but not
@@ -32,27 +34,43 @@ export function Accordion({ items }: AccordionProps) {
   }
 
   return (
-    <div className="divide-y divide-border border-t border-border">
+    // `divide-y` (not a `border-t` on the outer wrapper) is what gives
+    // every item a border-top EXCEPT the first — divide-y only inserts a
+    // border between adjacent children, never before the first or after
+    // the last, so no first:-item override is needed for the border
+    // itself (only for its own top padding, below).
+    <div className="divide-y divide-border">
       {items.map((item) => {
         const isOpen = openIds.includes(item.id);
         return (
-          <div key={item.id}>
+          <div key={item.id} className="pt-4 first:pt-0">
             <h3 className="font-sans">
               <button
                 type="button"
                 onClick={() => toggle(item.id)}
                 aria-expanded={isOpen}
                 aria-controls={`accordion-panel-${item.id}`}
-                className="flex w-full items-center justify-between gap-4 py-4 text-left text-sm font-medium uppercase"
+                className="flex w-full items-center justify-between gap-4 pb-4 text-left font-display text-sm uppercase lg:text-[24px]"
               >
                 {item.title}
                 <span
                   aria-hidden="true"
-                  className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs ${
-                    isOpen ? "bg-lime text-lime-foreground" : "text-foreground"
+                  className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full ${
+                    isOpen ? "bg-lime" : ""
                   }`}
                 >
-                  {isOpen ? "▲" : "▼"}
+                  {/* Real project asset (public/assets/images/all/arrow-down.svg)
+                      — same glyph in both states, rotated 180° when open
+                      rather than swapped for a different icon. */}
+                  <Image
+                    src="/assets/images/all/arrow-down.svg"
+                    alt=""
+                    width={13}
+                    height={8}
+                    className={`h-2 w-auto transition-transform duration-200 ease-out ${
+                      isOpen ? "rotate-180" : ""
+                    }`}
+                  />
                 </span>
               </button>
             </h3>

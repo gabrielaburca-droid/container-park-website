@@ -257,7 +257,7 @@ export function BusinessDetailTemplate({
                       >
                         <span className="relative h-[21px] w-[21px] shrink-0">
                           <Image
-                            src="/assets/images/all/web-icon.svg"
+                            src="/assets/images/all/icon-web.svg"
                             alt=""
                             fill
                             sizes="21px"

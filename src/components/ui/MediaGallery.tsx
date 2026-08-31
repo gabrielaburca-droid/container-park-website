@@ -6,6 +6,7 @@ import { urlForImage } from "@/lib/sanity/image";
 import { VideoPlayer } from "@/components/ui/VideoPlayer";
 import { ImageLightbox } from "@/components/ui/ImageLightbox";
 import { EYEBROW_CLASSES, SECTION_HEADING_CLASSES } from "@/lib/ui/typography";
+import { CARD_IMAGE_HOVER_CLASSES, CARD_IMAGE_OVERLAY_CLASSES } from "@/lib/ui/cardImageHover";
 import type { SanityImage } from "@/lib/sanity/types";
 
 export interface MediaGalleryItem {
@@ -71,13 +72,24 @@ export function MediaGallery({
               ? urlForImage(item.image).width(400).height(300).url()
               : null;
             const tile = url && (
-              <Image src={url} alt={item.image.alt || ""} fill className="object-cover" />
+              <Image
+                src={url}
+                alt={item.image.alt || ""}
+                fill
+                className={`object-cover ${CARD_IMAGE_HOVER_CLASSES}`}
+              />
             );
 
             if (item.isVideo) {
               return (
-                <li key={index} className="relative aspect-[4/3] overflow-hidden bg-white/10">
+                // `group` here (not just on VideoPlayer's own inner button)
+                // so the hover darken/zoom responds to the whole tile, not
+                // only the small play-button hitbox — VideoPlayer's own
+                // separate `group` (its ring-spin animation) is scoped to
+                // itself and unaffected by this outer one.
+                <li key={index} className="group relative aspect-[4/3] overflow-hidden bg-white/10">
                   {tile}
+                  <div aria-hidden="true" className={CARD_IMAGE_OVERLAY_CLASSES} />
                   <div className="absolute inset-0 flex items-center justify-center bg-black/20">
                     <VideoPlayer videoUrl={item.videoUrl} title={item.image.alt || heading} />
                   </div>
@@ -92,9 +104,10 @@ export function MediaGallery({
                   type="button"
                   onClick={() => thisPhotoIndex !== null && setLightboxIndex(thisPhotoIndex)}
                   aria-label={`View image: ${item.image.alt || heading}`}
-                  className="block h-full w-full"
+                  className="group block h-full w-full"
                 >
                   {tile}
+                  <div aria-hidden="true" className={CARD_IMAGE_OVERLAY_CLASSES} />
                 </button>
               </li>
             );

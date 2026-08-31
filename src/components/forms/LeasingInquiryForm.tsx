@@ -1,74 +1,56 @@
 "use client";
 
-import { TextField, TextareaField, SelectField } from "./fields";
+import { TextField } from "./fields";
 import { Button } from "@/components/ui/Button";
 import { useFormSubmit } from "./useFormSubmit";
 import { FormStatusMessage } from "./FormStatusMessage";
 
-// Date/time fields use native browser inputs — no custom picker exists in
-// the project and none was requested. "How did you hear about us?" options
-// are intentionally empty (see SelectField).
+// REAL CONTENT — the live /leasing/ page's actual inquiry form is a
+// 4-field Contact Form 7 form (Name, Email Address, Contact Number,
+// Company Name; submit label "Send Inquiry"), not the larger
+// booking-details form previously here (that field set — arrival/
+// departure dates, event date/time, guest count — belonged to Group
+// Events' real content, not Leasing's; it's never been reproduced here
+// since it turned out to not be real Leasing content either, see the
+// Group Events form's own note on why the live Tripleseat widget itself
+// isn't replicated). Placeholders and the "250 ft²" note are transcribed
+// verbatim from the live form's own markup.
 export function LeasingInquiryForm() {
   const { status, handleSubmit } = useFormSubmit("leasing");
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8 border border-border bg-white p-6">
-      <div>
-        <h3 className="font-display text-xl uppercase">Send Us an Inquiry</h3>
-        <p className="mt-1 text-sm text-muted">
-          Birthdays, corporate buyouts, weddings, and everything in between. Tell us what
-          you&apos;re planning — we&apos;ll take it from there.
-        </p>
+    <form onSubmit={handleSubmit} className="space-y-6 bg-white p-6 sm:p-8">
+      <p className="text-sm text-muted">
+        Please keep in mind that all available spaces in Downtown Container Park are approximately
+        250 ft<sup>2</sup>.
+      </p>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <TextField label="Name" name="your-name" placeholder="Your Name" required />
+        <TextField
+          label="Email Address"
+          name="email-add"
+          type="email"
+          placeholder="youremail@domain.com"
+          required
+        />
       </div>
-
-      <fieldset className="space-y-4">
-        <legend className="text-xs font-medium uppercase tracking-wide">
-          Your Contact Information
-        </legend>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <TextField label="First Name" name="firstName" required />
-          <TextField label="Last Name" name="lastName" required />
-        </div>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <TextField label="Contact Number" name="phone" type="tel" required />
-          <TextField label="Email Address" name="email" type="email" required />
-        </div>
-        <TextField label="Company Name" name="company" required />
-      </fieldset>
-
-      <fieldset className="space-y-4">
-        <legend className="text-xs font-medium uppercase tracking-wide">Your Booking Details</legend>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <TextField
-          label="Nature of this Booking (e.g., Conference, Wedding)"
-          name="bookingNature"
+          label="Contact Number"
+          name="phone-number"
+          type="tel"
+          placeholder="123-456-789"
+          required
         />
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <TextField label="Arriving On" name="arrivingOn" type="date" />
-          <TextField label="Departing On" name="departingOn" type="date" />
-        </div>
-        <TextareaField
-          label="Is there any additional information you would like to add?"
-          name="bookingNotes"
-        />
-        <SelectField label="How did you hear about us?" name="referralSource" options={[]} />
-      </fieldset>
-
-      <fieldset className="space-y-4">
-        <legend className="text-xs font-medium uppercase tracking-wide">Your Event Details</legend>
         <TextField
-          label="Nature of this Event (e.g., Birthday Party or Business Dinner)"
-          name="eventNature"
+          label="Company Name"
+          name="company"
+          placeholder="Your Company Name"
+          required
         />
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <TextField label="Event Date" name="eventDate" type="date" />
-          <TextField label="Start time" name="startTime" type="time" />
-          <TextField label="End time" name="endTime" type="time" />
-        </div>
-        <TextField label="Number of People" name="guestCount" type="number" />
-      </fieldset>
-
+      </div>
       <Button type="submit" disabled={status === "submitting"}>
-        {status === "submitting" ? "Submitting..." : "Submit"}
+        {status === "submitting" ? "Sending..." : "Send Inquiry"}
       </Button>
       <FormStatusMessage status={status} />
     </form>

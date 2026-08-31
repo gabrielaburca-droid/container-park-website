@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Carousel } from "@/components/ui/Carousel";
 import { EYEBROW_CLASSES, SECTION_HEADING_CLASSES } from "@/lib/ui/typography";
-import { CARD_IMAGE_HOVER_CLASSES } from "@/lib/ui/cardImageHover";
+import { CARD_IMAGE_HOVER_CLASSES, CARD_IMAGE_OVERLAY_CLASSES } from "@/lib/ui/cardImageHover";
 import type { InstagramImage } from "@/lib/instagram/types";
 
 interface InstagramStripProps {
@@ -74,7 +74,7 @@ export function InstagramStrip({
                   target="_blank"
                   rel="noreferrer"
                   aria-label="View this post on Instagram"
-                  className="relative block aspect-square w-28 overflow-hidden sm:w-40 lg:w-56"
+                  className="group relative block aspect-square w-28 overflow-hidden sm:w-40 lg:w-56"
                 >
                   <Image
                     src={image.url}
@@ -82,6 +82,7 @@ export function InstagramStrip({
                     fill
                     className={`object-cover ${CARD_IMAGE_HOVER_CLASSES}`}
                   />
+                  <div aria-hidden="true" className={CARD_IMAGE_OVERLAY_CLASSES} />
                 </a>
               ))}
             </Carousel>

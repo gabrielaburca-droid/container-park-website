@@ -30,6 +30,11 @@ interface PageHeroProps {
    * given. */
   imageUrl?: string;
   badgeLabel?: string;
+  /** Badge text color — "dark" (the existing default, e.g. Business
+   * Detail's tagline badge) or "white" (Events page's small label, per its
+   * own design). Doesn't affect any other prop or any existing consumer
+   * that doesn't pass it. */
+  badgeTextColor?: "dark" | "white";
   /** Opt into Home Hero's own H1/accent sizing (140px desktop H1, matching
    * lime accent line below it — see HERO_HEADING_CLASSES/HERO_ACCENT_CLASSES
    * in lib/ui/typography.ts) instead of this component's smaller default
@@ -64,6 +69,7 @@ export function PageHero({
   image,
   imageUrl,
   badgeLabel,
+  badgeTextColor = "dark",
   large = false,
   detail = false,
   children,
@@ -84,7 +90,11 @@ export function PageHero({
       <HeroGradientOverlay />
       <div className="relative z-10 mx-auto w-full max-w-container px-4 py-10">
         {badgeLabel && (
-          <span className="mb-3 inline-block max-w-[500px] bg-lime px-3 py-1 text-xs font-semibold text-lime-foreground">
+          <span
+            className={`mb-3 inline-block max-w-[500px] bg-lime px-3 py-1 text-xs font-semibold ${
+              badgeTextColor === "white" ? "text-white" : "text-lime-foreground"
+            }`}
+          >
             {badgeLabel}
           </span>
         )}

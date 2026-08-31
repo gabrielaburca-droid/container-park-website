@@ -30,14 +30,21 @@ export default async function VisitUsPage() {
 
   return (
     <>
+      {/* RESTYLE ONLY: switched to the same `large` white-H1/lime-accent
+          Hero treatment already established on Events/Leasing/Group
+          Events/Contact (no small eyebrow above the H1, per the attached
+          design) and wired in the real hero-visit.jpg asset.
+          Title/titleAccent/description text values are exactly what was
+          already there; nothing about the actual copy changed. */}
       <PageHero
-        eyebrow="Visit Us"
         title={page?.hero?.heading || "VISIT US"}
         titleAccent="DOWNTOWN LAS VEGAS"
         description={
           page?.hero?.subheading ||
           "Join a vibrant community of local businesses in the heart of Downtown Las Vegas."
         }
+        imageUrl="/assets/images/all/hero-visit.jpg"
+        large
       />
 
       {/* REAL CONTENT — re-verified word-for-word against the live
@@ -66,13 +73,19 @@ export default async function VisitUsPage() {
       </LocationBlock>
 
       <Container>
-        <div className="pb-16">
+        {/* Single column, per spec — was a 2-column grid (Park Rules
+            beside the accordion); the attached design stacks them in one
+            column instead: Park Rules, then the accordion box below it.
+            pt-12 matches LocationBlock's own top padding (py-12) so this
+            section has the same breathing room above it as the other
+            main sections on the page. */}
+        <div className="pb-16 pt-12">
           <SectionHeading
             eyebrow="Discover the Park"
             heading="Parking in Downtown"
             align="center"
           />
-          <div className="mt-8 grid grid-cols-1 gap-8 lg:grid-cols-2">
+          <div className="mt-8">
             <ParkRulesList directionsUrl={directionsUrl} />
             {/* REAL CONTENT — all 4 accordion items migrated from the live
                 /visit/ page during the content + SEO migration audit. The
@@ -80,8 +93,9 @@ export default async function VisitUsPage() {
                 the other three were collapsed there and unreadable, but
                 their real content was recovered directly from the live
                 site (not invented, not left as filler). */}
-            <Accordion
-              items={[
+            <div className="mt-8 bg-[#F5F5F5] p-6 sm:p-8">
+              <Accordion
+                items={[
                 {
                   id: "public-transportation",
                   title: "Public Transportation",
@@ -157,8 +171,9 @@ export default async function VisitUsPage() {
                     </div>
                   ),
                 },
-              ]}
-            />
+                ]}
+              />
+            </div>
           </div>
         </div>
       </Container>

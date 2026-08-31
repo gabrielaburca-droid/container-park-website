@@ -23,7 +23,12 @@ export interface Review {
 export function ReviewCard({ review }: { review: Review }) {
   return (
     <li className="bg-[#FCFCFC] p-6">
-      <div className="flex items-start justify-between gap-4">
+      {/* Below 370px the star rating drops onto its own line under the
+          name/date block instead of squeezing onto the same row (CSS-only
+          via Tailwind's arbitrary `min-[370px]:` breakpoint, not JS) — at
+          370px and up this is byte-identical to the original single-row
+          layout. */}
+      <div className="flex flex-col items-start gap-1 min-[370px]:flex-row min-[370px]:justify-between min-[370px]:gap-4">
         <div className="flex items-center gap-3">
           {/* Real project asset (public/assets/images/all/user.svg) — a
               generic reviewer avatar, not a specific person's photo (the

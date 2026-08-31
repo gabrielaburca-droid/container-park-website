@@ -29,6 +29,8 @@ export const event = defineType({
       name: "isRecurring",
       title: "Recurring Event",
       type: "boolean",
+      description:
+        "Drives the Events page's Recurring/Featured tabs — on means this shows under Recurring Events, off means Featured Events.",
       initialValue: false,
     }),
     defineField({

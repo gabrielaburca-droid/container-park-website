@@ -61,18 +61,29 @@ interface SelectFieldProps {
   name: string;
   required?: boolean;
   options: { value: string; label: string }[];
+  /** Controlled usage (e.g. GroupEventForm's referral-source select needs
+   * to react to the chosen value to conditionally show a "please
+   * specify" field, matching the live Tripleseat form's own behavior).
+   * Omit both for a plain uncontrolled select — every other existing
+   * call site is unaffected. */
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
-// TODO: NEEDS CONFIRMATION — no dropdown was shown open in the source
-// design ("How did you hear about us?", "Sort by"), so `options` is
-// intentionally empty at every call site until real values are confirmed.
-export function SelectField({ label, name, required, options }: SelectFieldProps) {
+export function SelectField({ label, name, required, options, value, onChange }: SelectFieldProps) {
   return (
     <div>
       <label htmlFor={name} className="text-sm font-medium">
         {label} {required && <span aria-hidden="true">*</span>}
       </label>
-      <select id={name} name={name} required={required} className={`${fieldClasses} bg-white`}>
+      <select
+        id={name}
+        name={name}
+        required={required}
+        value={value}
+        onChange={onChange ? (event) => onChange(event.target.value) : undefined}
+        className={`${fieldClasses} bg-white`}
+      >
         <option value="">Select an option</option>
         {options.map((option) => (
           <option key={option.value} value={option.value}>

@@ -11,7 +11,15 @@ function toIcsDate(dateString: string) {
   return new Date(dateString).toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
 }
 
-export function buildGoogleCalendarUrl(event: Pick<EventDoc, "title" | "startDate" | "endDate">) {
+interface CalendarExtras {
+  location?: string;
+  details?: string;
+}
+
+export function buildGoogleCalendarUrl(
+  event: Pick<EventDoc, "title" | "startDate" | "endDate">,
+  extras?: CalendarExtras
+) {
   const start = toIcsDate(event.startDate);
   const end = event.endDate ? toIcsDate(event.endDate) : start;
   const params = new URLSearchParams({
@@ -19,10 +27,15 @@ export function buildGoogleCalendarUrl(event: Pick<EventDoc, "title" | "startDat
     text: event.title,
     dates: `${start}/${end}`,
   });
+  if (extras?.location) params.set("location", extras.location);
+  if (extras?.details) params.set("details", extras.details);
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
 
-export function buildIcsDataUrl(event: Pick<EventDoc, "title" | "startDate" | "endDate">) {
+export function buildIcsDataUrl(
+  event: Pick<EventDoc, "title" | "startDate" | "endDate">,
+  extras?: CalendarExtras
+) {
   const start = toIcsDate(event.startDate);
   const end = event.endDate ? toIcsDate(event.endDate) : start;
   const ics = [
@@ -32,8 +45,12 @@ export function buildIcsDataUrl(event: Pick<EventDoc, "title" | "startDate" | "e
     `SUMMARY:${event.title}`,
     `DTSTART:${start}`,
     `DTEND:${end}`,
+    extras?.location ? `LOCATION:${extras.location}` : null,
+    extras?.details ? `DESCRIPTION:${extras.details}` : null,
     "END:VEVENT",
     "END:VCALENDAR",
-  ].join("\r\n");
+  ]
+    .filter(Boolean)
+    .join("\r\n");
   return `data:text/calendar;charset=utf-8,${encodeURIComponent(ics)}`;
 }

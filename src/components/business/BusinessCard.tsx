@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { urlForImage } from "@/lib/sanity/image";
 import { Button } from "@/components/ui/Button";
-import { CARD_IMAGE_HOVER_CLASSES } from "@/lib/ui/cardImageHover";
+import { CARD_IMAGE_HOVER_CLASSES, CARD_IMAGE_OVERLAY_CLASSES } from "@/lib/ui/cardImageHover";
 import { getOpenStatus } from "@/lib/business/openStatus";
 import type { Business } from "@/lib/sanity/types";
 
@@ -47,6 +47,10 @@ export function BusinessCard({ business, hrefBase = "/listing" }: BusinessCardPr
             className={`object-cover ${CARD_IMAGE_HOVER_CLASSES}`}
           />
         )}
+        {/* Sits above the image but below the badge/tagline below it (DOM
+            order), so those stay fully crisp/legible on hover instead of
+            darkening along with the photo. */}
+        <div aria-hidden="true" className={CARD_IMAGE_OVERLAY_CLASSES} />
         {business.badgeLabel && (
           <span className="absolute left-2 top-2 bg-lime px-2 py-1 text-[10px] font-semibold uppercase text-lime-foreground">
             {business.badgeLabel}

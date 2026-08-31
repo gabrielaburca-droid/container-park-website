@@ -40,14 +40,34 @@ export async function getUpcomingEvents(): Promise<EventDoc[]> {
 }
 
 export async function getEventBySlug(slug: string): Promise<EventDoc | null> {
-  return MOCK_EVENTS.find((event) => event.slug.current === slug) ?? null;
+  // Multiple occurrences of a recurring event (e.g. The Mantis) all share
+  // the same real live slug/URL — one detail page per event, not per
+  // date, matching the live site. Returns the soonest upcoming occurrence
+  // (MOCK_EVENTS is pre-sorted chronologically) so the detail page shows
+  // a real, currently-relevant date.
+  //
+  // Events with `externalUrl` set have no detail page of their own on the
+  // live site (see EventDoc.externalUrl) — excluded here so navigating
+  // straight to their slug 404s honestly instead of rendering an invented
+  // on-site page. Listing cards for these already link straight to
+  // `externalUrl` instead of this route (see EventCard).
+  return MOCK_EVENTS.find((event) => event.slug.current === slug && !event.externalUrl) ?? null;
 }
 
 export async function getAllEventSlugs(): Promise<string[]> {
   const now = Date.now();
-  return MOCK_EVENTS.filter((event) => new Date(event.startDate).getTime() >= now).map(
-    (event) => event.slug.current
-  );
+  // One sitemap entry per real event, not per occurrence — de-duplicated
+  // by slug (see getEventBySlug). Events with `externalUrl` set have no
+  // detail page of their own (see EventDoc.externalUrl) — excluded so the
+  // sitemap never advertises an internal /events/[slug] URL that would
+  // just 404.
+  const slugs = new Set<string>();
+  for (const event of MOCK_EVENTS) {
+    if (event.externalUrl) continue;
+    if (new Date(event.startDate).getTime() < now) continue;
+    slugs.add(event.slug.current);
+  }
+  return Array.from(slugs);
 }
 
 export async function getPage(pageId: string): Promise<PageDoc | null> {

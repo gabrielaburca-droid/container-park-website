@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/Button";
-
 // Literal rule text transcribed from the Visit Us Figma export.
 const PARK_RULES = [
   "No outside food or beverages.",
@@ -16,7 +14,7 @@ const PARK_RULES = [
 export function ParkRulesList({ directionsUrl }: { directionsUrl?: string }) {
   return (
     <div>
-      <h3 className="font-display text-xl uppercase">Park Rules</h3>
+      <h3 className="font-display text-xl uppercase lg:text-[28px]">Park Rules</h3>
       <ul className="mt-4 list-disc space-y-2 pl-5 text-sm text-muted">
         {PARK_RULES.map((rule) => (
           <li key={rule}>{rule}</li>
@@ -24,9 +22,14 @@ export function ParkRulesList({ directionsUrl }: { directionsUrl?: string }) {
       </ul>
       {directionsUrl && (
         <div className="mt-4">
-          <Button href={directionsUrl} variant="outline">
+          <a
+            href={directionsUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="font-display text-sm uppercase tracking-wide underline underline-offset-2"
+          >
             Get Directions
-          </Button>
+          </a>
         </div>
       )}
     </div>

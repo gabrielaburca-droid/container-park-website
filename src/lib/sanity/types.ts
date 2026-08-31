@@ -113,8 +113,14 @@ export interface EventDoc {
   // Business note above for the pattern).
   shortDescription?: string;
   tags?: string[];
-  isSpecial?: boolean;
   partnerOffers?: EventPartnerOffer[];
+  // Set only for events that exist on the live site's events calendar but
+  // have no on-site detail page of their own (e.g. an externally-ticketed
+  // event linked straight to Eventbrite from the live archive listing).
+  // When present, listing cards link straight out to this URL instead of
+  // an invented internal /events/[slug] page. Real field, not yet on the
+  // Sanity schema — same schema-gap pattern as the fields above.
+  externalUrl?: string;
 }
 
 export interface PageHero {
