@@ -16,7 +16,7 @@ const nextConfig = {
   // handler (carousel arrows, filter tabs, etc.) ever runs. This
   // allow-lists Replit's own preview domains for that check; it has no
   // effect in production (`next start`) or outside Replit.
-  allowedDevOrigins: ["*.replit.dev", "*.repl.co", "*.replit.app"],
+allowedDevOrigins: ["**.replit.dev", "*.repl.co", "*.replit.app"],
   images: {
     remotePatterns: [
       {
