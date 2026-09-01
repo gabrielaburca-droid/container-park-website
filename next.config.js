@@ -7,6 +7,16 @@ const redirects = require("./src/data/redirects.json");
 const nextConfig = {
   reactStrictMode: true,
   output: "standalone",
+  // Next.js's dev server blocks cross-origin requests to dev-only assets
+  // (JS chunks, HMR, RSC payloads) by default, allowing only `localhost`.
+  // The Replit preview loads the app through a proxied *.replit.dev /
+  // *.repl.co / *.replit.app domain, not localhost — the initial HTML
+  // still renders (a plain SSR response), but every follow-up asset
+  // request gets silently blocked, so React never hydrates and no click
+  // handler (carousel arrows, filter tabs, etc.) ever runs. This
+  // allow-lists Replit's own preview domains for that check; it has no
+  // effect in production (`next start`) or outside Replit.
+  allowedDevOrigins: ["*.replit.dev", "*.repl.co", "*.replit.app"],
   images: {
     remotePatterns: [
       {

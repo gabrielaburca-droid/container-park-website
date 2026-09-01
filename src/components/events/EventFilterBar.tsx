@@ -47,7 +47,9 @@ export function EventFilterBar({
           this can exceed narrow phone widths; scrolling avoids both page
           overflow and an awkward multi-row underline tab bar. */}
       <div className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
-        <div className="flex w-max gap-6 border-b border-border font-display text-sm uppercase tracking-wide sm:w-auto">
+        {/* Mobile is 15px (text-[15px]); sm: restores the original
+            text-sm (14px) so tablet/desktop stay exactly as they were. */}
+        <div className="flex w-max gap-6 border-b border-border font-display text-[15px] uppercase tracking-wide sm:w-auto sm:text-sm">
           {TABS.map((tab) => (
             <button
               key={tab.id}

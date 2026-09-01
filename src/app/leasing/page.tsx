@@ -71,7 +71,7 @@ export default async function LeasingPage() {
                   the same "stray extra H1" pattern CLAUDE.md already
                   flags elsewhere on the old site. */}
               <SectionHeading heading="Looking for space for your small business?" />
-              <p className="mt-4 text-muted">
+              <p className="mt-4 text-sm text-muted sm:text-base">
                 The types of businesses we are looking to connect with are those that contribute to
                 the community of Downtown Las Vegas. We are particularly looking for businesses
                 that will provide the kinds of services that Downtown residents need to create a

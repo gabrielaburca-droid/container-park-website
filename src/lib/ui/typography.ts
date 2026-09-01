@@ -136,10 +136,10 @@ export const DETAIL_CATEGORY_CLASSES =
 export const LISTING_HERO_SUBTITLE_CLASSES =
   "font-display text-xs uppercase tracking-wide text-lime sm:text-sm lg:text-[100px] lg:leading-[0.9]";
 
-// Filter/date-pill label (see home/HomeEventsSection.tsx's date pills and
-// events/EventFilterBar.tsx's date pills + "Select Date") — a shared
-// constant so both stay in sync. Previously Inter; size (text-xs) and
-// tracking-wide are unchanged from before this update, only the
-// font-family and (implicitly, since Bebas Neue has no matching cut) the
-// font-weight utility changed.
-export const FILTER_TAB_CLASSES = "font-display text-xs uppercase tracking-wide";
+// Filter/date-pill label (see home/HomeEventsSection.tsx's date pills,
+// events/EventFilterBar.tsx's date pills + "Select Date",
+// listing/CategoryFilterPills.tsx, and listing/SortDropdown.tsx) — a
+// shared constant so all four stay in sync. Mobile is 15px (text-[15px]);
+// sm: restores the original text-xs (12px) so tablet/desktop render
+// exactly as before.
+export const FILTER_TAB_CLASSES = "font-display text-[15px] uppercase tracking-wide sm:text-xs";

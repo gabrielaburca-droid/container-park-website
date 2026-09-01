@@ -72,7 +72,7 @@ export default async function GroupEventsPage() {
                   precedes this on the live page — "Host Your Event at
                   Container Park" belongs to the form section only (see
                   GroupEventForm.tsx), not duplicated here. */}
-              <p className="text-muted">
+              <p className="text-sm text-muted sm:text-base">
                 Guarded by a 44-foot tall fire-breathing Praying Mantis, Downtown Container Park is
                 a 1.1-acre urban open-air shopping center home to unique dining and live
                 entertainment built from repurposed shipping containers. The innovative shopping

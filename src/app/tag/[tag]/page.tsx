@@ -117,7 +117,9 @@ export default async function TagPage({ params }: TagPageProps) {
               // Honest empty state (CLAUDE.md — no invented content) for a
               // real tag with no currently-upcoming events, or an
               // unrecognized tag slug.
-              <p className="text-center text-muted">No upcoming events tagged &ldquo;{label}&rdquo;.</p>
+              <p className="text-center text-sm text-muted sm:text-base">
+                No upcoming events tagged &ldquo;{label}&rdquo;.
+              </p>
             )}
 
             <div className="mt-10 flex justify-center">

@@ -59,7 +59,7 @@ export function ImageTextSplit({
         <div className="md:pl-10">
           <SectionHeading eyebrow={eyebrow} heading={heading} />
           {paragraphs.map((paragraph, index) => (
-            <p key={index} className="mt-4">
+            <p key={index} className="mt-4 text-sm sm:text-base">
               {paragraph}
             </p>
           ))}

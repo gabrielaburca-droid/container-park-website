@@ -104,7 +104,9 @@ export function HomeEventsSection({ events }: { events: EventDoc[] }) {
             </Carousel>
           </div>
         ) : (
-          <p className="mt-8 text-center text-muted">No events match this filter yet.</p>
+          <p className="mt-8 text-center text-sm text-muted sm:text-base">
+            No events match this filter yet.
+          </p>
         )}
 
         <div className="mt-8 text-center">

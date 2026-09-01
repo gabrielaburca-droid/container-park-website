@@ -131,7 +131,10 @@ export function BusinessDetailTemplate({
                   live site (see data/mock/businesses.ts) — left column,
                   directly above the Reviews heading, per spec. */}
               {business.description && business.description.length > 0 && (
-                <div className="prose max-w-none">
+                // text-sm/sm:text-base cascades into PortableText's own
+                // unstyled <p> tags (no size class of their own) — 14px on
+                // mobile, back to the original 16px from sm: up.
+                <div className="prose max-w-none text-sm sm:text-base">
                   <PortableText value={business.description} />
                 </div>
               )}

@@ -56,7 +56,7 @@ export function LocationBlock({
             16px inner padding). */}
         <div className="px-4 py-12 md:pl-12 md:pr-[max(1rem,calc(50vw-674px))] lg:pl-16">
           <h2 className="font-display text-2xl uppercase lg:text-[36px]">{heading}</h2>
-          {description && <p className="mt-4 text-muted">{description}</p>}
+          {description && <p className="mt-4 text-sm text-muted sm:text-base">{description}</p>}
           {address && (
             <p className="mt-4 text-sm text-muted">
               {[address.street, address.city, address.state, address.zip]

@@ -114,7 +114,7 @@ export function EventsListingClient({ events }: { events: EventDoc[] }) {
           ))}
         </ul>
       ) : (
-        <p className="mt-8 text-muted">No events match these filters yet.</p>
+        <p className="mt-8 text-sm text-muted sm:text-base">No events match these filters yet.</p>
       )}
 
       {hasMore && (

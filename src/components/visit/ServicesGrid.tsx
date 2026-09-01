@@ -25,7 +25,7 @@ export function ServicesGrid({ services = DEFAULT_SERVICES }: { services?: Servi
   return (
     <div className="mt-8">
       <h3 className="font-display text-xl uppercase lg:text-[28px]">Services</h3>
-      <p className="mt-2 text-muted">
+      <p className="mt-2 text-sm text-muted sm:text-base">
         The Downtown Container Park provides the following services and amenities:
       </p>
       <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">

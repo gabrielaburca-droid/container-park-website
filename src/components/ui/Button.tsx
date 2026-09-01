@@ -79,12 +79,13 @@ const ARROW_FADE_OUT_CLASSES = "group-hover:opacity-0 group-focus-visible:opacit
 const ARROW_FADE_IN_CLASSES = "group-hover:opacity-100 group-focus-visible:opacity-100";
 
 // Bebas Neue (font-display), 16px at desktop (lg:) — global button
-// typography. Base/tablet size is unchanged (text-xs, as before this
-// update). No font-weight utility: Bebas Neue only ships one real weight
-// (already its bold-looking display cut), and no tracking-wide either —
-// unlike Inter, a condensed display face doesn't need extra letter-
-// spacing to read as a deliberate UI label, and stretching it further at
-// 16px would start to look loose rather than crisp.
+// typography. No font-weight utility: Bebas Neue only ships one real
+// weight (already its bold-looking display cut), and no tracking-wide
+// either — unlike Inter, a condensed display face doesn't need extra
+// letter-spacing to read as a deliberate UI label, and stretching it
+// further at 16px would start to look loose rather than crisp.
+// Mobile is 15px (text-[15px]); sm: restores the original text-xs (12px)
+// so tablet/desktop stay exactly as they were before this change.
 //
 // Two variants of the transition-property declaration, picked by
 // `expandOnHover` (see that prop): the default only transitions color/
@@ -103,7 +104,7 @@ const TRANSITION_WITH_SCALE_CLASSES =
 
 function baseClasses(expandOnHover: boolean) {
   const transition = expandOnHover ? TRANSITION_WITH_SCALE_CLASSES : TRANSITION_CLASSES;
-  return `inline-flex items-center gap-2 px-5 py-3 font-display text-xs uppercase ${transition} disabled:pointer-events-none disabled:opacity-60 lg:text-[16px]`;
+  return `inline-flex items-center gap-2 px-5 py-3 font-display text-[15px] uppercase ${transition} disabled:pointer-events-none disabled:opacity-60 sm:text-xs lg:text-[16px]`;
 }
 
 // Opt-in, subtle "background opens up" hover treatment (Newsletter's dark

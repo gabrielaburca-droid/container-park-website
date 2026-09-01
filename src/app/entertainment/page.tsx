@@ -93,7 +93,7 @@ export default async function EntertainmentPage() {
                 </div>
               </>
             ) : (
-              <p className="text-muted">No upcoming events yet.</p>
+              <p className="text-sm text-muted sm:text-base">No upcoming events yet.</p>
             )}
           </div>
 

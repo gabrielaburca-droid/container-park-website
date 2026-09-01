@@ -143,7 +143,9 @@ export function ListingTemplate({
               ))}
             </ul>
           ) : (
-            <p className="mt-8 text-muted">No businesses in this category yet.</p>
+            <p className="mt-8 text-sm text-muted sm:text-base">
+              No businesses in this category yet.
+            </p>
           )}
         </div>
       </Container>
