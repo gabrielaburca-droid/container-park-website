@@ -1,0 +1,55 @@
+Debug the Replit Preview because the site's interactive elements are not working.
+
+IMPORTANT: Do not make speculative changes. Find the actual root cause first.
+
+Current problem:
+- Carousel/slider arrow buttons do not respond to clicks.
+- Event filter/tab buttons do not respond to clicks.
+- The buttons are visible, but clicking them does nothing.
+- The Next.js server itself is running and returns HTTP 200.
+- We previously added `allowedDevOrigins` in `next.config.js`, but the problem still exists.
+
+Please investigate the RUNNING Replit Preview directly.
+
+1. Open the actual Replit Preview in the browser.
+2. Check the browser Console for JavaScript, hydration, chunk-loading, CORS or CSP errors.
+3. Open Network and verify that all `_next/static/...` JavaScript chunks are loading successfully.
+4. Check the status codes of the JS chunks and React/Next.js RSC requests.
+5. Verify that client-side JavaScript is actually executing and React is hydrating.
+6. Test a known client interaction/state change from the page.
+7. Inspect the actual Preview URL/origin being used by Replit.
+8. Compare that origin with the current `allowedDevOrigins` configuration in `next.config.js`.
+9. Check the Replit Run configuration and determine exactly which command/process/port the Preview is connected to.
+10. Check whether there is more than one Next.js process running and whether the Preview might be connected to a different process than the one being tested.
+11. If `allowedDevOrigins` is not the actual cause, identify the real cause before changing anything.
+
+Do NOT:
+- change the carousel logic;
+- rewrite the filter components;
+- change the UI/design;
+- change SEO;
+- change routes;
+- change content;
+- change styling;
+- reset/rebase/merge/pull Git;
+- make unrelated code changes.
+
+If you find the actual cause, make the smallest possible fix.
+
+After fixing, verify with REAL browser clicks in the Replit Preview:
+- carousel arrows must move the carousel;
+- Event filter tabs must change their active state;
+- Events filtering must actually update the displayed events;
+- test at desktop and mobile widths.
+
+Then run:
+
+npx tsc --noEmit
+npx eslint .
+npm run build
+
+Finally, report:
+1. The exact root cause.
+2. The exact file/configuration changed.
+3. How you verified the fix in the Replit Preview.
+4. The results of tsc, eslint and build.
