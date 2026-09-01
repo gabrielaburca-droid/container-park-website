@@ -117,6 +117,11 @@ export function ImageLightbox({ images, index, onClose, onNavigate, title }: Ima
               src={current.url}
               alt={current.alt}
               fill
+              // Modal caps at max-w-3xl (768px), minus the side arrow
+              // buttons + gap on sm+; full viewport width (minus the
+              // dialog's own padding) below that, where the arrows drop
+              // beneath the image instead.
+              sizes="(min-width: 640px) 700px, 100vw"
               className="object-contain [animation:fade-in_300ms_ease-out]"
             />
           </div>

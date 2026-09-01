@@ -14,8 +14,16 @@ export async function generateMetadata(): Promise<Metadata> {
   const page = await getPage(PAGE_ID);
   return buildMetadata({
     title: page?.seo?.title || "Group Events",
-    description: page?.seo?.description,
+    // Derived from the same real page copy rendered in the body
+    // paragraph below (live-site text, not invented), trimmed to a
+    // concise meta-description length.
+    description:
+      page?.seo?.description ||
+      "Guarded by a 44-foot tall fire-breathing Praying Mantis, Downtown Container Park is a 1.1-acre open-air shopping center in Downtown Las Vegas.",
     path: "/group-events",
+    // Same real hero image already rendered on this page's PageHero
+    // below — not a new/invented asset.
+    ogImage: "/assets/images/all/hero-leasing.jpg",
   });
 }
 

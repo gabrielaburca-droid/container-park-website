@@ -62,6 +62,9 @@ export function VideoPlayer({ videoUrl, title = "Video", onPlay, className = "" 
           src="/assets/images/all/play-btn-text.svg"
           alt=""
           fill
+          // Matches the button's own fixed size at each breakpoint (90px
+          // mobile / 120px sm / 150px lg, see the button's className above).
+          sizes="(min-width: 1024px) 150px, (min-width: 640px) 120px, 90px"
           className="object-contain group-hover:[animation:spin-slow_6s_linear_infinite]"
         />
         {/* Circle: 70px mobile / 90px tablet / 110px desktop, per spec,

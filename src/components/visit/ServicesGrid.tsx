@@ -39,7 +39,7 @@ export function ServicesGrid({ services = DEFAULT_SERVICES }: { services?: Servi
               alt=""
               width={48}
               height={48}
-              className="h-6 w-6 shrink-0"
+              className="h-8 w-8 shrink-0"
             />
             <span className="font-display text-sm uppercase lg:text-[20px]">{service.label}</span>
           </li>

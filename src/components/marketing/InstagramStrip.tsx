@@ -80,6 +80,9 @@ export function InstagramStrip({
                     src={image.url}
                     alt={image.alt}
                     fill
+                    // Matches the tile's own fixed width at each breakpoint
+                    // (w-28 / sm:w-40 / lg:w-56, see the className above).
+                    sizes="(min-width: 1024px) 224px, (min-width: 640px) 160px, 112px"
                     className={`object-cover ${CARD_IMAGE_HOVER_CLASSES}`}
                   />
                   <div aria-hidden="true" className={CARD_IMAGE_OVERLAY_CLASSES} />

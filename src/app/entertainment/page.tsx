@@ -4,6 +4,7 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { EventCard } from "@/components/event/EventCard";
+import { EventCalendar } from "@/components/events/EventCalendar";
 import { PageBottom } from "@/components/layout/PageBottom";
 // TEMPORARY: mock data layer for local visual QA — see CLAUDE.md.
 // Swap back to "@/lib/sanity/queries" before connecting Sanity.
@@ -11,7 +12,19 @@ import { getUpcomingEvents, getSiteSettings } from "@/lib/mock/queries";
 import { buildMetadata } from "@/lib/seo/metadata";
 
 export function generateMetadata(): Metadata {
-  return buildMetadata({ title: "Entertainment", path: "/entertainment" });
+  // Factual summary of this page's real content (Featured Events + Event
+  // Calendar, both rendered below) — no page-specific intro copy exists
+  // to extract verbatim, and the generic site description would
+  // otherwise duplicate every other page's fallback.
+  return buildMetadata({
+    title: "Entertainment",
+    description:
+      "Upcoming events, live entertainment, and the full event calendar at Downtown Container Park in Las Vegas.",
+    path: "/entertainment",
+    // Same real hero image already rendered on this page's PageHero
+    // below — not a new/invented asset.
+    ogImage: "/assets/images/all/hero-events.jpg",
+  });
 }
 
 // REAL CONTENT — the live /entertainment/ page is not a business directory
@@ -83,6 +96,24 @@ export default async function EntertainmentPage() {
               <p className="text-muted">No upcoming events yet.</p>
             )}
           </div>
+
+          {/* REAL FUNCTIONALITY — the live /entertainment/ page's own
+              real calendar (a Modern Events Calendar month grid with
+              prev/next navigation and click-a-day-to-see-its-events),
+              reimplemented natively against this project's own real
+              event data instead of copying MEC's markup/styling. See
+              EventCalendar.tsx for the full reasoning. Uses `allUpcoming`
+              (every real occurrence, not just the deduped "Featured
+              Events" slice above) so every date with a real event is
+              represented. */}
+          {allUpcoming.length > 0 && (
+            <div className="pb-16">
+              <SectionHeading heading="Event Calendar" align="center" />
+              <div className="mt-8">
+                <EventCalendar events={allUpcoming} />
+              </div>
+            </div>
+          )}
         </Container>
       </section>
 

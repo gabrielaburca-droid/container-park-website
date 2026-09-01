@@ -36,21 +36,34 @@ export function HomeEventsSection({ events }: { events: EventDoc[] }) {
   const [filter, setFilter] = useState("all");
 
   const filtered = useMemo(() => {
+    let result = events;
     if (filter === "today") {
       const today = new Date().toDateString();
-      return events.filter((event) => new Date(event.startDate).toDateString() === today);
-    }
-    if (filter === "this-month" || filter === "next-month") {
+      result = events.filter((event) => new Date(event.startDate).toDateString() === today);
+    } else if (filter === "this-month" || filter === "next-month") {
       const now = new Date();
       const offset = filter === "next-month" ? 1 : 0;
       const targetMonth = (now.getMonth() + offset) % 12;
       const targetYear = now.getFullYear() + Math.floor((now.getMonth() + offset) / 12);
-      return events.filter((event) => {
+      result = events.filter((event) => {
         const eventDate = new Date(event.startDate);
         return eventDate.getMonth() === targetMonth && eventDate.getFullYear() === targetYear;
       });
     }
-    return events;
+
+    // De-duplicated by slug (not _id): many events are expanded into one
+    // row per real occurrence (see data/mock/events.ts) — this carousel
+    // should showcase distinct events, not the same one repeated across
+    // its many upcoming dates. Same pattern already used by the
+    // Entertainment page's own Featured Events section. Keeps the first
+    // (soonest, since `events` is pre-sorted chronologically) occurrence
+    // of each real event within whatever date filter is active above.
+    const seenSlugs = new Set<string>();
+    return result.filter((event) => {
+      if (seenSlugs.has(event.slug.current)) return false;
+      seenSlugs.add(event.slug.current);
+      return true;
+    });
   }, [events, filter]);
 
   return (

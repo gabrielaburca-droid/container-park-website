@@ -19,8 +19,15 @@ export async function generateMetadata(): Promise<Metadata> {
   const page = await getPage(PAGE_ID);
   return buildMetadata({
     title: page?.seo?.title || "Visit Us",
-    description: page?.seo?.description,
+    // Real first sentence of the page's own LocationBlock copy below,
+    // not invented.
+    description:
+      page?.seo?.description ||
+      "The Downtown Container Park is located at 707 Fremont Street, in the heart of Downtown Las Vegas at the corner of Fremont Street and S. 7th Street.",
     path: "/visit-us",
+    // Same real hero image already rendered on this page's PageHero
+    // below — not a new/invented asset.
+    ogImage: "/assets/images/all/hero-visit.jpg",
   });
 }
 

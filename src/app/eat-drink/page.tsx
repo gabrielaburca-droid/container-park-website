@@ -16,7 +16,14 @@ const EAT_DRINK_INTRO =
   "The Downtown Container Park located on historic Fremont Street is Las Vegas’ premier shopping destination for anyone and everyone. The open air shopping center features the best selection of retail stores, restaurants and nightlife.";
 
 export function generateMetadata(): Metadata {
-  return buildMetadata({ title: "Eat & Drink", description: EAT_DRINK_INTRO, path: "/eat-drink" });
+  // Same real hero image already rendered on this page (see
+  // heroImageUrl below) — not a new/invented asset.
+  return buildMetadata({
+    title: "Eat & Drink",
+    description: EAT_DRINK_INTRO,
+    path: "/eat-drink",
+    ogImage: "/assets/images/all/eat-hero.jpg",
+  });
 }
 
 export default async function EatDrinkPage() {

@@ -7,7 +7,19 @@ import { getBusinessesByCategory, getSiteSettings } from "@/lib/mock/queries";
 import { buildMetadata } from "@/lib/seo/metadata";
 
 export function generateMetadata(): Metadata {
-  return buildMetadata({ title: "Attractions", path: "/attractions" });
+  // Factual summary of this page's real content (the Attractions
+  // business directory rendered below) — no page-specific intro copy
+  // exists to extract verbatim, and the generic site description would
+  // otherwise duplicate every other page's fallback.
+  return buildMetadata({
+    title: "Attractions",
+    description:
+      "Explore the attractions at Downtown Container Park, an open-air shopping and entertainment destination in Downtown Las Vegas.",
+    path: "/attractions",
+    // Same real hero image already rendered on this page (see
+    // heroImageUrl below) — not a new/invented asset.
+    ogImage: "/assets/images/all/attraction-hero.jpg",
+  });
 }
 
 // TODO: NEEDS CONFIRMATION — sub-category taxonomy unconfirmed (see

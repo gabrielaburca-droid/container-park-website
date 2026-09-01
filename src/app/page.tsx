@@ -10,15 +10,22 @@ import { PageBottom } from "@/components/layout/PageBottom";
 // Swap back to "@/lib/sanity/queries" before connecting Sanity.
 import { getPage, getSiteSettings, getUpcomingEvents } from "@/lib/mock/queries";
 import { buildMetadata } from "@/lib/seo/metadata";
+import { urlForImage } from "@/lib/sanity/image";
 
 const PAGE_ID = "page-home";
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getPage(PAGE_ID);
+  // Same image (and same placeholder-hero fallback) HomeHero itself
+  // renders below — see HomeHero.tsx — not a new/invented asset.
+  const ogImage = page?.hero?.image?.asset
+    ? urlForImage(page.hero.image).width(1200).height(630).url()
+    : "/assets/images/all/placeholder-hero.jpg";
   return buildMetadata({
     title: page?.seo?.title || "Downtown Container Park",
     description: page?.seo?.description,
     path: "/",
+    ogImage,
   });
 }
 

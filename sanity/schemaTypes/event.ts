@@ -79,6 +79,13 @@ export const event = defineType({
       type: "reference",
       to: [{ type: "business" }],
     }),
+    defineField({
+      name: "location",
+      title: "Location",
+      type: "string",
+      description:
+        'Short venue label shown under the event title (e.g. "Container Park - Lawn", "Container Park - Stage and Lawn", "Oak and Ivy"). Not the same as Related Business or a street address.',
+    }),
     defineField({ name: "ticketUrl", title: "Ticket / RSVP URL", type: "url" }),
     defineField({ name: "price", title: "Price", type: "string" }),
     defineField({ name: "seo", title: "SEO", type: "seo" }),

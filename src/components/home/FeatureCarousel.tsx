@@ -98,6 +98,9 @@ export function FeatureCarousel({ slides = DEFAULT_SLIDES }: { slides?: FeatureC
                     src={slide.imageUrl}
                     alt={slide.imageAlt || ""}
                     fill
+                    // Matches the card's own fixed width at each breakpoint
+                    // (w-64 / sm:w-80 / lg:w-[576px], see cardClassName above).
+                    sizes="(min-width: 1024px) 576px, (min-width: 640px) 320px, 256px"
                     className={`object-cover ${CARD_IMAGE_HOVER_CLASSES}`}
                   />
                 )}

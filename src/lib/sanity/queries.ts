@@ -50,7 +50,7 @@ export async function getAllBusinessSlugs(): Promise<string[]> {
 export async function getUpcomingEvents(): Promise<EventDoc[]> {
   return sanityFetch<EventDoc[]>(
     `*[_type == "event" && defined(startDate) && startDate >= now()] | order(startDate asc){
-      _id, title, slug, startDate, endDate, time, heroImage, category
+      _id, title, slug, startDate, endDate, time, heroImage, category, location
     }`,
     {},
     []

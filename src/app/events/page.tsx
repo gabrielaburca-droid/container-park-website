@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { PageHero } from "@/components/layout/PageHero";
 import { Container } from "@/components/ui/Container";
 import { PageBottom } from "@/components/layout/PageBottom";
@@ -9,7 +10,15 @@ import { getSiteSettings, getUpcomingEvents } from "@/lib/mock/queries";
 import { buildMetadata } from "@/lib/seo/metadata";
 
 export function generateMetadata(): Metadata {
-  return buildMetadata({ title: "Events", path: "/events" });
+  // Same real tagline rendered under the page's own H1 below, not invented.
+  return buildMetadata({
+    title: "Events",
+    description: "One destination. Endless experiences.",
+    path: "/events",
+    // Same real hero image already rendered on this page's PageHero
+    // below — not a new/invented asset.
+    ogImage: "/assets/images/all/hero-events.jpg",
+  });
 }
 
 export default async function EventsPage() {
@@ -34,7 +43,14 @@ export default async function EventsPage() {
       />
       <Container>
         <div className="py-12">
-          <EventsListingClient events={events} />
+          {/* `EventsListingClient` reads an optional `?search=` query
+              param (real tag links from the Entertainment calendar/Event
+              Detail land here — see EventsListingClient.tsx) via
+              `useSearchParams()`, which Next.js requires a Suspense
+              boundary for during static generation. */}
+          <Suspense fallback={null}>
+            <EventsListingClient events={events} />
+          </Suspense>
         </div>
       </Container>
       <PageBottom settings={settings} />

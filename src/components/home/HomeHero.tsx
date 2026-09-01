@@ -5,6 +5,11 @@ import { HeroGradientOverlay } from "@/components/layout/HeroGradientOverlay";
 import { HERO_HEADING_CLASSES, HERO_ACCENT_CLASSES } from "@/lib/ui/typography";
 import type { SanityImage } from "@/lib/sanity/types";
 
+// Real, existing project asset — the shared fallback for when the Home
+// page's Sanity content has no hero image set yet, so the Hero is never
+// left with no background at all (see PageHero.tsx's identical fallback).
+const PLACEHOLDER_HERO_URL = "/assets/images/all/placeholder-hero.jpg";
+
 interface HomeHeroProps {
   heading?: string;
   accentHeading?: string;
@@ -58,19 +63,21 @@ export function HomeHero({
   exploreEventsHref = "/events",
   servicesHref = "/visit-us",
 }: HomeHeroProps) {
-  const imageUrl = image?.asset ? urlForImage(image).width(1920).height(1000).url() : null;
+  const imageUrl = image?.asset
+    ? urlForImage(image).width(1920).height(1000).url()
+    : PLACEHOLDER_HERO_URL;
 
   return (
     <section className="relative flex min-h-[400px] items-end overflow-hidden bg-near-black text-white sm:min-h-[820px]">
-      {imageUrl && (
-        <Image
-          src={imageUrl}
-          alt={image?.alt || ""}
-          fill
-          priority
-          className="object-cover object-[30%_center] sm:object-center"
-        />
-      )}
+      <Image
+        src={imageUrl}
+        alt={image?.alt || ""}
+        fill
+        priority
+        // Full-bleed section background at every breakpoint.
+        sizes="100vw"
+        className="object-cover object-[30%_center] sm:object-center"
+      />
       {/* Shared across every Hero on the site — see
           layout/HeroGradientOverlay.tsx for the full reasoning. */}
       <HeroGradientOverlay />

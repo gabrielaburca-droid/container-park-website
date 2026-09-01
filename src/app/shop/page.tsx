@@ -68,7 +68,14 @@ export function generateMetadata(): Metadata {
   // Real on-page copy as the meta description (previously fell back to the
   // generic sitewide default) — an improvement, not a substitution, since
   // it's the exact same text now rendered in the Hero.
-  return buildMetadata({ title: "Shop", description: SHOP_INTRO, path: "/shop" });
+  // Same real hero image already rendered on this page (see heroImageUrl
+  // below) — not a new/invented asset.
+  return buildMetadata({
+    title: "Shop",
+    description: SHOP_INTRO,
+    path: "/shop",
+    ogImage: "/assets/images/all/shop-hero.jpg",
+  });
 }
 
 // Sub-category pills confirmed by the Shop listing Figma export only — the

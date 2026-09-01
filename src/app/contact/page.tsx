@@ -15,8 +15,16 @@ export async function generateMetadata(): Promise<Metadata> {
   const page = await getPage(PAGE_ID);
   return buildMetadata({
     title: page?.seo?.title || "Contact",
-    description: page?.seo?.description,
+    // Same real tagline rendered under the page's own H1 below (or the
+    // page's real subheading, if set), not invented.
+    description:
+      page?.seo?.description ||
+      page?.hero?.subheading ||
+      "Join a vibrant community of local businesses in the heart of Downtown Las Vegas.",
     path: "/contact",
+    // Same real hero image already rendered on this page's PageHero
+    // below — not a new/invented asset.
+    ogImage: "/assets/images/all/hero-contact.jpg",
   });
 }
 
@@ -106,7 +114,7 @@ export default async function ContactPage() {
                     alt=""
                     width={38}
                     height={50}
-                    className="h-5 w-auto shrink-0"
+                    className="h-[30px] w-auto shrink-0"
                   />
                   <span>
                     {[
@@ -127,7 +135,7 @@ export default async function ContactPage() {
                     alt=""
                     width={21}
                     height={20}
-                    className="h-5 w-auto shrink-0"
+                    className="h-auto w-[28px] shrink-0"
                   />
                   <span>{settings.phone}</span>
                 </p>

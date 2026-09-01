@@ -12,6 +12,7 @@ import { getBusinessBySlug, getReviewsForBusiness, getSiteSettings } from "@/lib
 import { urlForImage } from "@/lib/sanity/image";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { buildBreadcrumbJsonLd, buildLocalBusinessJsonLd } from "@/lib/seo/structuredData";
+import { portableTextToPlainText, truncateDescription } from "@/lib/seo/textExtract";
 
 // Preserves the current production URL structure (/listing/{slug}/). Do not
 // change this path — see CLAUDE.md.
@@ -32,9 +33,18 @@ export async function generateMetadata({ params }: BusinessPageProps): Promise<M
     ? urlForImage(business.heroImage).width(1200).height(630).url()
     : undefined;
 
+  // Fallback chain: real seo.description -> real shortDescription -> a
+  // concise excerpt derived from the business's own real body copy
+  // (description) -> buildMetadata's generic site description, only if
+  // none of the above exist. Never invented content.
+  const derivedDescription = business.description
+    ? truncateDescription(portableTextToPlainText(business.description))
+    : undefined;
+  const description = business.seo?.description || business.shortDescription || derivedDescription;
+
   return buildMetadata({
     title: business.seo?.title || business.name,
-    description: business.seo?.description || business.shortDescription,
+    description,
     path: `/listing/${slug}`,
     ogImage,
   });

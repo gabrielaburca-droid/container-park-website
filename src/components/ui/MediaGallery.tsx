@@ -76,6 +76,10 @@ export function MediaGallery({
                 src={url}
                 alt={item.image.alt || ""}
                 fill
+                // Grid is grid-cols-2 (mobile) / sm:grid-cols-4 inside
+                // max-w-container (1380px) — each tile is ~50vw on mobile,
+                // ~25vw on sm+, capped at the container's own max width.
+                sizes="(min-width: 1380px) 325px, (min-width: 640px) 25vw, 50vw"
                 className={`object-cover ${CARD_IMAGE_HOVER_CLASSES}`}
               />
             );
@@ -104,7 +108,7 @@ export function MediaGallery({
                   type="button"
                   onClick={() => thisPhotoIndex !== null && setLightboxIndex(thisPhotoIndex)}
                   aria-label={`View image: ${item.image.alt || heading}`}
-                  className="group block h-full w-full"
+                  className="group relative block h-full w-full"
                 >
                   {tile}
                   <div aria-hidden="true" className={CARD_IMAGE_OVERLAY_CLASSES} />

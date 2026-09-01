@@ -26,7 +26,8 @@ export function VideoFeature({
   return (
     <section className="relative flex min-h-[420px] items-center overflow-hidden bg-near-black text-white sm:min-h-[550px] lg:h-[826px]">
       {posterUrl && (
-        <Image src={posterUrl} alt={posterAlt} fill priority className="object-cover" />
+        // Full-bleed section background at every breakpoint.
+        <Image src={posterUrl} alt={posterAlt} fill priority sizes="100vw" className="object-cover" />
       )}
       {/* Left-side scrim for text legibility — the photo's own left side is
           already quite dark in the reference, this is a safety net

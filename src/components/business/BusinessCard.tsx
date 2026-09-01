@@ -44,6 +44,9 @@ export function BusinessCard({ business, hrefBase = "/listing" }: BusinessCardPr
             src={imageUrl}
             alt={business.heroImage?.alt || business.name}
             fill
+            // ListingTemplate's grid: grid-cols-1 / sm:2 / md:3 / lg:4
+            // inside max-w-container (1380px).
+            sizes="(min-width: 1380px) 319px, (min-width: 1024px) 25vw, (min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
             className={`object-cover ${CARD_IMAGE_HOVER_CLASSES}`}
           />
         )}

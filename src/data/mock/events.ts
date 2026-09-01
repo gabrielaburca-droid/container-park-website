@@ -1,4 +1,4 @@
-import type { EventDoc, PortableTextBlock, SanityImage } from "@/lib/sanity/types";
+import type { EventDoc, EventTag, PortableTextBlock, SanityImage } from "@/lib/sanity/types";
 import { realImage } from "@/lib/mock/placeholder";
 import { portableText } from "./portableText";
 
@@ -151,15 +151,34 @@ interface EventSeries {
   recurrence: Recurrence;
   shortDescription?: string;
   description: PortableTextBlock[];
-  tags?: string[];
+  // Real tag labels/slugs, scraped verbatim from each event's own live
+  // detail page and linked via this project's own internal /tag/[slug]
+  // route (see EventTag) — never the old site's URL. Left unset for the
+  // one event with no on-site live detail page to verify tags against
+  // (Chismosas Y Mimosas Night Market).
+  tags?: EventTag[];
   heroImage: SanityImage;
   relatedBusinessId?: string;
   relatedBusinessName?: string;
   relatedBusinessSlug?: string;
+  // Live site's own short "Location" field (MEC's Location taxonomy),
+  // scraped directly from each event's real detail page — independent of
+  // relatedBusinessName. Left unset for the two real events that
+  // genuinely have no Location set on the live site (Noche Latina;
+  // Chismosas Y Mimosas, which has no on-site detail page at all) rather
+  // than guessing one.
+  location?: string;
   ticketUrl?: string;
   externalUrl?: string;
   price?: string;
   partnerOffers?: { businessName: string; offerText: string }[];
+}
+
+// Real tag label + real slug, scraped verbatim from each event's own live
+// detail page — see the `tags` field note above. The slug feeds this
+// project's own internal `/tag/[slug]` route, never the old site's URL.
+function tag(label: string, slug: string): EventTag {
+  return { label, slug };
 }
 
 const SERIES: EventSeries[] = [
@@ -185,7 +204,11 @@ const SERIES: EventSeries[] = [
       "The Mantis is 40 feet tall and 30 feet wide. She throws giant fire flames reaching six stories high. Built with a 4,000 watt surround sound system, can speak more than 20 different languages, and is operated by a team of trained, licensed professionals.",
       "(Weather permitting)",
     ]),
-    tags: ["fire", "mantis"],
+    tags: [
+      tag("fire burning man drum circle", "fire-burning-man-drum-circle"),
+      tag("mantis", "mantis"),
+    ],
+    location: "Downtown Container Park",
     relatedBusinessId: "real-the-mantis",
     relatedBusinessName: "The Mantis",
     relatedBusinessSlug: "the-mantis",
@@ -210,7 +233,13 @@ const SERIES: EventSeries[] = [
       "Come in and enjoy whiskey and wine specials throughout the park.",
       "$30 rotating whiskey flight at Oak & Ivy. Wine specials at Bin 702. Power Hour: bottomless $12 draft beers, mimosas, house margaritas, or sangria from 6PM to 7PM with a $15 food order at Downtown Terrace. No mixing and matching, choose wisely!",
     ]),
-    tags: ["whiskey", "wine", "drinks specials", "live music"],
+    tags: [
+      tag(
+        "whiskey whisky wine drinks specials live music",
+        "whiskey-whisky-wine-drinks-specials-live-music"
+      ),
+    ],
+    location: "Container Park - Stage and Lawn",
     heroImage: realImage(
       "Whiskey & Wine Wednesday flyer (from live site)",
       "/assets/images/events/whiskey-wine-wednesday.jpg"
@@ -235,7 +264,14 @@ const SERIES: EventSeries[] = [
       "Our goal is to make sure that each individual feels like their own personal artist. We want all of our new artists to walk away with a sense of confidence, and we found that good food and liquid courage always helps with these scenarios.",
       "$25 includes all supplies and a complimentary cocktail. Classes are every Wednesday. Party starts at 7:00pm. You paint when you arrive. You create your own design.",
     ]),
-    tags: ["fun", "paint", "drink"],
+    tags: [
+      tag("DRINK", "drink"),
+      tag("fun", "fun"),
+      tag("girls night", "girls-night"),
+      tag("LADIES", "ladies"),
+      tag("PAINT", "paint"),
+    ],
+    location: "Oak and Ivy",
     relatedBusinessId: "real-oak-ivy",
     relatedBusinessName: "Oak & Ivy",
     relatedBusinessSlug: "oak-ivy",
@@ -282,7 +318,8 @@ const SERIES: EventSeries[] = [
       "Live music from 6:30pm to 9:30pm by DiDi West Band playing 90's pop rock and alt rock.",
       "Food and drink specials throughout the park!",
     ]),
-    tags: ["live music", "90s", "rock"],
+    tags: [tag("90'S ALT ROCK POP", "90s-alt-rock-pop")],
+    location: "Container Park - Stage and Lawn",
     heroImage: realImage(
       "Pop Rocks 90's Pop Rock & Alt Rock Night flyer (from live site)",
       "/assets/images/events/pop-rocks.jpg"
@@ -304,7 +341,9 @@ const SERIES: EventSeries[] = [
     recurrence: { type: "none" },
     shortDescription: "Labor Day Weekend at Downtown Container Park — 702 Market x Downtown...",
     description: portableText(["Labor Day Weekend at Downtown Container Park", "702 Market x Downtown..."]),
-    tags: ["night market", "labor day"],
+    // No on-site live detail page exists for this event (see note above)
+    // to verify real tags/destinations against, so none are set here
+    // rather than guessed.
     externalUrl:
       "https://www.eventbrite.com/e/chismosas-y-mimosas-tickets-1996351653536?aff=oddtdtcreator",
     heroImage: realImage(
@@ -329,7 +368,8 @@ const SERIES: EventSeries[] = [
       "Young & old, active or sedentary — everyone is capable of reaching their unique challenge. Downtown Yoga In The Park is entering its fourth year of promoting health & wellness in the Las Vegas community.",
       "These Saturday & Sunday recurring classes unfold at a welcoming pace for all, and are taught in the Ashtanga style by Rayce Rayos (RYT200 / CPT-ACE / BS-Kinesiology).",
     ]),
-    tags: ["yoga", "health", "fitness", "stretch"],
+    tags: [tag("YOGA ON THE LAWN", "yoga-on-the-lawn")],
+    location: "Container Park - Lawn",
     ticketUrl:
       "https://www.eventbrite.com/e/downtown-yoga-in-the-park-las-vegas-tickets-123105540987",
     heroImage: realImage(
@@ -354,7 +394,8 @@ const SERIES: EventSeries[] = [
       "Young & old, active or sedentary — everyone is capable of reaching their unique challenge. Downtown Yoga In The Park is entering its fourth year of promoting health & wellness in the Las Vegas community.",
       "These recurring classes unfold at a welcoming pace for all, and are taught in the Ashtanga style by Rayce Rayos (RYT200 / CPT-ACE / BS-Kinesiology).",
     ]),
-    tags: ["yoga", "health", "fitness", "stretch"],
+    tags: [tag("YOGA ON THE LAWN", "yoga-on-the-lawn")],
+    location: "Container Park - Lawn",
     ticketUrl:
       "https://www.eventbrite.com/e/downtown-yoga-in-the-park-las-vegas-tickets-123105540987",
     heroImage: realImage(
@@ -379,7 +420,8 @@ const SERIES: EventSeries[] = [
       "Live music from 6:30pm to 9:30pm by Strings & Beats playing your favorite R&B, hip-hop, and love songs.",
       "Food and drink specials throughout the park!",
     ]),
-    tags: ["live music", "r&b", "hip-hop"],
+    tags: [tag("SLOW JAM LOVE SONGS DATE NIGHT", "slow-jam-love-songs-date-night")],
+    location: "Container Park - Stage and Lawn",
     heroImage: realImage(
       "Slow Jams Saturdaze flyer (from live site)",
       "/assets/images/events/slow-jams-saturdaze.jpg"
@@ -401,7 +443,13 @@ const SERIES: EventSeries[] = [
     description: portableText([
       "Come in and enjoy live local music and performances as well as over 20 vendors to shop from. This is all put together by our friends at ISI Group!",
     ]),
-    tags: ["art", "live music", "vendors"],
+    tags: [
+      tag("art", "art"),
+      tag("DJ", "dj"),
+      tag("POP UP", "pop-up"),
+      tag("SMALL VENDORS", "small-vendors"),
+    ],
+    location: "Container Park",
     heroImage: realImage(
       "Second Sunday Art & Entertainment flyer (from live site)",
       "/assets/images/events/second-sunday.jpg"
@@ -423,7 +471,13 @@ const SERIES: EventSeries[] = [
     description: portableText([
       "Come in and enjoy the Monday Football game at kickoff on our 18ft LED screen with audio! Enjoy bucket and margarita specials throughout the Container Park!",
     ]),
-    tags: ["football", "drink specials"],
+    tags: [
+      tag(
+        "drink specials margarita modelo beer football monday",
+        "drink-specials-margarita-modelo-beer-football-monday"
+      ),
+    ],
+    location: "Container Park - Stage and Lawn",
     heroImage: realImage(
       "Modelo & Margaritas Football Mondays flyer (from live site)",
       "/assets/images/events/modelo-margaritas-football-mondays.jpg"
@@ -445,7 +499,9 @@ const SERIES: EventSeries[] = [
       "Come by on the third Saturdays of every month and enjoy Noche Latina!",
       "Live music from 6:30pm to 9:30pm playing Latin sounds. Food and drink specials throughout the park!",
     ]),
-    tags: ["live music", "latin"],
+    tags: [
+      tag("LATIN LATINA NOCHE MARGARITA MODELO", "latin-latina-noche-margarita-modelo"),
+    ],
     heroImage: realImage("Noche Latina flyer (from live site)", "/assets/images/events/noche-latina.jpg"),
   },
   {
@@ -465,7 +521,8 @@ const SERIES: EventSeries[] = [
       "Come by on the last Saturdays of every month and enjoy Island Ohana Night!",
       "Live music from 6:30pm to 9:30pm, with food specials from Ninth Island Gourmet and The Poke Shack & Grill, plus drink specials and tiki drinks at the bars!",
     ]),
-    tags: ["island ohana", "reggae"],
+    tags: [tag("ISLAND OHANA REGGAE", "island-ohana-reggae")],
+    location: "Container Park Lawn and Stage",
     heroImage: realImage(
       "Island Ohana Night flyer (from live site)",
       "/assets/images/events/island-ohana-night.jpg"
@@ -487,7 +544,8 @@ const SERIES: EventSeries[] = [
     description: portableText([
       "Come down to Container Park as Musicology goes country. Enjoy the singers of Musicology Academy as they perform a variety of country hits that will have you clicking your boots.",
     ]),
-    tags: ["live music", "country"],
+    tags: [tag("country music", "country-music")],
+    location: "Container Park - Stage and Lawn",
     heroImage: realImage(
       "Musicology Academy Goes Country flyer (from live site)",
       "/assets/images/events/musicology-academy-goes-country.png"
@@ -514,6 +572,7 @@ function expandSeries(series: EventSeries): EventDoc[] {
     description: series.description,
     tags: series.tags,
     heroImage: series.heroImage,
+    location: series.location,
     relatedBusiness: series.relatedBusinessId
       ? {
           _id: series.relatedBusinessId,

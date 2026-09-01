@@ -40,7 +40,18 @@ export function ImageTextSplit({
             1380px cap (where the gutter is thin) while still reaching a
             full 4rem "intentionally oversized" bleed on wide screens. */}
         <div className="relative aspect-[5/4] bg-border md:ml-[calc(-1*min(4rem,max(1rem,calc((100vw-var(--container-max))/2+1rem))))]">
-          {imageUrl && <Image src={imageUrl} alt={imageAlt} fill className="object-cover" />}
+          {imageUrl && (
+            <Image
+              src={imageUrl}
+              alt={imageAlt}
+              fill
+              // md:grid-cols-[7fr_5fr] inside max-w-container (1380px) —
+              // this column is ~58% of the container (plus a left bleed,
+              // see the className above) on desktop, full width on mobile.
+              sizes="(min-width: 1380px) 820px, (min-width: 768px) 60vw, 100vw"
+              className="object-cover"
+            />
+          )}
         </div>
         {/* Generous left padding on top of the grid gap, so the text
             column reads as clearly separated from the (now bleeding)

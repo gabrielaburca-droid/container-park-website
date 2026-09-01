@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import { PortableText } from "@portabletext/react";
 import { PageHero } from "@/components/layout/PageHero";
 import { Container } from "@/components/ui/Container";
@@ -36,10 +37,19 @@ export async function generateMetadata({ params }: EventPageProps): Promise<Meta
     return buildMetadata({ title: "Event Not Found", path: `/events/${slug}` });
   }
 
+  // Event's own real flyer/hero image when available — same image used
+  // for the Event JSON-LD's `image` field below, not a new/invented
+  // asset. Omitted (not a fallback image) when the event has none, same
+  // as the existing listing-page OG behavior.
+  const ogImage = event.heroImage?.asset
+    ? urlForImage(event.heroImage).width(1200).height(630).url()
+    : undefined;
+
   return buildMetadata({
     title: event.seo?.title || event.title,
-    description: event.seo?.description,
+    description: event.seo?.description || event.shortDescription,
     path: `/events/${slug}`,
+    ogImage,
   });
 }
 
@@ -76,11 +86,21 @@ export default async function EventDetailPage({ params }: EventPageProps) {
   const icsUrl = buildIcsDataUrl(event, calendarExtras);
   const eventTypeLabel = event.isRecurring ? "Recurring" : "Featured";
 
+  const eventImageUrl = event.heroImage?.asset
+    ? urlForImage(event.heroImage).width(1200).height(630).url()
+    : undefined;
+
   const eventJsonLd = buildEventJsonLd({
     name: event.title,
     startDate: event.startDate,
     endDate: event.endDate,
     url: `/events/${slug}`,
+    image: eventImageUrl,
+    description: event.shortDescription,
+    location: event.location,
+    address: settings?.address,
+    price: event.price,
+    ticketUrl: event.ticketUrl,
   });
 
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([
@@ -189,6 +209,9 @@ export default async function EventDetailPage({ params }: EventPageProps) {
                     src={urlForImage(event.heroImage).width(900).height(1125).url()}
                     alt={event.heroImage.alt || event.title}
                     fill
+                    // Capped at max-w-md (448px, see the wrapper div above)
+                    // at every breakpoint; full viewport width below that.
+                    sizes="(min-width: 448px) 448px, 100vw"
                     className="object-cover"
                   />
                 </div>
@@ -231,11 +254,16 @@ export default async function EventDetailPage({ params }: EventPageProps) {
                   </div>
                   <ul className="mt-2 flex flex-wrap gap-2 pl-8">
                     {event.tags.map((tag) => (
-                      <li
-                        key={tag}
-                        className="bg-border px-3 py-1 text-xs font-bold uppercase text-black"
-                      >
-                        {tag}
+                      <li key={tag.label}>
+                        {/* This site's own internal tag route (see
+                            src/app/tag/[tag]/page.tsx) — never the old
+                            WordPress site's /tag/[slug]/ page. */}
+                        <Link
+                          href={`/tag/${tag.slug}`}
+                          className="block bg-border px-3 py-1 text-xs font-bold uppercase text-black transition-colors duration-150 hover:bg-lime"
+                        >
+                          {tag.label}
+                        </Link>
                       </li>
                     ))}
                   </ul>

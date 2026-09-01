@@ -10,18 +10,36 @@ interface BuildMetadataInput {
   description?: string;
   path: string;
   ogImage?: string;
+  // Opt-in only — every existing caller that omits this is unaffected
+  // (falls through to Next's normal index/follow default). Currently
+  // only /tag/[tag] passes this, to keep those real-but-not-search-
+  // result-worthy pages functional/clickable without being indexed.
+  robots?: Metadata["robots"];
 }
 
-export function buildMetadata({ title, description, path, ogImage }: BuildMetadataInput): Metadata {
+export function buildMetadata({
+  title,
+  description,
+  path,
+  ogImage,
+  robots,
+}: BuildMetadataInput): Metadata {
   const resolvedDescription = description || DEFAULT_DESCRIPTION;
   const fullTitle = title === SITE_NAME ? title : `${title} - ${SITE_NAME}`;
 
   return {
-    title: fullTitle,
+    // `absolute` bypasses the root layout's own `title.template`
+    // ("%s - Downtown Container Park") — this string is already the full,
+    // final title (built above), so letting the template wrap it again
+    // would double the suffix (e.g. "Shop - Downtown Container Park -
+    // Downtown Container Park"). OG/Twitter titles below are unaffected —
+    // Next's title template only applies to the document <title>.
+    title: { absolute: fullTitle },
     description: resolvedDescription,
     alternates: {
       canonical: path,
     },
+    ...(robots && { robots }),
     openGraph: {
       title: fullTitle,
       description: resolvedDescription,

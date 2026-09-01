@@ -1,9 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { EventCard } from "@/components/event/EventCard";
 import { EventFilterBar } from "@/components/events/EventFilterBar";
 import { Button } from "@/components/ui/Button";
+import { laDateKey } from "@/lib/events/date";
 import type { EventDoc } from "@/lib/sanity/types";
 
 // Page size shown in the source design (12 = 3 rows x 4 cols) — NOT
@@ -12,22 +14,16 @@ import type { EventDoc } from "@/lib/sanity/types";
 // from the current filtered set.
 const PAGE_SIZE = 12;
 
-// The park is in Las Vegas — event dates must compare by *that* calendar
-// day, not the visitor's/server's local timezone. Comparing via
-// `.toDateString()` (implicitly machine-local) put an event stored as
-// "7:30 PM Pacific" on the wrong UTC calendar day for anyone not already
-// in Pacific time (including this app's own server-rendered date math),
-// so a date-picker match against the event's real intended day silently
-// failed. "YYYY-MM-DD" here matches the native <input type="date"> value
-// exactly, so the date filter can compare strings directly.
-function laDateKey(date: Date): string {
-  return date.toLocaleDateString("en-CA", { timeZone: "America/Los_Angeles" });
-}
-
 export function EventsListingClient({ events }: { events: EventDoc[] }) {
+  // Reads a `?search=` query param once on mount, so this listing's
+  // search filter is itself linkable/shareable — the search box stays
+  // fully interactive afterward. (Event tag links now point at the live
+  // site's own real /tag/[slug]/ pages instead of here — see the Event
+  // Detail page's Tags section.)
+  const initialSearch = useSearchParams().get("search") ?? "";
   const [tab, setTab] = useState("all");
-  const [search, setSearch] = useState("");
-  const [submittedSearch, setSubmittedSearch] = useState("");
+  const [search, setSearch] = useState(initialSearch);
+  const [submittedSearch, setSubmittedSearch] = useState(initialSearch);
   const [dateFilter, setDateFilter] = useState("all");
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
@@ -50,7 +46,11 @@ export function EventsListingClient({ events }: { events: EventDoc[] }) {
 
     if (submittedSearch.trim()) {
       const query = submittedSearch.trim().toLowerCase();
-      result = result.filter((event) => event.title.toLowerCase().includes(query));
+      result = result.filter(
+        (event) =>
+          event.title.toLowerCase().includes(query) ||
+          event.tags?.some((tag) => tag.label.toLowerCase().includes(query))
+      );
     }
 
     if (dateFilter === "today") {

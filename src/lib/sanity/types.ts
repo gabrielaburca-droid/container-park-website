@@ -94,6 +94,16 @@ export interface EventPartnerOffer {
   offerText: string;
 }
 
+export interface EventTag {
+  label: string;
+  // Real tag slug (taken verbatim from the live site's own tag for this
+  // event, e.g. "mantis", "yoga-on-the-lawn") — used to build this
+  // project's own internal `/tag/[slug]` route (see src/app/tag/[tag]/
+  // page.tsx). This site must never link back out to the old WordPress
+  // site's /tag/[slug]/ archive pages.
+  slug: string;
+}
+
 export interface EventDoc {
   _id: string;
   title: string;
@@ -106,13 +116,21 @@ export interface EventDoc {
   heroImage?: SanityImage;
   category?: string;
   relatedBusiness?: RelatedBusinessRef | null;
+  // Short venue/location label as shown on the live site (e.g. "Container
+  // Park - Lawn", "Container Park - Stage and Lawn", "Oak and Ivy",
+  // "Downtown Container Park") — the live site's own MEC "Location" field,
+  // independent of `relatedBusiness` (which is a business detail-page
+  // reference, not necessarily where the event happens) and of `category`/
+  // `tags`. Not every live event has one set (e.g. Noche Latina) — treat
+  // as optional, not as a guaranteed field.
+  location?: string;
   ticketUrl?: string;
   price?: string;
   seo?: SeoFields;
   // TODO: SCHEMA GAP — not yet fields on the `event` Sanity document (see
   // Business note above for the pattern).
   shortDescription?: string;
-  tags?: string[];
+  tags?: EventTag[];
   partnerOffers?: EventPartnerOffer[];
   // Set only for events that exist on the live site's events calendar but
   // have no on-site detail page of their own (e.g. an externally-ticketed

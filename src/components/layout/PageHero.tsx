@@ -12,6 +12,13 @@ import {
 } from "@/lib/ui/typography";
 import type { SanityImage } from "@/lib/sanity/types";
 
+// Real, existing project asset — the shared fallback for any Hero with no
+// dedicated image (a business/event with no heroImage set, a page that
+// doesn't pass one at all), so the Hero is never left with no background
+// at all. Never used instead of a real, more specific image — only when
+// neither `imageUrl` nor a real `image.asset` resolves to one.
+const PLACEHOLDER_HERO_URL = "/assets/images/all/placeholder-hero.jpg";
+
 interface PageHeroProps {
   /** Small lime label. Renders ABOVE the H1 in the default (small) heading
    * mode — every existing non-large consumer (Leasing, Contact, Visit Us,
@@ -75,13 +82,21 @@ export function PageHero({
   children,
 }: PageHeroProps) {
   const resolvedImageUrl =
-    imageUrl || (image?.asset ? urlForImage(image).width(1920).height(800).url() : null);
+    imageUrl ||
+    (image?.asset ? urlForImage(image).width(1920).height(800).url() : null) ||
+    PLACEHOLDER_HERO_URL;
 
   return (
     <section className="relative flex min-h-[420px] items-end overflow-hidden bg-near-black text-white sm:min-h-[520px]">
-      {resolvedImageUrl && (
-        <Image src={resolvedImageUrl} alt={image?.alt || ""} fill priority className="object-cover" />
-      )}
+      {/* Full-bleed section background at every breakpoint. */}
+      <Image
+        src={resolvedImageUrl}
+        alt={image?.alt || ""}
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover"
+      />
       {/* Shared across every Hero on the site — see
           HeroGradientOverlay.tsx for the full reasoning. Replaces the
           previous flat `opacity-70` on the image above, which dimmed the

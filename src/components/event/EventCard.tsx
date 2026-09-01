@@ -66,6 +66,14 @@ export function EventCard({ event, className = "" }: EventCardProps) {
               src={imageUrl}
               alt={event.heroImage?.alt || event.title}
               fill
+              // This card's most common context (Events listing,
+              // Entertainment Featured Events, Tag pages, Related Events)
+              // is a grid-cols-1 / sm:2 / md:3 / lg:4 grid inside
+              // max-w-container (1380px); its one fixed-width context (the
+              // homepage carousel, w-64/sm:w-[318px]) is narrower than
+              // this at every breakpoint, so this errs toward a same-or-
+              // larger fetch there rather than an under-sized one.
+              sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
               className={`object-cover ${CARD_IMAGE_HOVER_CLASSES}`}
             />
           )}

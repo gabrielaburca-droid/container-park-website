@@ -15,8 +15,14 @@ export async function generateMetadata(): Promise<Metadata> {
   const page = await getPage(PAGE_ID);
   return buildMetadata({
     title: page?.seo?.title || "Leasing",
-    description: page?.seo?.description,
+    // Real first sentence of the page's own body copy below, not invented.
+    description:
+      page?.seo?.description ||
+      "The types of businesses we are looking to connect with are those that contribute to the community of Downtown Las Vegas.",
     path: "/leasing",
+    // Same real hero image already rendered on this page's PageHero
+    // below — not a new/invented asset.
+    ogImage: "/assets/images/all/hero-leasing.jpg",
   });
 }
 
