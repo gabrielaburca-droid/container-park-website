@@ -41,6 +41,7 @@ export function NewsletterBand() {
               id="newsletter-email"
               name="email"
               type="email"
+              data-lpignore="true"
               required
               placeholder="Enter your email"
               className="min-w-0 flex-1 border border-near-black bg-white px-4 py-3 text-sm lg:w-[390px] lg:flex-none"
