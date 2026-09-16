@@ -3,7 +3,7 @@ import Link from "next/link";
 import { urlForImage } from "@/lib/sanity/image";
 import { Button } from "@/components/ui/Button";
 import { CARD_IMAGE_HOVER_CLASSES, CARD_IMAGE_OVERLAY_CLASSES } from "@/lib/ui/cardImageHover";
-import { getOpenStatus } from "@/lib/business/openStatus";
+import { getOpenStatus, getNextOpenLabel } from "@/lib/business/openStatus";
 import type { Business } from "@/lib/sanity/types";
 
 interface BusinessCardProps {
@@ -25,6 +25,17 @@ export function BusinessCard({ business, hrefBase = "/listing" }: BusinessCardPr
   const href = `${hrefBase}/${business.slug.current}`;
   // Real-time, not a stored field — see lib/business/openStatus.ts for why.
   const openStatus = getOpenStatus(business.hours);
+  // Only computed when actually closed, and never for a business flagged
+  // as permanently closed (business.status — a separate, static field from
+  // this real-time hours check) — a permanently closed listing must never
+  // read as if it'll reopen later. Real data only (see
+  // lib/business/openStatus.ts): null whenever there's no honest same-day
+  // reopening time to show, which falls back to the existing "Closed now!"
+  // wording below rather than inventing one.
+  const nextOpenLabel =
+    openStatus === "closed" && business.status !== "closed"
+      ? getNextOpenLabel(business.hours)
+      : null;
 
   return (
     // flex + h-full: the grid (ListingTemplate) already stretches every
@@ -130,7 +141,10 @@ export function BusinessCard({ business, hrefBase = "/listing" }: BusinessCardPr
           </a>
         )}
 
-        {openStatus === "closed" && (
+        {openStatus === "closed" && nextOpenLabel && (
+          <p className="mt-1 text-xs font-semibold text-muted">Opens {nextOpenLabel}</p>
+        )}
+        {openStatus === "closed" && !nextOpenLabel && (
           <p className="mt-1 text-xs font-semibold text-status-closed">Closed now!</p>
         )}
         {openStatus === "open" && (

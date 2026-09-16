@@ -9,6 +9,13 @@ function parseTimeToMinutes(time: string): number | null {
   return hour * 60 + parseInt(match[2], 10);
 }
 
+// "11:30 AM" -> "11:30am" — same source strings getOpenStatus already
+// parses above, just recased/tightened for the "Opens 11:30am" label
+// (see getNextOpenLabel below), not a separately-invented format.
+function formatDisplayTime(time: string): string {
+  return time.trim().replace(/\s*(AM|PM)$/i, (suffix) => suffix.trim().toLowerCase());
+}
+
 // Shared by getOpenStatus and getTodayHours below — the park's own weekday,
 // evaluated in its timezone (Las Vegas, America/Los_Angeles) regardless of
 // where this runs, same reasoning as getOpenStatus itself.
@@ -76,4 +83,46 @@ export function getOpenStatus(hours?: DayHours[]): "open" | "closed" | null {
   const effectiveNow = nowMinutes < openMinutes ? nowMinutes + 24 * 60 : nowMinutes;
 
   return effectiveNow >= openMinutes && effectiveNow < closeMinutes ? "open" : "closed";
+}
+
+/**
+ * When a business is currently closed but its own real hours say it opens
+ * later *today* (and hasn't yet), returns that opening time formatted for
+ * display (e.g. "11:30am") — lets a listing card show a neutral
+ * "Opens 11:30am" instead of the red "Closed now!" wording, which reads as
+ * if the business shut down for good rather than just being outside
+ * today's window (see BusinessCard.tsx). Never reaches into another day's
+ * hours to guess a reopening time — only today's own already-real data.
+ *
+ * Returns null (fall back to the existing Open/Closed wording) whenever
+ * there's nothing honest to say here: no hours data, the business is
+ * currently open, today has no opening at all (a day off), or today's
+ * opening time has already passed.
+ *
+ * `now` is injectable for testing; defaults to the real current time.
+ */
+export function getNextOpenLabel(hours?: DayHours[], now: Date = new Date()): string | null {
+  if (!hours || hours.length === 0) return null;
+
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Los_Angeles",
+    weekday: "long",
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false,
+  }).formatToParts(now);
+
+  const weekday = parts.find((p) => p.type === "weekday")?.value;
+  const hour = parts.find((p) => p.type === "hour")?.value;
+  const minute = parts.find((p) => p.type === "minute")?.value;
+  if (!weekday || hour === undefined || minute === undefined) return null;
+  const nowMinutes = parseInt(hour, 10) * 60 + parseInt(minute, 10);
+
+  const today = hours.find((entry) => entry.day === weekday);
+  if (!today || today.closed || !today.open) return null;
+
+  const openMinutes = parseTimeToMinutes(today.open);
+  if (openMinutes === null || nowMinutes >= openMinutes) return null;
+
+  return formatDisplayTime(today.open);
 }
