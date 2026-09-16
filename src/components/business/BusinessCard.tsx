@@ -13,11 +13,12 @@ interface BusinessCardProps {
 }
 
 // CLICK: the image and the title are both real links to the business
-// detail page now, same destination as "View Shop" below — three
-// independent, equally-real ways in, not one primary link with the others
-// faked. The image still gets the sitewide hover-zoom treatment (see
-// cardImageHover.ts) — hovering anywhere on the card (the `group`)
-// triggers it, independent of which specific element is clicked.
+// detail page now, same destination as the CTA button below (see
+// ctaLabel) — three independent, equally-real ways in, not one primary
+// link with the others faked. The image still gets the sitewide
+// hover-zoom treatment (see cardImageHover.ts) — hovering anywhere on the
+// card (the `group`) triggers it, independent of which specific element
+// is clicked.
 export function BusinessCard({ business, hrefBase = "/listing" }: BusinessCardProps) {
   const imageUrl = business.heroImage?.asset
     ? urlForImage(business.heroImage).width(480).height(320).url()
@@ -30,6 +31,16 @@ export function BusinessCard({ business, hrefBase = "/listing" }: BusinessCardPr
   // business name right under itself. Card and detail page must agree on
   // this, not just the detail page.
   const tagline = business.tagline && business.tagline !== business.name ? business.tagline : undefined;
+  // "View Shop" is the project-wide default; an Attractions listing (see
+  // business.categories, e.g. The Mantis/The Lawn) gets "View Attraction"
+  // instead — same "View {Category}" pattern, using the category's own
+  // real name (matches the page's own title/nav label — see
+  // layout/Header.tsx's "Attractions" entry), not invented copy. The live
+  // site's own listing cards have no equivalent CTA button to draw
+  // wording from (checked: card grid links only via the title/thumbnail).
+  // Every other category (Eat & Drink, Entertainment) keeps "View Shop"
+  // unchanged — only Attractions was reported as wrong.
+  const ctaLabel = business.categories?.includes("attractions") ? "View Attraction" : "View Shop";
   // Real-time, not a stored field — see lib/business/openStatus.ts for why.
   const openStatus = getOpenStatus(business.hours);
   // Only computed when actually closed, and never for a business flagged
@@ -48,7 +59,7 @@ export function BusinessCard({ business, hrefBase = "/listing" }: BusinessCardPr
     // flex + h-full: the grid (ListingTemplate) already stretches every
     // <li> to the tallest card in its row by default — this makes the
     // CONTENT inside actually fill that height too, so mt-auto on the
-    // button wrapper below can pin "View Shop" to the bottom of every
+    // button wrapper below can pin the CTA button to the bottom of every
     // card on the same row, regardless of how much text (tagline/rating/
     // website/status) any individual card has above it.
     <li className="group flex h-full flex-col border border-border">
@@ -168,7 +179,7 @@ export function BusinessCard({ business, hrefBase = "/listing" }: BusinessCardPr
 
         <div className="mt-auto pt-3">
           <Button href={href} variant="outline">
-            View Shop
+            {ctaLabel}
           </Button>
         </div>
       </div>
