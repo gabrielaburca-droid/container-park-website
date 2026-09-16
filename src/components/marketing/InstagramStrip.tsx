@@ -43,7 +43,7 @@ export function InstagramStrip({
       <div className="mx-auto max-w-container px-4">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className={EYEBROW_CLASSES}>Follow the Flow</p>
+            <p className={EYEBROW_CLASSES}>On Instagram</p>
             <h2 className={`mt-1 ${SECTION_HEADING_CLASSES}`}>{handle}</h2>
           </div>
           {profileUrl && (
