@@ -73,9 +73,24 @@ export default async function VisitUsPage() {
 
         <div className="mt-8 space-y-1 text-sm text-muted">
           <p className="font-semibold text-foreground">Contact</p>
-          <p>Bookings: bookings@downtowncontainerpark.com</p>
-          <p>Event &amp; Venue Reservations: events@downtownproject.com</p>
-          <p>Media Inquiries: media@downtowncontainerpark.com</p>
+          <p>
+            Bookings:{" "}
+            <a href="mailto:bookings@downtowncontainerpark.com" className="hover:underline">
+              bookings@downtowncontainerpark.com
+            </a>
+          </p>
+          <p>
+            Event &amp; Venue Reservations:{" "}
+            <a href="mailto:events@downtownproject.com" className="hover:underline">
+              events@downtownproject.com
+            </a>
+          </p>
+          <p>
+            Media Inquiries:{" "}
+            <a href="mailto:media@downtowncontainerpark.com" className="hover:underline">
+              media@downtowncontainerpark.com
+            </a>
+          </p>
         </div>
       </LocationBlock>
 

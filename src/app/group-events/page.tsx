@@ -13,7 +13,13 @@ const PAGE_ID = "page-group-events";
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getPage(PAGE_ID);
   return buildMetadata({
-    title: page?.seo?.title || "Group Events",
+    // Title matches the live site's indexed title verbatim ("Book an
+    // Event - Downtown Container Park", confirmed against
+    // https://downtowncontainerpark.com/book-an-event/ during the
+    // metadata migration audit) to preserve existing SEO signal — the
+    // page's own H1 stays "GROUP EVENTS" (an explicit design decision,
+    // see PageHero below), this only affects <title>.
+    title: page?.seo?.title || "Book an Event",
     // Derived from the same real page copy rendered in the body
     // paragraph below (live-site text, not invented), trimmed to a
     // concise meta-description length.

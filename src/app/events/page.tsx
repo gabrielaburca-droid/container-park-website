@@ -10,9 +10,15 @@ import { getSiteSettings, getUpcomingEvents } from "@/lib/mock/queries";
 import { buildMetadata } from "@/lib/seo/metadata";
 
 export function generateMetadata(): Metadata {
-  // Same real tagline rendered under the page's own H1 below, not invented.
+  // Title matches the live site's indexed title verbatim ("Events Archive
+  // - Downtown Container Park", confirmed against
+  // https://downtowncontainerpark.com/events/ during the metadata
+  // migration audit) to preserve existing SEO signal — the page's own H1
+  // stays "Events" (see PageHero below), this only affects <title>.
+  // Description: same real tagline rendered under the page's own H1
+  // below, not invented (the live page has no meta description to match).
   return buildMetadata({
-    title: "Events",
+    title: "Events Archive",
     description: "One destination. Endless experiences.",
     path: "/events",
     // Same real hero image already rendered on this page's PageHero

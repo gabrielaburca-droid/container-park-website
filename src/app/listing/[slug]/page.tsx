@@ -68,6 +68,8 @@ export default async function BusinessDetailPage({ params }: BusinessPageProps) 
     url: `/listing/${slug}`,
     telephone: business.phone,
     address: business.address,
+    rating: business.rating,
+    reviewCount: business.reviewCount,
   });
 
   const breadcrumbJsonLd = buildBreadcrumbJsonLd([

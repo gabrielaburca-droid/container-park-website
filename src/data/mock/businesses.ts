@@ -95,7 +95,7 @@ export const MOCK_BUSINESSES: Business[] = [
       ),
     ],
     phone: "+1 702-826-2702",
-    website: "http://bin702.com/",
+    website: "https://bin702.com/",
     socialLinks: { facebook: "https://www.facebook.com/Bin-702-616108155106146/" },
     hours: [
       { day: "Monday", open: "12:00 PM", close: "10:00 PM" },
@@ -193,7 +193,7 @@ export const MOCK_BUSINESSES: Business[] = [
       ),
     ],
     phone: "+1 702-413-7076",
-    website: "http://blackspadetattoo.com/",
+    website: "https://blackspadetattoo.com/",
     socialLinks: { facebook: "https://www.facebook.com/blackspade1140" },
     hours: [
       { day: "Monday", open: "11:00 AM", close: "09:00 PM" },
@@ -248,7 +248,7 @@ export const MOCK_BUSINESSES: Business[] = [
       ),
     ],
     phone: "(725)726-0257",
-    website: "http://cinloco.com/",
+    website: "https://cinloco.com/",
     hours: [
       { day: "Monday", open: "11:30 AM", close: "08:00 PM" },
       { day: "Tuesday", open: "11:30 AM", close: "08:00 PM" },
@@ -968,7 +968,7 @@ export const MOCK_BUSINESSES: Business[] = [
       ),
     ],
     phone: "+1 702-308-4682",
-    website: "http://www.lovocigars.com/",
+    website: "https://www.lovocigars.com/",
     socialLinks: { facebook: "https://www.facebook.com/LovoLasVegas/" },
     hours: [
       { day: "Monday", open: "11:00 AM", close: "09:00 PM" },
@@ -1033,7 +1033,7 @@ export const MOCK_BUSINESSES: Business[] = [
       ),
     ],
     phone: "(725) 247-2110",
-    website: "http://Lunadivinaco.com",
+    website: "https://Lunadivinaco.com",
     hours: [
       { day: "Monday", open: "11:30 AM", close: "05:30 PM" },
       { day: "Tuesday", open: "11:30 AM", close: "05:30 PM" },
@@ -1515,7 +1515,7 @@ export const MOCK_BUSINESSES: Business[] = [
       ),
     ],
     phone: "702-596-1111",
-    website: "http://segwaylasvegas.com/",
+    website: "https://segwaylasvegas.com/",
     hours: [
       { day: "Monday", open: "10:00 AM", close: "07:30 PM" },
       { day: "Tuesday", open: "10:00 AM", close: "07:30 PM" },
@@ -1829,7 +1829,7 @@ export const MOCK_BUSINESSES: Business[] = [
       ),
     ],
     phone: "702-909-0337",
-    website: "http://www.tastebuzzvegas.com/",
+    website: "https://www.tastebuzzvegas.com/",
     socialLinks: { facebook: "https://www.facebook.com/tastebuzzfoodtours" },
     address: PARK_ADDRESS,
     status: "open",

@@ -137,7 +137,9 @@ export default async function ContactPage() {
                     height={20}
                     className="h-auto w-[28px] shrink-0"
                   />
-                  <span>{settings.phone}</span>
+                  <a href={`tel:+1${settings.phone.replace(/\D/g, "")}`} className="hover:underline">
+                    {settings.phone}
+                  </a>
                 </p>
               )}
               {settings?.email && (

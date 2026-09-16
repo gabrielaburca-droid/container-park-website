@@ -52,6 +52,15 @@ export function buildLocalBusinessJsonLd(business: {
   image?: string;
   telephone?: string;
   address?: Address;
+  // Real, per-business values only (business.rating/reviewCount — see
+  // data/mock/businesses.ts) — both are the genuine average/count of that
+  // business's own real, verbatim-transcribed reviews (see
+  // data/mock/reviews.ts), re-verified against the live site's own review
+  // widget during the reviews/ratings SEO audit. Omitted entirely (no
+  // `aggregateRating` field at all) for the many businesses with neither
+  // value, rather than defaulting to an invented rating.
+  rating?: number;
+  reviewCount?: number;
 }) {
   return {
     "@context": "https://schema.org",
@@ -70,6 +79,20 @@ export function buildLocalBusinessJsonLd(business: {
         postalCode: business.address.zip,
       },
     }),
+    ...(typeof business.rating === "number" &&
+      typeof business.reviewCount === "number" &&
+      business.reviewCount > 0 && {
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: business.rating,
+          reviewCount: business.reviewCount,
+          // Every star-rating UI on this site (ReviewCard, ReviewSummary,
+          // this Hero) renders on a real, fixed 5-star scale — not an
+          // invented value.
+          bestRating: 5,
+          worstRating: 1,
+        },
+      }),
   };
 }
 

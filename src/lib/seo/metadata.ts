@@ -25,7 +25,12 @@ export function buildMetadata({
   robots,
 }: BuildMetadataInput): Metadata {
   const resolvedDescription = description || DEFAULT_DESCRIPTION;
-  const fullTitle = title === SITE_NAME ? title : `${title} - ${SITE_NAME}`;
+  // Bypass suffixing when `title` is already a complete, pre-built title
+  // that starts with the site name (currently just the homepage's live-
+  // matched "Downtown Container Park - Boutique Shopping, Unique Dining,
+  // Live Music" — see page.tsx) — appending " - Downtown Container Park"
+  // to that would double the site name.
+  const fullTitle = title.startsWith(SITE_NAME) ? title : `${title} - ${SITE_NAME}`;
 
   return {
     // `absolute` bypasses the root layout's own `title.template`

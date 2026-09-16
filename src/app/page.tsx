@@ -22,8 +22,15 @@ export async function generateMetadata(): Promise<Metadata> {
     ? urlForImage(page.hero.image).width(1200).height(630).url()
     : "/assets/images/all/placeholder-hero.jpg";
   return buildMetadata({
-    title: page?.seo?.title || "Downtown Container Park",
-    description: page?.seo?.description,
+    // Verbatim from the live homepage's Yoast SEO title/description
+    // (confirmed against https://downtowncontainerpark.com/ during the
+    // metadata migration audit) — not invented copy.
+    title:
+      page?.seo?.title ||
+      "Downtown Container Park - Boutique Shopping, Unique Dining, Live Music",
+    description:
+      page?.seo?.description ||
+      "Visit Downtown Container Park, The Best Shopping, Dining and Entertainment Shopping Center in Las Vegas, Nevada. Learn about Family Events, Stores and Restaurants in Downtown Las Vegas, Nevada.",
     path: "/",
     ogImage,
   });
