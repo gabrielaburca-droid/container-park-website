@@ -123,7 +123,18 @@ export function Carousel({
     track.scrollBy({ left: direction * cardWidth, behavior: "smooth" });
   }
 
-  const displayChildren = loop ? [...children, ...children, ...children] : children;
+  // Each group tags whether it's a buffer copy (the before/after clones
+  // that make the infinite-loop scroll illusion possible, see `loop`
+  // above) or the one real, middle copy — used below to hide the clones
+  // from assistive tech without changing anything about how they scroll
+  // or look.
+  const slideGroups = loop
+    ? [
+        { items: children, isClone: true },
+        { items: children, isClone: false },
+        { items: children, isClone: true },
+      ]
+    : [{ items: children, isClone: false }];
   const arrowButtonClasses = "flex h-11 w-11 items-center justify-center border border-foreground";
 
   return (
@@ -196,17 +207,45 @@ export function Carousel({
         )}
         <div
           ref={trackRef}
-          className={`no-scrollbar flex snap-x snap-mandatory gap-[10px] overflow-x-auto scroll-smooth pb-2 sm:gap-6 ${
+          // overflow-y-hidden is load-bearing, not decorative: per the CSS
+          // overflow spec, leaving overflow-y unset while overflow-x is
+          // non-'visible' computes overflow-y to 'auto' too (confirmed via
+          // getComputedStyle — it was really 'auto' here, not 'visible').
+          // That makes this horizontal-only track register as a *vertical*
+          // scroll container as well, with nothing to actually scroll —
+          // which is exactly the known cause of a hovered horizontal
+          // scroller swallowing/latching the page's own mouse-wheel
+          // scroll instead of letting it bubble up. Explicitly hidden
+          // here (there's no vertical overflow content to clip either
+          // way, so this has no visual effect) restores normal page
+          // scrolling over the carousel without any JS wheel handler.
+          className={`no-scrollbar flex snap-x snap-mandatory gap-[10px] overflow-x-auto overflow-y-hidden scroll-smooth pb-2 sm:gap-6 ${
             bleedRight
               ? "mr-[calc(-1*max(1rem,calc((100vw-var(--container-max))/2+1rem)))] pr-4"
               : ""
           }`}
         >
-          {displayChildren.map((child, index) => (
-            <div key={index} data-carousel-slide className="shrink-0 snap-start">
-              {child}
-            </div>
-          ))}
+          {slideGroups.flatMap((group, groupIndex) =>
+            group.items.map((child, itemIndex) => (
+              <div
+                key={`${groupIndex}-${itemIndex}`}
+                data-carousel-slide
+                // Buffer copies are pixel-identical duplicates of the real
+                // middle copy, not distinct content — screen readers and
+                // keyboard tabbing must skip them entirely. `inert` (in
+                // addition to aria-hidden) also makes their interactive
+                // descendants — links, buttons — unfocusable and
+                // unclickable; aria-hidden alone doesn't do that, and a
+                // focusable element inside an aria-hidden ancestor is
+                // itself an accessibility bug.
+                aria-hidden={group.isClone ? true : undefined}
+                inert={group.isClone ? true : undefined}
+                className="shrink-0 snap-start"
+              >
+                {child}
+              </div>
+            ))
+          )}
         </div>
       </div>
     </div>
