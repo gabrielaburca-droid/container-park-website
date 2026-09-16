@@ -72,7 +72,23 @@ export function EventsListingClient({ events }: { events: EventDoc[] }) {
       result = result.filter((event) => laDateKey(new Date(event.startDate)) === dateFilter);
     }
 
-    return result;
+    // De-duplicated by slug (not _id), same pattern already used by every
+    // other event listing (Entertainment's Featured Events, Tag pages,
+    // Event Detail's Other Events — see e.g. entertainment/page.tsx): a
+    // nightly/recurring event like The Mantis is expanded into one
+    // EventDoc per real occurrence (see data/mock/events.ts), so without
+    // this it renders one card per date instead of one card for the whole
+    // recurring attraction. Applied last, after the tab/search/date
+    // filters above, so it collapses to the soonest occurrence *within*
+    // whatever's currently filtered (e.g. picking "Next Month" still
+    // shows the recurring attraction's soonest occurrence that month,
+    // rather than losing it entirely).
+    const seenSlugs = new Set<string>();
+    return result.filter((event) => {
+      if (seenSlugs.has(event.slug.current)) return false;
+      seenSlugs.add(event.slug.current);
+      return true;
+    });
   }, [events, tab, submittedSearch, dateFilter]);
 
   // visibleCount is a cumulative reveal over the CURRENT filtered set —
