@@ -11,8 +11,11 @@ function parseTimeToMinutes(time: string): number | null {
 
 // "11:30 AM" -> "11:30am" — same source strings getOpenStatus already
 // parses above, just recased/tightened for the "Opens 11:30am" label
-// (see getNextOpenLabel below), not a separately-invented format.
-function formatDisplayTime(time: string): string {
+// (see getNextOpenLabel below), not a separately-invented format. Exported
+// so other real-time-hours consumers (e.g. BusinessDetailTemplate's near-
+// top "Open until {close time}" status) can format a business's own real
+// `today.close` the same way, instead of re-implementing this formatting.
+export function formatDisplayTime(time: string): string {
   return time.trim().replace(/\s*(AM|PM)$/i, (suffix) => suffix.trim().toLowerCase());
 }
 

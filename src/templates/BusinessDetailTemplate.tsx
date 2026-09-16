@@ -9,7 +9,7 @@ import { ReviewForm } from "@/components/business/ReviewForm";
 import type { Review } from "@/components/business/ReviewCard";
 import type { Business } from "@/lib/sanity/types";
 import { buildDirectionsUrl, buildMapsEmbedUrl } from "@/lib/maps";
-import { getOpenStatus, getTodayHours } from "@/lib/business/openStatus";
+import { getOpenStatus, getTodayHours, getNextOpenLabel, formatDisplayTime } from "@/lib/business/openStatus";
 
 interface BusinessDetailTemplateProps {
   business: Business;
@@ -41,6 +41,25 @@ export function BusinessDetailTemplate({
   const tagline = business.tagline && business.tagline !== business.name ? business.tagline : undefined;
   const openStatus = getOpenStatus(business.hours);
   const todayHours = getTodayHours(business.hours);
+  // Near-top status (see the Hero row below) — reuses the exact same
+  // real-time hours logic already introduced for the listing cards (see
+  // lib/business/openStatus.ts, business/BusinessCard.tsx), not a second
+  // independent hours calculation. The detailed hours box further down
+  // this page (sidebar, "pre-footer" on mobile where it stacks last) is
+  // untouched — this only adds a second, more visible surface for the
+  // same real data, per the client's ask.
+  //
+  // Same permanently-closed guard as BusinessCard.tsx: never show a false
+  // "opens later" reading for a listing flagged business.status==="closed".
+  const nextOpenLabel =
+    openStatus === "closed" && business.status !== "closed"
+      ? getNextOpenLabel(business.hours)
+      : null;
+  // Only meaningful when actually open — getOpenStatus only ever returns
+  // "open" when today.close is a real, present value (see openStatus.ts),
+  // so this is never guessed for a business with no real closing time.
+  const closesAtLabel =
+    openStatus === "open" && todayHours?.close ? formatDisplayTime(todayHours.close) : null;
 
   return (
     <>
@@ -87,6 +106,30 @@ export function BusinessDetailTemplate({
               </span>{" "}
               {business.reviewCount ?? 0} Review{business.reviewCount === 1 ? "" : "s"}
             </span>
+          )}
+          {/* Same divider as above, shown whenever anything already in this
+              row precedes the status. */}
+          {(business.claimed || typeof business.rating === "number") && openStatus && (
+            <span aria-hidden="true" className="h-4 w-px bg-white/40" />
+          )}
+          {/* Near-top open/closed status (see the block computing
+              nextOpenLabel/closesAtLabel above) — the client's ask: the
+              detailed hours box further down this page only became visible
+              after scrolling past the description/reviews (effectively
+              "pre-footer" on mobile, where it stacks last), so this adds
+              the same real, live status right under the H1 too. That
+              sidebar box is untouched — this doesn't replace or duplicate
+              its content, just surfaces the same real-time status earlier.
+              Plain white (this row's own default, like "Claimed"/the
+              review count above it) for the two non-alarming states; the
+              existing `text-status-closed` red only for the one case with
+              no honest same-day time to show — same red already used by
+              this exact status concept elsewhere (BusinessCard.tsx, and
+              this page's own sidebar box below). */}
+          {closesAtLabel && <span>Open until {closesAtLabel}</span>}
+          {!closesAtLabel && nextOpenLabel && <span>Opens {nextOpenLabel}</span>}
+          {!closesAtLabel && !nextOpenLabel && openStatus === "closed" && (
+            <span className="text-status-closed">Closed now!</span>
           )}
         </div>
       </PageHero>
