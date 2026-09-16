@@ -35,6 +35,14 @@ const nextConfig = {
         hostname: "containerpark.wpenginepowered.com",
       },
     ],
+    // Explicit opt-in to AVIF (checked first) + WebP (fallback) for the
+    // built-in image optimizer — Next's own default is `['image/webp']`
+    // only (confirmed against the installed Next 16.3.1 source), so AVIF
+    // was never actually being served without this. Both are real,
+    // already-supported output formats for the optimizer (via `sharp`,
+    // already an installed dependency) — this doesn't add a new capability,
+    // just turns on the one that was off by default.
+    formats: ["image/avif", "image/webp"],
     // TEMPORARY — enables next/image to serve the local placeholder SVGs
     // under public/assets/images/placeholders/ (used by the temporary mock
     // data layer, see src/lib/mock/, CLAUDE.md). Every SVG there is static,
