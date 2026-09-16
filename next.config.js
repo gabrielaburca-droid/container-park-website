@@ -34,6 +34,24 @@ const nextConfig = {
         protocol: "https",
         hostname: "containerpark.wpenginepowered.com",
       },
+      // Instagram Graph API media/thumbnail URLs (see
+      // src/lib/instagram/queries.ts) resolve to Facebook's own CDN, not a
+      // single fixed host — real responses rotate across many
+      // "scontent[-region].cdninstagram.com" and multi-label
+      // "*.*.fbcdn.net" edge hostnames. `**` (any number of subdomain
+      // levels, per Next's own remotePatterns syntax) is what actually
+      // covers that rotation; a single `*` only matches one label and
+      // would silently miss the multi-label fbcdn.net hosts. Still scoped
+      // to exactly these two real, Meta-owned root domains — not a
+      // blanket allow of arbitrary remote hosts.
+      {
+        protocol: "https",
+        hostname: "**.cdninstagram.com",
+      },
+      {
+        protocol: "https",
+        hostname: "**.fbcdn.net",
+      },
     ],
     // Explicit opt-in to AVIF (checked first) + WebP (fallback) for the
     // built-in image optimizer — Next's own default is `['image/webp']`
