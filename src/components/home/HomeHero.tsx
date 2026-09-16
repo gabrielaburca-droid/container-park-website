@@ -44,12 +44,14 @@ function ScrollToDiscoverLink({ className = "" }: { className?: string }) {
   );
 }
 
-// CTA destinations: "Explore Events" -> /events. "See Our Services" -> the
-// Visit Us page, which is where the site's actual "Services" content lives
-// (see ServicesGrid in src/components/visit/ServicesGrid.tsx, rendered on
-// /visit-us) — there's no standalone "/services" route anywhere in the
-// approved sitemap (see CLAUDE.md), so this is the closest real, existing
-// destination rather than an invented URL.
+// CTA destinations: "Explore Events" -> /events. "Visit Us" -> /visit-us,
+// using the site's own existing nav label for that exact URL (see
+// layout/Header.tsx's { label: "Visit Us", url: "/visit-us" } and the page's
+// own title/H1) rather than "See Our Services" — that page is a full
+// plan-your-visit page (location, parking, hours, services — see
+// ServicesGrid in src/components/visit/ServicesGrid.tsx — and more), not
+// only its "Services" section, so the site's own real "Visit Us" label
+// describes the destination more accurately, not just less vaguely.
 // ANIMATION: NEEDS CONFIRMATION — no parallax/ken-burns implemented.
 // "Scroll to Discover" is a real in-page anchor link to #discover (the
 // FeatureCarousel section directly below, see FeatureCarousel.tsx), using
@@ -140,7 +142,7 @@ export function HomeHero({
         <div className="mt-6 flex flex-wrap gap-3">
           <Button href={exploreEventsHref}>Explore Events</Button>
           <Button href={servicesHref} variant="outline-light">
-            See Our Services
+            Visit Us
           </Button>
         </div>
       </div>
