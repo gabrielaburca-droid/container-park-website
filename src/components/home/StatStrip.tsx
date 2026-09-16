@@ -9,12 +9,10 @@ interface StatItem {
   iconHeight: number;
 }
 
-// Source copy preserved exactly, including the "Availale" spelling shown
-// in the source design — not silently corrected per instruction. Icons are
-// the real assets provided in public/assets/images/all/ (icon-time,
-// icon-location, icon-free-admision [sic], icon-parking) — order matches
-// the Figma reference exactly, replacing the earlier inline-SVG
-// approximations now that real assets exist.
+// Icons are the real assets provided in public/assets/images/all/
+// (icon-time, icon-location, icon-free-admision [sic], icon-parking) —
+// order matches the Figma reference exactly, replacing the earlier
+// inline-SVG approximations now that real assets exist.
 const DEFAULT_ITEMS: StatItem[] = [
   {
     label: "Open Daily",
@@ -35,7 +33,7 @@ const DEFAULT_ITEMS: StatItem[] = [
     iconHeight: 50,
   },
   {
-    label: "Parking Availale",
+    label: "Parking Available",
     iconSrc: "/assets/images/all/icon-parking.svg",
     iconWidth: 50,
     iconHeight: 50,
