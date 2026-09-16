@@ -23,6 +23,13 @@ export function BusinessCard({ business, hrefBase = "/listing" }: BusinessCardPr
     ? urlForImage(business.heroImage).width(480).height(320).url()
     : null;
   const href = `${hrefBase}/${business.slug.current}`;
+  // Same guard already applied on the business detail page (see
+  // templates/BusinessDetailTemplate.tsx) for the one real data-quality
+  // case where a business's own scraped tagline happens to equal its name
+  // (e.g. Black Spade Tattoo) — showing it here too would duplicate the
+  // business name right under itself. Card and detail page must agree on
+  // this, not just the detail page.
+  const tagline = business.tagline && business.tagline !== business.name ? business.tagline : undefined;
   // Real-time, not a stored field — see lib/business/openStatus.ts for why.
   const openStatus = getOpenStatus(business.hours);
   // Only computed when actually closed, and never for a business flagged
@@ -80,9 +87,17 @@ export function BusinessCard({ business, hrefBase = "/listing" }: BusinessCardPr
             Neue eyebrow treatment — Inter, 12px, not uppercase, normal
             (zero) letter-spacing, literal black text — not the shared
             EYEBROW_CLASSES scale used elsewhere, per spec. */}
-        {business.tagline && (
-          <p className="absolute left-5 top-0 line-clamp-2 w-fit max-w-[calc(100%-2.5rem)] bg-lime px-2 py-1 font-sans text-xs font-medium tracking-normal text-black">
-            {business.tagline}
+        {tagline && (
+          // line-clamp-4 (not 2): the real, longest tagline in the current
+          // data (~150 characters, e.g. Luna Divina Co.'s) needs ~4 lines
+          // to fully fit at this badge's real rendered width — 2 lines cut
+          // every tagline longer than about one short sentence off
+          // mid-word. 4 lines fits every real tagline in the data in
+          // full (no clamp ever actually engages today); still capped,
+          // not line-clamp-none, so a future outlier can't grow the badge
+          // tall enough to spill past the image it sits on.
+          <p className="absolute left-5 top-0 line-clamp-4 w-fit max-w-[calc(100%-2.5rem)] bg-lime px-2 py-1 font-sans text-xs font-medium tracking-normal text-black">
+            {tagline}
           </p>
         )}
       </Link>
