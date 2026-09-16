@@ -37,8 +37,14 @@ export function EventCard({ event, className = "" }: EventCardProps) {
     ? urlForImage(event.heroImage).width(480).height(320).url()
     : null;
   const date = new Date(event.startDate);
-  const day = date.toLocaleDateString("en-US", { day: "2-digit" });
-  const month = date.toLocaleDateString("en-US", { month: "short" }).toUpperCase();
+  const eventTimeZone = "America/Los_Angeles";
+  const day = date.toLocaleDateString("en-US", {
+    day: "2-digit",
+    timeZone: eventTimeZone,
+  });
+  const month = date
+    .toLocaleDateString("en-US", { month: "short", timeZone: eventTimeZone })
+    .toUpperCase();
 
   // Events with no detail page of their own on the live site (e.g. one
   // linked straight to an external ticketing page from the live archive)
