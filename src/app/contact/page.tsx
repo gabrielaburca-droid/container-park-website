@@ -11,21 +11,45 @@ import { buildDirectionsUrl, buildMapsEmbedUrl } from "@/lib/maps";
 
 const PAGE_ID = "page-contact";
 
+// Client feedback (round 2): the previous description/hero fallback
+// ("Join a vibrant community of local businesses in the heart of
+// Downtown Las Vegas.") was generic community/leasing-recruitment
+// messaging with no source on the live Contact page (verified during the
+// prior audit) or on Leasing's own real copy either — it wasn't literally
+// Leasing's text, but it read as the same kind of "join our tenant
+// community" pitch, wrong for a page whose real purpose is just contact
+// info. Replaced with client-supplied, deliberately factual copy.
+const CONTACT_TITLE = "Contact Downtown Container Park | Downtown Las Vegas";
+const CONTACT_DESCRIPTION =
+  "Get in touch with Downtown Container Park in Las Vegas. Find our location, contact information and hours of operation.";
+
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getPage(PAGE_ID);
-  return buildMetadata({
-    title: page?.seo?.title || "Contact",
-    // Same real tagline rendered under the page's own H1 below (or the
-    // page's real subheading, if set), not invented.
-    description:
-      page?.seo?.description ||
-      page?.hero?.subheading ||
-      "Join a vibrant community of local businesses in the heart of Downtown Las Vegas.",
+  const title = page?.seo?.title || CONTACT_TITLE;
+  const metadata = buildMetadata({
+    title,
+    description: page?.seo?.description || page?.hero?.subheading || CONTACT_DESCRIPTION,
     path: "/contact",
     // Same real hero image already rendered on this page's PageHero
     // below — not a new/invented asset.
     ogImage: "/assets/images/all/hero-contact.jpg",
   });
+  // CONTACT_TITLE is already a complete string in its own "Page |
+  // Downtown Container Park" format, not the sitewide "{page} - Downtown
+  // Container Park" pattern buildMetadata()'s suffixing logic assumes —
+  // override the title/OG/Twitter title it computed with the exact
+  // requested string (same technique used on the Events page). Only
+  // applies to this literal fallback, not a real future page?.seo?.title
+  // value, which would still just be a short page-specific fragment
+  // expecting the normal suffix.
+  return page?.seo?.title
+    ? metadata
+    : {
+        ...metadata,
+        title: { absolute: title },
+        openGraph: { ...metadata.openGraph, title },
+        twitter: { ...metadata.twitter, title },
+      };
 }
 
 export default async function ContactPage() {
@@ -35,19 +59,20 @@ export default async function ContactPage() {
 
   return (
     <>
-      {/* RESTYLE ONLY: switched to the same `large` white-H1/lime-accent
-          Hero treatment already established on Events/Leasing/Group
-          Events (no small eyebrow above the H1, per the attached design)
-          and wired in the real hero-contact.jpg asset — this Hero
-          previously had no image at all. Title/titleAccent/description
-          text values are exactly what was already there; nothing about
-          the actual copy changed. */}
+      {/* Same `large` white-H1/lime-accent Hero treatment already
+          established on Events/Leasing/Group Events (no small eyebrow
+          above the H1, per the attached design), with the real
+          hero-contact.jpg asset. H1 fallback ("CONTACT") is unchanged —
+          already a proper, factual heading, not the generic copy the
+          client's round-2 feedback flagged. titleAccent/description
+          fallbacks were updated (see CONTACT_DESCRIPTION above) to
+          replace that generic copy with the client-supplied text. */}
       <PageHero
         title={page?.hero?.heading || "CONTACT"}
-        titleAccent="LET'S CONNECT"
+        titleAccent="GET IN TOUCH"
         description={
           page?.hero?.subheading ||
-          "Join a vibrant community of local businesses in the heart of Downtown Las Vegas."
+          "Have a question or need more information? Get in touch with Downtown Container Park."
         }
         imageUrl="/assets/images/all/hero-contact.jpg"
         large

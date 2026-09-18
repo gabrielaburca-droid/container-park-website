@@ -214,6 +214,13 @@ export const MOCK_BUSINESSES: Business[] = [
     categories: ["shop"] as Business["categories"],
     tagline:
       "Permanent Jewelry experience in 14K solid gold, sterling silver and gold filled. CinloCo also offers a jewelry line + accessories.",
+    // PROPOSED COPY (client feedback round 2, business descriptions pass)
+    // — a concise rephrasing of the tagline above (the only real content
+    // available for this listing), not a separate new fact. Stops this
+    // listing's meta description from falling through to the generic
+    // sitewide default.
+    shortDescription:
+      "Discover CinloCo's permanent jewelry experience featuring 14K solid gold pieces designed to become a lasting part of your everyday style.",
     rating: 5,
     reviewCount: 1,
     claimed: false,
@@ -448,7 +455,7 @@ export const MOCK_BUSINESSES: Business[] = [
   },
   {
     _id: "real-dream-dancenv",
-    name: "Dream Dance Nv",
+    name: "Dream Dance NV",
     slug: { current: "dream-dancenv" },
     description: [
       {
@@ -499,60 +506,60 @@ export const MOCK_BUSINESSES: Business[] = [
     reviewCount: 2,
     claimed: true,
     heroImage: realImage(
-      "Dream Dance Nv storefront photo (from live site)",
+      "Dream Dance NV storefront photo (from live site)",
       "/assets/images/businesses/dream-dancenv.jpg"
     ),
     gallery: [
       realImage(
-        "Dream Dance Nv — gallery photo 1 (from live site)",
+        "Dream Dance NV — gallery photo 1 (from live site)",
         "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/956272A1-04F7-4001-A581-D4631CA58E3C.jpg"
       ),
       realImage(
-        "Dream Dance Nv — gallery photo 2 (from live site)",
+        "Dream Dance NV — gallery photo 2 (from live site)",
         "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/IMG_4583.jpg"
       ),
       realImage(
-        "Dream Dance Nv — gallery photo 3 (from live site)",
+        "Dream Dance NV — gallery photo 3 (from live site)",
         "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/FullSizeRender.jpeg"
       ),
       realImage(
-        "Dream Dance Nv — gallery photo 4 (from live site)",
+        "Dream Dance NV — gallery photo 4 (from live site)",
         "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/IMG_4263.jpg"
       ),
       realImage(
-        "Dream Dance Nv — gallery photo 5 (from live site)",
+        "Dream Dance NV — gallery photo 5 (from live site)",
         "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/IMG_2819.jpg"
       ),
       realImage(
-        "Dream Dance Nv — gallery photo 6 (from live site)",
+        "Dream Dance NV — gallery photo 6 (from live site)",
         "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/IMG_2756.jpg"
       ),
       realImage(
-        "Dream Dance Nv — gallery photo 7 (from live site)",
+        "Dream Dance NV — gallery photo 7 (from live site)",
         "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/IMG_2783.jpg"
       ),
       realImage(
-        "Dream Dance Nv — gallery photo 8 (from live site)",
+        "Dream Dance NV — gallery photo 8 (from live site)",
         "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/IMG_4055.jpg"
       ),
       realImage(
-        "Dream Dance Nv — gallery photo 9 (from live site)",
+        "Dream Dance NV — gallery photo 9 (from live site)",
         "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/IMG_4580.jpg"
       ),
       realImage(
-        "Dream Dance Nv — gallery photo 10 (from live site)",
+        "Dream Dance NV — gallery photo 10 (from live site)",
         "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/IMG_4144.jpg"
       ),
       realImage(
-        "Dream Dance Nv — gallery photo 11 (from live site)",
+        "Dream Dance NV — gallery photo 11 (from live site)",
         "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/IMG_5345.jpg"
       ),
       realImage(
-        "Dream Dance Nv — gallery photo 12 (from live site)",
+        "Dream Dance NV — gallery photo 12 (from live site)",
         "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/IMG_4547.jpg"
       ),
       realImage(
-        "Dream Dance Nv — gallery photo 13 (from live site)",
+        "Dream Dance NV — gallery photo 13 (from live site)",
         "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/IMG_5351.jpg"
       ),
     ],
@@ -1386,6 +1393,12 @@ export const MOCK_BUSINESSES: Business[] = [
     name: "Keep It Classic Las Vegas",
     slug: { current: "run-it-back" },
     categories: ["shop"] as Business["categories"],
+    // PROPOSED COPY (client feedback round 2, business descriptions pass)
+    // — a plain sentence built from the live listing's own real descriptor
+    // ("Vintage Clothing/Retro Video Games"), not an added fact. Stops
+    // this listing's meta description from falling through to the generic
+    // sitewide default.
+    shortDescription: "Shop vintage clothing and retro video games at Keep It Classic Las Vegas.",
     claimed: true,
     heroImage: realImage(
       "Keep It Classic Las Vegas storefront photo (from live site)",
@@ -1534,6 +1547,12 @@ export const MOCK_BUSINESSES: Business[] = [
     slug: { current: "shop-mama-sage" },
     categories: ["shop"] as Business["categories"],
     tagline: "A Vibey Little Shop!",
+    // PROPOSED COPY (client feedback round 2, business descriptions pass)
+    // — a concise rephrasing of the tagline above (the only real content
+    // available for this listing) plus the business's real, shared park
+    // location, not an added fact. Stops this listing's meta description
+    // from falling through to the generic sitewide default.
+    shortDescription: "Discover Shop Mama Sage, a vibey little shop at Downtown Container Park.",
     rating: 5,
     reviewCount: 8,
     claimed: false,
@@ -1698,12 +1717,27 @@ export const MOCK_BUSINESSES: Business[] = [
     status: "open",
   },
   {
-    // NEEDS CONFIRMATION: the live site's current Shop listing shows this
-    // same URL (/listing/sunnys/) under the name "Pole Fitness Studio &
-    // Boutique", not "Sunny's" — the business appears to have rebranded
-    // since the original migration. Not renamed here since that's a bigger
-    // change than this pass's scope (rating/review/claimed enrichment);
-    // flagging for a decision rather than silently renaming it.
+    // Name CONFIRMED (client feedback round 2, business-name spelling
+    // pass): the client has confirmed "Sunny's" is the correct official
+    // business name — matches this entry's `name` field exactly, so no
+    // change was needed there.
+    //
+    // The underlying content conflict below is still unresolved and is a
+    // separate question from the name itself: the live site's current
+    // Shop listing shows this same URL (/listing/sunnys/) with an H1/title
+    // of "Pole Fitness Studio & Boutique", but its own body paragraph
+    // still describes Sunnys as a swimwear company founded in 2017, and
+    // its "Keywords" line lists both swimwear AND pole-fitness terms
+    // together — the live site itself doesn't consistently know which
+    // business this is. Deliberately NOT given a shortDescription/
+    // description here: anything written to match the confirmed name
+    // "Sunny's" would contradict the live page's current H1/title;
+    // anything written to match "Pole Fitness Studio & Boutique" would
+    // contradict this entry's own (now client-confirmed) `name` field.
+    // Still needs client/tenant confirmation of the business's actual
+    // current services/identity before a description can be safely
+    // added — left showing the generic sitewide description in the
+    // meantime rather than guessing.
     _id: "real-sunnys",
     name: "Sunny's",
     slug: { current: "sunnys" },
@@ -1778,6 +1812,30 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-taste-buzz-food-tours",
     name: "Taste Buzz Food Tours",
     slug: { current: "taste-buzz-food-tours" },
+    // VERIFIED LIVE CONTENT (client feedback round 2, business
+    // descriptions pass) — the listing's own real body description,
+    // transcribed verbatim from the live page, not invented. Stops this
+    // listing's meta description from falling through to the generic
+    // sitewide default: the existing metadata fallback chain (see
+    // app/listing/[slug]/page.tsx) already derives a truncated meta
+    // description from this same field, so no separate shortDescription
+    // is needed here.
+    description: [
+      {
+        _type: "block",
+        _key: "taste_buzz_food_toursb1",
+        style: "normal",
+        markDefs: [],
+        children: [
+          {
+            _type: "span",
+            _key: "taste_buzz_food_tourss2",
+            text: "Participants get an incredible opportunity to experience what it’s like to be a local in Las Vegas. Our small-group, Las Vegas food tours offer a unique 3-hour foodie adventure that combines food tastings with local culture, history, sightseeing, and stories. Enjoy a full meal including dessert and a city tour, guided by longtime locals that love to share their passion for food and the city. Tastings include popular local favorite dishes and restaurants from savory to sweet ranging from street food to upscale dining.",
+            marks: [],
+          },
+        ],
+      },
+    ],
     categories: ["shop", "eat-drink"] as Business["categories"],
     rating: 1,
     reviewCount: 2,
@@ -2184,6 +2242,91 @@ export const MOCK_BUSINESSES: Business[] = [
       { day: "Tuesday", open: "11:30 AM", close: "09:00 PM" },
       { day: "Wednesday", open: "11:30 AM", close: "09:00 PM" },
       { day: "Thursday", open: "11:30 AM", close: "09:00 PM" },
+    ],
+    address: PARK_ADDRESS,
+    status: "open",
+  },
+  {
+    _id: "real-chicali-bites",
+    name: "Chicali Bites",
+    slug: { current: "chicali-bites" },
+    description: [
+      {
+        _type: "block",
+        _key: "chicali_bitesb1",
+        style: "normal",
+        markDefs: [],
+        children: [
+          {
+            _type: "span",
+            _key: "chicali_bitess2",
+            text: "Chicali Bites is a fresh Mexican snack and beverage shop bringing the flavors we grew up loving to the heart of Downtown Las Vegas. Our menu features refreshing aguas frescas, fresas con crema, esquites, tostilocos, mangonadas, paletas, spicy treats and other Mexican favorites—prepared fresh and with our own Chicali touch.",
+            marks: [],
+          },
+        ],
+      },
+      {
+        _type: "block",
+        _key: "chicali_bitesb3",
+        style: "normal",
+        markDefs: [],
+        children: [
+          {
+            _type: "span",
+            _key: "chicali_bitess4",
+            text: "Our slogan, “Hecho fresco con amor” — “Made fresh with love,” represents exactly what we want people to experience when they visit us. We believe the simplest treats become something special when they’re made fresh, served with care and shared with the people you love.",
+            marks: [],
+          },
+        ],
+      },
+      {
+        _type: "block",
+        _key: "chicali_bitesb5",
+        style: "normal",
+        markDefs: [],
+        children: [
+          {
+            _type: "span",
+            _key: "chicali_bitess6",
+            text: "Our mission is to create a welcoming place where Mexican flavor, family and community come together. Whether you’re stopping by for an agua fresca, introducing your kids to a treat you grew up with, or simply craving something delicious, we want every visit to Chicali Bites to feel a little like home.",
+            marks: [],
+          },
+        ],
+      },
+    ],
+    categories: ["eat-drink"] as Business["categories"],
+    tagline: "“Hecho fresco con amor” — “Made fresh with love”",
+    heroImage: realImage(
+      "Chicali Bites storefront photo (from live site)",
+      "https://containerpark.wpenginepowered.com/wp-content/uploads/2026/09/image0-1-350x450.png"
+    ),
+    gallery: [
+      realImage(
+        "Chicali Bites — gallery photo 1 (from live site)",
+        "https://containerpark.wpenginepowered.com/wp-content/uploads/2026/09/image1-1-350x450.png"
+      ),
+      realImage(
+        "Chicali Bites — gallery photo 2 (from live site)",
+        "https://containerpark.wpenginepowered.com/wp-content/uploads/2026/09/image2-1-350x450.png"
+      ),
+      realImage(
+        "Chicali Bites — gallery photo 3 (from live site)",
+        "https://containerpark.wpenginepowered.com/wp-content/uploads/2026/09/image3-1-350x450.png"
+      ),
+      realImage(
+        "Chicali Bites — gallery photo 4 (from live site)",
+        "https://containerpark.wpenginepowered.com/wp-content/uploads/2026/09/image4-1-350x450.png"
+      ),
+    ],
+    phone: "702-245-8866",
+    hours: [
+      { day: "Monday", open: "11:30 AM", close: "08:00 PM" },
+      { day: "Tuesday", open: "11:30 AM", close: "08:00 PM" },
+      { day: "Wednesday", open: "11:30 AM", close: "08:00 PM" },
+      { day: "Thursday", open: "11:30 AM", close: "08:00 PM" },
+      { day: "Friday", open: "11:30 AM", close: "08:00 PM" },
+      { day: "Saturday", open: "11:30 AM", close: "08:00 PM" },
+      { day: "Sunday", open: "11:30 AM", close: "08:00 PM" },
     ],
     address: PARK_ADDRESS,
     status: "open",

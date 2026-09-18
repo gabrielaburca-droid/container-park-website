@@ -9,22 +9,43 @@ import { EventsListingClient } from "@/components/events/EventsListingClient";
 import { getSiteSettings, getUpcomingEvents } from "@/lib/mock/queries";
 import { buildMetadata } from "@/lib/seo/metadata";
 
+// Client feedback (round 2): the previous title ("Events Archive", the
+// live site's own auto-generated archive-page title) and description
+// ("One destination. Endless experiences.") both read as generic/
+// archive-oriented rather than describing what's actually on this page.
+// Replaced with client-supplied copy for both the <title>/meta
+// description AND the visible Hero description below — the old
+// description string was literally identical in both places, so leaving
+// the visible copy unchanged would have shown the exact wording the
+// client flagged as needing rewriting, right on the page itself.
+const EVENTS_TITLE = "Events in Downtown Las Vegas | Downtown Container Park";
+const EVENTS_DESCRIPTION =
+  "Discover live music, family-friendly events, entertainment and special experiences at Downtown Container Park in Las Vegas.";
+
 export function generateMetadata(): Metadata {
-  // Title matches the live site's indexed title verbatim ("Events Archive
-  // - Downtown Container Park", confirmed against
-  // https://downtowncontainerpark.com/events/ during the metadata
-  // migration audit) to preserve existing SEO signal — the page's own H1
-  // stays "Events" (see PageHero below), this only affects <title>.
-  // Description: same real tagline rendered under the page's own H1
-  // below, not invented (the live page has no meta description to match).
-  return buildMetadata({
-    title: "Events Archive",
-    description: "One destination. Endless experiences.",
+  const metadata = buildMetadata({
+    title: EVENTS_TITLE,
+    description: EVENTS_DESCRIPTION,
     path: "/events",
     // Same real hero image already rendered on this page's PageHero
     // below — not a new/invented asset.
     ogImage: "/assets/images/all/hero-events.jpg",
   });
+  // EVENTS_TITLE is already a complete, client-specified string in its own
+  // "Page | Downtown Container Park" format, not the sitewide
+  // "{page} - Downtown Container Park" pattern buildMetadata()'s own
+  // suffixing logic assumes (and its bypass only checks for a title that
+  // *starts with* the site name, which this doesn't) — override the
+  // title/OG/Twitter title fields it computed with the exact requested
+  // string instead of letting them get a second, unwanted suffix
+  // appended. Description/canonical/OG image/Twitter card type all still
+  // come from the normal call above.
+  return {
+    ...metadata,
+    title: { absolute: EVENTS_TITLE },
+    openGraph: { ...metadata.openGraph, title: EVENTS_TITLE },
+    twitter: { ...metadata.twitter, title: EVENTS_TITLE },
+  };
 }
 
 export default async function EventsPage() {
@@ -43,7 +64,7 @@ export default async function EventsPage() {
       <PageHero
         title="EVENTS"
         titleAccent="LIVE DOWNTOWN"
-        description="One destination. Endless experiences."
+        description={EVENTS_DESCRIPTION}
         imageUrl="/assets/images/all/hero-events.jpg"
         large
       />

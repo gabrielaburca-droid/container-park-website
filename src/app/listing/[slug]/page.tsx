@@ -8,7 +8,12 @@ import { JsonLd } from "@/components/seo/JsonLd";
 // getReviewsForBusiness has no Sanity equivalent yet (no `review` schema —
 // see CLAUDE.md) so this whole import will need reworking, not just its
 // source path, when reviews are eventually wired to a real backend.
-import { getBusinessBySlug, getReviewsForBusiness, getSiteSettings } from "@/lib/mock/queries";
+import {
+  getAllBusinessSlugs,
+  getBusinessBySlug,
+  getReviewsForBusiness,
+  getSiteSettings,
+} from "@/lib/mock/queries";
 import { urlForImage } from "@/lib/sanity/image";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { buildBreadcrumbJsonLd, buildLocalBusinessJsonLd } from "@/lib/seo/structuredData";
@@ -19,6 +24,19 @@ import { portableTextToPlainText, truncateDescription } from "@/lib/seo/textExtr
 
 interface BusinessPageProps {
   params: Promise<{ slug: string }>;
+}
+
+// Prerenders every known business at build time (performance audit —
+// this route had no generateStaticParams and was fully server-rendered on
+// every request). `dynamicParams` is left at its Next.js default (true),
+// so a slug not in this list still resolves normally instead of 404ing
+// outright — it's rendered on demand the same way every slug was before
+// this change, and still 404s via the existing notFound() call below if
+// no matching business exists. Known slugs simply skip that per-request
+// render from now on.
+export async function generateStaticParams() {
+  const slugs = await getAllBusinessSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: BusinessPageProps): Promise<Metadata> {

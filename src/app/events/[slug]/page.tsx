@@ -12,7 +12,12 @@ import { PageBottom } from "@/components/layout/PageBottom";
 import { JsonLd } from "@/components/seo/JsonLd";
 // TEMPORARY: mock data layer for local visual QA — see CLAUDE.md.
 // Swap back to "@/lib/sanity/queries" before connecting Sanity.
-import { getEventBySlug, getSiteSettings, getUpcomingEvents } from "@/lib/mock/queries";
+import {
+  getAllEventSlugs,
+  getEventBySlug,
+  getSiteSettings,
+  getUpcomingEvents,
+} from "@/lib/mock/queries";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { buildBreadcrumbJsonLd, buildEventJsonLd } from "@/lib/seo/structuredData";
 import { buildGoogleCalendarUrl, buildIcsDataUrl } from "@/lib/calendar";
@@ -27,6 +32,20 @@ import { SITE_URL } from "@/lib/seo/metadata";
 
 interface EventPageProps {
   params: Promise<{ slug: string }>;
+}
+
+// Prerenders every known upcoming event at build time (performance audit —
+// this route had no generateStaticParams and was fully server-rendered on
+// every request). `dynamicParams` is left at its Next.js default (true),
+// so a slug not in this list (e.g. one that becomes upcoming after this
+// build, since getAllEventSlugs() is date-filtered) still resolves
+// normally on demand instead of 404ing outright — same as every slug
+// behaved before this change — and still 404s via the existing
+// notFound() call below if no matching event exists. Known slugs simply
+// skip that per-request render from now on.
+export async function generateStaticParams() {
+  const slugs = await getAllEventSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: EventPageProps): Promise<Metadata> {

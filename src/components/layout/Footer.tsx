@@ -11,17 +11,16 @@ const FALLBACK_EXPLORE = [
   { label: "Attractions", url: "/attractions" },
 ];
 
-// "Terms" has no `url` — no Terms/Privacy page exists on the current live
-// site (checked its full footer + nav markup) or in this project's fixed
-// page set (see CLAUDE.md's five approved page IDs), so there's no real
-// destination to link to yet. Shown per the Figma reference but rendered
-// unlinked (see FooterColumn below) rather than pointed at an invented
-// route.
+// "Privacy Policy" and "Terms" now point at real routes (src/app/
+// privacy-policy/, src/app/terms/) — draft, client/legal-review content,
+// not yet indexed (see those pages' own `robots` metadata), but real,
+// working destinations rather than the dead link this used to be.
 const FALLBACK_USEFUL_LINKS: { label: string; url?: string }[] = [
   { label: "Group Events", url: "/group-events" },
   { label: "Leasing", url: "/leasing" },
   { label: "Visit us", url: "/visit-us" },
-  { label: "Terms" },
+  { label: "Privacy Policy", url: "/privacy-policy" },
+  { label: "Terms", url: "/terms" },
 ];
 
 // logo-downtown.svg (used by Header.tsx) renders its "CONTAINER" wordmark
