@@ -21,6 +21,7 @@ import {
 import { buildMetadata } from "@/lib/seo/metadata";
 import { buildBreadcrumbJsonLd, buildEventJsonLd } from "@/lib/seo/structuredData";
 import { buildGoogleCalendarUrl, buildIcsDataUrl } from "@/lib/calendar";
+import { laDateKey } from "@/lib/events/date";
 import { buildFacebookShareUrl, buildMailShareUrl, buildTwitterShareUrl } from "@/lib/share";
 import { buildDirectionsUrl, buildMapsEmbedUrl } from "@/lib/maps";
 import { urlForImage } from "@/lib/sanity/image";
@@ -43,6 +44,12 @@ interface EventPageProps {
 // behaved before this change — and still 404s via the existing
 // notFound() call below if no matching event exists. Known slugs simply
 // skip that per-request render from now on.
+// Recurring events show their current-or-next occurrence (see
+// getEventBySlug), which moves on as time passes — so prerendered pages
+// are regenerated in the background at most every 15 minutes (ISR)
+// instead of freezing on whatever date was next at build time.
+export const revalidate = 900;
+
 export async function generateStaticParams() {
   const slugs = await getAllEventSlugs();
   return slugs.map((slug) => ({ slug }));
@@ -109,10 +116,15 @@ export default async function EventDetailPage({ params }: EventPageProps) {
     ? urlForImage(event.heroImage).width(1200).height(630).url()
     : undefined;
 
+  // Sunset-timed events (see EventDoc.timeType) have no real clock time —
+  // their startDate/endDate are only Las Vegas day boundaries — so the
+  // structured data gets date-only values (valid schema.org Date) rather
+  // than a misleading midnight timestamp.
+  const isSunset = event.timeType === "sunset";
   const eventJsonLd = buildEventJsonLd({
     name: event.title,
-    startDate: event.startDate,
-    endDate: event.endDate,
+    startDate: isSunset ? laDateKey(new Date(event.startDate)) : event.startDate,
+    endDate: isSunset ? laDateKey(new Date(event.startDate)) : event.endDate,
     url: `/events/${slug}`,
     image: eventImageUrl,
     description: event.shortDescription,
@@ -128,10 +140,13 @@ export default async function EventDetailPage({ params }: EventPageProps) {
     { name: event.title, url: `/events/${slug}` },
   ]);
 
+  // Las Vegas calendar date, not the server's — an evening event's UTC
+  // timestamp is already the next day (7:30 PM PDT = 02:30 UTC).
   const dateLabel = new Date(event.startDate).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
+    timeZone: "America/Los_Angeles",
   });
 
   // Static grid, NOT a carousel — no arrows/dots evidenced for this

@@ -112,6 +112,15 @@ export interface EventDoc {
   endDate?: string;
   isRecurring?: boolean;
   time?: string;
+  // "sunset" = no real clock time (e.g. Sunset Drum Circle): startDate is
+  // only a Las Vegas calendar-day marker (local midnight, never shown as a
+  // time), endDate is that day's end, and `time` is the only schedule
+  // shown. Calendar exports become all-day entries and structured data
+  // uses date-only values. Unset = a normal fixed-time event.
+  // TODO: SCHEMA GAP — not yet a field on the `event` Sanity document
+  // (its startDate is a required datetime); add alongside the other
+  // schema-gap fields below when Sanity is connected.
+  timeType?: "fixed" | "sunset";
   description?: PortableTextBlock[];
   heroImage?: SanityImage;
   category?: string;

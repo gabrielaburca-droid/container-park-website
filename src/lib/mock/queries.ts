@@ -32,9 +32,30 @@ export async function getAllBusinessSlugs(): Promise<string[]> {
   return MOCK_BUSINESSES.map((business) => business.slug.current);
 }
 
+// The instant an occurrence stops counting as "upcoming". Fixed-time
+// events: their start (unchanged behavior). Sunset-timed events have no
+// real start time — startDate is just their day's midnight marker (see
+// EventDoc.timeType) — so they stay upcoming until their day ends, keeping
+// today's occurrence visible all day.
+function upcomingUntil(event: EventDoc): number {
+  const cutoff = event.timeType === "sunset" && event.endDate ? event.endDate : event.startDate;
+  return new Date(cutoff).getTime();
+}
+
+// The instant an occurrence is over: its end (or its start, if it has no
+// end). Used only to pick which occurrence a detail page shows, so an
+// occurrence that's currently happening (e.g. The Mantis at 9 PM) stays
+// the displayed one until it finishes. Sunset-timed events' endDate is
+// already their Las Vegas day's end. Listings/sitemap keep using
+// upcomingUntil() above, unchanged.
+function occurrenceEndsAt(event: EventDoc): number {
+  const start = new Date(event.startDate).getTime();
+  return event.endDate ? Math.max(start, new Date(event.endDate).getTime()) : start;
+}
+
 export async function getUpcomingEvents(): Promise<EventDoc[]> {
   const now = Date.now();
-  return MOCK_EVENTS.filter((event) => new Date(event.startDate).getTime() >= now).sort(
+  return MOCK_EVENTS.filter((event) => upcomingUntil(event) >= now).sort(
     (a, b) => new Date(a.startDate).getTime() - new Date(b.startDate).getTime()
   );
 }
@@ -42,16 +63,22 @@ export async function getUpcomingEvents(): Promise<EventDoc[]> {
 export async function getEventBySlug(slug: string): Promise<EventDoc | null> {
   // Multiple occurrences of a recurring event (e.g. The Mantis) all share
   // the same real live slug/URL — one detail page per event, not per
-  // date, matching the live site. Returns the soonest upcoming occurrence
-  // (MOCK_EVENTS is pre-sorted chronologically) so the detail page shows
-  // a real, currently-relevant date.
+  // date, matching the live site. Returns the current-or-next occurrence
+  // (the first, in MOCK_EVENTS' chronological order, that hasn't ended
+  // yet) so the detail page shows a real, currently-relevant date. If
+  // every occurrence is already over, falls back to the most recent one —
+  // for a one-off event that's simply its own real date.
   //
   // Events with `externalUrl` set have no detail page of their own on the
   // live site (see EventDoc.externalUrl) — excluded here so navigating
   // straight to their slug 404s honestly instead of rendering an invented
   // on-site page. Listing cards for these already link straight to
   // `externalUrl` instead of this route (see EventCard).
-  return MOCK_EVENTS.find((event) => event.slug.current === slug && !event.externalUrl) ?? null;
+  const occurrences = MOCK_EVENTS.filter(
+    (event) => event.slug.current === slug && !event.externalUrl
+  );
+  const now = Date.now();
+  return occurrences.find((event) => occurrenceEndsAt(event) >= now) ?? occurrences.at(-1) ?? null;
 }
 
 export async function getAllEventSlugs(): Promise<string[]> {
@@ -64,7 +91,7 @@ export async function getAllEventSlugs(): Promise<string[]> {
   const slugs = new Set<string>();
   for (const event of MOCK_EVENTS) {
     if (event.externalUrl) continue;
-    if (new Date(event.startDate).getTime() < now) continue;
+    if (upcomingUntil(event) < now) continue;
     slugs.add(event.slug.current);
   }
   return Array.from(slugs);

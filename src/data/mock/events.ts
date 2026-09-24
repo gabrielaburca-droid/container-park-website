@@ -49,7 +49,7 @@ import { portableText } from "./portableText";
 // effectively-unbounded pagination, not an invented shortcut on any
 // individual event's content. This is what makes "Load More" on our own
 // Events page (see EventsListingClient) a real, non-trivial feature
-// rather than a formality: ~174 real occurrences across 13 real events.
+// rather than a formality: ~237 real occurrences across 14 real events.
 //
 // One correction from the live data itself: "Pop Rocks" describes itself
 // as happening "the first Saturdays of every month," and its own next
@@ -80,11 +80,48 @@ function dateKey(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
 
+// Las Vegas UTC offset (e.g. "-07:00") in effect at local midnight of the
+// given calendar day. Sampled at 08:00 UTC — 00:00 PST / 01:00 PDT, i.e.
+// always before that day's 2 AM DST switch — so it's DST-correct, unlike
+// toISO()'s fixed GMT-0700 (fine for evening clock times, but would put a
+// November midnight on the previous day).
+function laMidnightOffset(year: number, month: number, day: number): string {
+  const name = new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Los_Angeles",
+    timeZoneName: "longOffset",
+  })
+    .formatToParts(new Date(Date.UTC(year, month, day, 8)))
+    .find((part) => part.type === "timeZoneName")?.value;
+  return name?.replace("GMT", "") || "-08:00";
+}
+
+function laMidnightISO(year: number, month: number, day: number): string {
+  const y = String(year);
+  const m = String(month + 1).padStart(2, "0");
+  const d = String(day).padStart(2, "0");
+  return new Date(`${y}-${m}-${d}T00:00:00${laMidnightOffset(year, month, day)}`).toISOString();
+}
+
+// Sunset-timed events (see EventDoc.timeType): start = the Las Vegas
+// calendar day's midnight (a date marker, never displayed as a time), end
+// = the last millisecond of that day, so the occurrence stays "upcoming"
+// until the day is over.
+function laDayBoundsISO(date: Date): { start: string; end: string } {
+  const [y, m, d] = [date.getFullYear(), date.getMonth(), date.getDate()];
+  const next = new Date(y, m, d + 1);
+  const nextMidnight = laMidnightISO(next.getFullYear(), next.getMonth(), next.getDate());
+  return {
+    start: laMidnightISO(y, m, d),
+    end: new Date(new Date(nextMidnight).getTime() - 1).toISOString(),
+  };
+}
+
 // weekday: JS Date.getDay() convention (Sunday = 0 .. Saturday = 6).
 type Recurrence =
   | { type: "none" }
   | { type: "daily" }
   | { type: "weekly" }
+  | { type: "weekdays"; days: number[] } // every week, on each listed weekday
   | { type: "monthly"; weekday: number; nth: 1 | 2 | 3 | 4 | -1 }; // -1 = last
 
 function nthWeekdayOfMonth(year: number, month: number, weekday: number, nth: number): Date {
@@ -118,6 +155,13 @@ function occurrenceDates(anchor: Date, recurrence: Recurrence, windowEnd: Date):
     return dates;
   }
 
+  if (recurrence.type === "weekdays") {
+    for (let d = new Date(anchor); d <= windowEnd; d.setDate(d.getDate() + 1)) {
+      if (recurrence.days.includes(d.getDay())) dates.push(new Date(d));
+    }
+    return dates;
+  }
+
   // Monthly: real cadence (e.g. "1st Saturday," "last Saturday") derived
   // from the live site's own scraped date sequence for this event — see
   // the file header note.
@@ -138,14 +182,24 @@ function occurrenceDates(anchor: Date, recurrence: Recurrence, windowEnd: Date):
   return dates;
 }
 
-interface EventSeries {
+// Fixed-time events carry real clock times. Sunset-timed events (see
+// EventDoc.timeType) have no clock time at all — each occurrence spans its
+// Las Vegas calendar day instead (see laDayBoundsISO), and `timeLabel`
+// alone tells visitors when it happens.
+type SeriesTiming =
+  | {
+      timeType?: "fixed";
+      startTime: string; // e.g. "7:30 PM" — fed to toISO()
+      endTime: string;
+    }
+  | { timeType: "sunset"; startTime?: never; endTime?: never };
+
+type EventSeries = SeriesTiming & {
   id: string;
   title: string;
   slug: string;
   category?: string;
   isRecurring: boolean;
-  startTime: string; // e.g. "7:30 PM" — fed to toISO()
-  endTime: string;
   timeLabel: string; // display string, e.g. "07:30 PM - 11:00 PM"
   anchorDate: Date; // real first upcoming occurrence, from the live site
   recurrence: Recurrence;
@@ -157,7 +211,9 @@ interface EventSeries {
   // one event with no on-site live detail page to verify tags against
   // (Chismosas Y Mimosas Night Market).
   tags?: EventTag[];
-  heroImage: SanityImage;
+  // Optional so an event with no verified image yet can omit it — cards/
+  // detail pages already render cleanly without one.
+  heroImage?: SanityImage;
   relatedBusinessId?: string;
   relatedBusinessName?: string;
   relatedBusinessSlug?: string;
@@ -172,7 +228,7 @@ interface EventSeries {
   externalUrl?: string;
   price?: string;
   partnerOffers?: { businessName: string; offerText: string }[];
-}
+};
 
 // Real tag label + real slug, scraped verbatim from each event's own live
 // detail page — see the `tags` field note above. The slug feeds this
@@ -215,6 +271,45 @@ const SERIES: EventSeries[] = [
     heroImage: realImage(
       "The Mantis (from live site)",
       "/assets/images/events/community-sunset-drum-circle.png"
+    ),
+  },
+  {
+    // Separate event from The Mantis, per client confirmation. Title and
+    // description are the live site's original "SUNSET DRUM CIRCLE" event
+    // copy (Wayback Machine snapshots 2022-01 to 2023-06, before that post
+    // was repurposed into the Mantis entry above). Wednesday–Sunday
+    // schedule follows the live homepage FAQ's current Mantis hours
+    // ("help us wake up the Mantis with a drum circle at sunset"). No real
+    // clock time exists — it's at sunset — so this is a sunset-timed
+    // series (see SeriesTiming), not an invented start/end time. Hero
+    // image is that original event's own photo (IMG-7766, 2022–23), copied
+    // unmodified from the live site's media library.
+    id: "sunset-drum-circle",
+    title: "Sunset Drum Circle",
+    slug: "sunset-drum-circle",
+    category: "attractions",
+    isRecurring: true,
+    timeType: "sunset",
+    timeLabel: "At sunset · Weather permitting",
+    anchorDate: new Date(2026, 7, 31),
+    recurrence: { type: "weekdays", days: [0, 3, 4, 5, 6] }, // Sun, Wed–Sat
+    shortDescription: "Come join us everyday at Sunset to wake up The Mantis. (Weather permitting)",
+    description: portableText([
+      "Come join us everyday at Sunset to wake up The Mantis. (Weather permitting)",
+    ]),
+    tags: [
+      tag("fire", "fire"),
+      tag("burning man", "burning-man"),
+      tag("drum circle", "drum-circle"),
+      tag("mantis", "mantis"),
+    ],
+    location: "Downtown Container Park, 707 Fremont St, Las Vegas, NV 89101",
+    relatedBusinessId: "real-the-mantis",
+    relatedBusinessName: "The Mantis",
+    relatedBusinessSlug: "the-mantis",
+    heroImage: realImage(
+      "People drumming in a circle in front of The Mantis at dusk (from live site)",
+      "/assets/images/events/sunset-drum-circle.jpg"
     ),
   },
   {
@@ -559,32 +654,42 @@ function expandSeries(series: EventSeries): EventDoc[] {
   );
   const multiple = dates.length > 1;
 
-  return dates.map((date) => ({
-    _id: multiple ? `real-${series.id}-${dateKey(date)}` : `real-${series.id}`,
-    title: series.title,
-    slug: { current: series.slug },
-    startDate: isoFromDate(date, series.startTime),
-    endDate: isoFromDate(date, series.endTime),
-    isRecurring: series.isRecurring,
-    time: series.timeLabel,
-    category: series.category,
-    shortDescription: series.shortDescription,
-    description: series.description,
-    tags: series.tags,
-    heroImage: series.heroImage,
-    location: series.location,
-    relatedBusiness: series.relatedBusinessId
-      ? {
-          _id: series.relatedBusinessId,
-          name: series.relatedBusinessName as string,
-          slug: { current: series.relatedBusinessSlug as string },
-        }
-      : undefined,
-    ticketUrl: series.ticketUrl,
-    externalUrl: series.externalUrl,
-    price: series.price,
-    partnerOffers: series.partnerOffers,
-  }));
+  return dates.map((date) => {
+    const { start, end } =
+      series.timeType === "sunset"
+        ? laDayBoundsISO(date)
+        : {
+            start: isoFromDate(date, series.startTime),
+            end: isoFromDate(date, series.endTime),
+          };
+    return {
+      _id: multiple ? `real-${series.id}-${dateKey(date)}` : `real-${series.id}`,
+      title: series.title,
+      slug: { current: series.slug },
+      startDate: start,
+      endDate: end,
+      ...(series.timeType === "sunset" && { timeType: "sunset" as const }),
+      isRecurring: series.isRecurring,
+      time: series.timeLabel,
+      category: series.category,
+      shortDescription: series.shortDescription,
+      description: series.description,
+      tags: series.tags,
+      heroImage: series.heroImage,
+      location: series.location,
+      relatedBusiness: series.relatedBusinessId
+        ? {
+            _id: series.relatedBusinessId,
+            name: series.relatedBusinessName as string,
+            slug: { current: series.relatedBusinessSlug as string },
+          }
+        : undefined,
+      ticketUrl: series.ticketUrl,
+      externalUrl: series.externalUrl,
+      price: series.price,
+      partnerOffers: series.partnerOffers,
+    };
+  });
 }
 
 export const MOCK_EVENTS: EventDoc[] = SERIES.flatMap(expandSeries).sort(

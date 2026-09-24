@@ -35,8 +35,8 @@ export function EventsListingClient({ events }: { events: EventDoc[] }) {
 
     // `isRecurring` is the single real classification field (already on
     // the Sanity schema) — Recurring Events shows only events with it set
-    // (currently just "The Mantis"), Featured Events shows every other
-    // imported event.
+    // (currently "The Mantis" and "Sunset Drum Circle"), Featured Events
+    // shows every other imported event.
     if (tab === "recurring") {
       result = result.filter((event) => event.isRecurring);
     }
