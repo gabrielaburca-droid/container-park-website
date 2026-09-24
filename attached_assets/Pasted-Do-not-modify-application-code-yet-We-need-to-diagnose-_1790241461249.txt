@@ -1,0 +1,51 @@
+Do not modify application code yet.
+
+We need to diagnose why the Replit production build cannot install the committed dependencies.
+
+Current state:
+- Commit: 295448d8676cedea369ca2c094024f5473189f94
+- GitHub sync succeeded.
+- The commit adds nodemailer and @types/nodemailer.
+- Replit reports that nodemailer is missing locally.
+- Restoring/installing dependencies was blocked by the package security policy.
+- / and /events return 200.
+- /contact and /leasing return 200.
+- /events/sunset-drum-circle and /events/community-sunset-drum-circle return 500 with a missing client-reference manifest.
+- .replit has a pre-existing local modification. PRESERVE IT.
+- Do not commit or push anything.
+
+Please investigate only:
+
+1. Check package.json and package-lock.json and confirm nodemailer is correctly declared.
+2. Check whether node_modules/nodemailer exists.
+3. Check the installed npm/node versions.
+4. Check the exact error produced when attempting the normal dependency installation.
+5. Determine whether the security policy is blocking:
+   - nodemailer itself,
+   - its version,
+   - @types/nodemailer,
+   - or the installation command/policy generally.
+6. Check whether package-lock.json is internally consistent with package.json.
+7. Do NOT bypass security policy.
+8. Do NOT use --force, --ignore-scripts, or other security bypasses.
+9. Do NOT change package versions yet.
+10. Do NOT modify .replit.
+11. Do NOT modify application code.
+12. Do NOT commit or push.
+
+If the dependency installation can be safely restored using the existing package.json/package-lock.json without bypassing policy, do that and then run:
+
+npm run build
+
+If installation remains blocked, stop and report the exact security-policy error and what dependency/version is being blocked.
+
+Also check whether the missing client-reference manifest errors are simply a consequence of the incomplete/mismatched build, rather than a separate application bug.
+
+Report:
+- exact install error
+- whether package.json/package-lock.json are consistent
+- whether nodemailer can be installed under the current Replit policy
+- whether the 500 errors are a build/runtime consequence
+- recommended next step
+
+Do not make unrelated changes.
