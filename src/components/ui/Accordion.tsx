@@ -74,11 +74,17 @@ export function Accordion({ items }: AccordionProps) {
                 </span>
               </button>
             </h3>
-            {isOpen && (
-              <div id={`accordion-panel-${item.id}`} className="pb-4 text-sm text-muted">
-                {item.content}
-              </div>
-            )}
+            {/* Always rendered — a closed panel is only `hidden`, so its
+                content is still in the server-rendered HTML (crawlable,
+                and found by in-page search) rather than existing only
+                after a click. */}
+            <div
+              id={`accordion-panel-${item.id}`}
+              hidden={!isOpen}
+              className="pb-4 text-sm text-muted"
+            >
+              {item.content}
+            </div>
           </div>
         );
       })}

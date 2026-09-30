@@ -1,1 +1,6 @@
-[]
+[
+  { "source": "/visit/", "destination": "/visit-us", "permanent": true },
+  { "source": "/visit", "destination": "/visit-us", "permanent": true },
+  { "source": "/book-an-event/", "destination": "/group-events", "permanent": true },
+  { "source": "/book-an-event", "destination": "/group-events", "permanent": true }
+]

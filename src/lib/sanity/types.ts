@@ -28,6 +28,7 @@ export interface SocialLinks {
   facebook?: string;
   instagram?: string;
   twitter?: string;
+  youtube?: string;
   tiktok?: string;
   tripadvisor?: string;
 }
@@ -81,6 +82,17 @@ export interface Business {
   tagline?: string;
   /** Whether this listing shows the live site's "Claimed" badge. */
   claimed?: boolean;
+  /** Live listing page's "Additional Details" rows (e.g. Cash: Yes). */
+  amenities?: { label: string; value: string }[];
+  /** Live listing page's "Quick questions" block. */
+  faq?: { question: string; answer: string[] }[];
+  /** Headed image shown below the description on the live listing page
+   * (e.g. The Mantis' "Fun Facts" infographic). width/height are the
+   * file's real pixel size. */
+  featureImage?: { heading: string; image: SanityImage; width: number; height: number };
+  /** Keeps the business's data and detail page but leaves it out of the
+   * category listing pages. */
+  unlisted?: boolean;
 }
 
 export interface RelatedBusinessRef {
@@ -134,6 +146,9 @@ export interface EventDoc {
   // as optional, not as a guaranteed field.
   location?: string;
   ticketUrl?: string;
+  // Live detail page's "More Info" link when it isn't a ticket page (e.g.
+  // an organiser's Instagram). Same schema-gap pattern as the fields below.
+  moreInfoUrl?: string;
   price?: string;
   seo?: SeoFields;
   // TODO: SCHEMA GAP — not yet fields on the `event` Sanity document (see

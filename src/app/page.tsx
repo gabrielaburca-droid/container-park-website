@@ -5,6 +5,7 @@ import { ImageTextSplit } from "@/components/home/ImageTextSplit";
 import { StatStrip } from "@/components/home/StatStrip";
 import { HomeEventsSection } from "@/components/home/HomeEventsSection";
 import { VideoFeature } from "@/components/home/VideoFeature";
+import { HomeFaq } from "@/components/home/HomeFaq";
 import { PageBottom } from "@/components/layout/PageBottom";
 // TEMPORARY: mock data layer for local visual QA — see CLAUDE.md.
 // Swap back to "@/lib/sanity/queries" before connecting Sanity.
@@ -78,6 +79,8 @@ export default async function HomePage() {
         posterUrl="/assets/images/all/video-placeholder.jpg"
         posterAlt="The Mantis, a fire-breathing praying mantis sculpture, at Downtown Container Park"
       />
+
+      <HomeFaq />
 
       <PageBottom settings={settings} />
     </>

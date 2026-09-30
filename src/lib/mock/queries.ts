@@ -19,8 +19,8 @@ import { MOCK_REVIEWS_BY_BUSINESS_SLUG } from "@/data/mock/reviews";
 // only by route-level files (app/**/page.tsx, layout.tsx).
 
 export async function getBusinessesByCategory(category: string): Promise<Business[]> {
-  return MOCK_BUSINESSES.filter((business) =>
-    business.categories.includes(category as BusinessCategory)
+  return MOCK_BUSINESSES.filter(
+    (business) => !business.unlisted && business.categories.includes(category as BusinessCategory)
   ).sort((a, b) => a.name.localeCompare(b.name));
 }
 

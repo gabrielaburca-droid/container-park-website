@@ -7,6 +7,7 @@ import {
   upsertContact,
 } from "@/lib/activecampaign/client";
 import { isEmailConfigured, sendInquiryEmail, type InquiryEmail } from "@/lib/email/client";
+import { submitTripleseatLead } from "@/lib/tripleseat/client";
 
 export interface FormSubmitResult {
   success: boolean;
@@ -14,9 +15,10 @@ export interface FormSubmitResult {
 }
 
 // Single seam for connecting a real provider per form. Contact and Leasing
-// send a plain-text notification email to info@containerpark.com over
-// SMTP (see src/lib/email/client.ts). Group Events still falls through to
-// the log-only stub below. The newsletter
+// send a plain-text notification email to info@containerpark.com via
+// Resend (see src/lib/email/client.ts). Group Events posts a real lead to
+// Tripleseat, the same lead form the live site uses (see
+// src/lib/tripleseat/client.ts). The newsletter
 // ("Join the VIP List") form is the one confirmed ActiveCampaign use case
 // (client feedback: marketing list signup, account username
 // "verycreative") — see src/lib/activecampaign/client.ts. Contact/Leasing/
@@ -39,6 +41,10 @@ export async function submitForm(
 
   if (formName === "contact" || formName === "leasing") {
     return submitInquiryEmail(formName, payload);
+  }
+
+  if (formName === "group-event") {
+    return submitGroupEventLead(payload);
   }
 
   // TODO: CONNECT PROVIDER — replace with a real transactional-email
@@ -114,14 +120,14 @@ async function submitInquiryEmail(
 
   if (!isEmailConfigured()) {
     // Locally, keep the existing log-only stub so the form stays usable
-    // without SMTP credentials. In production, never tell a visitor their
+    // without a Resend API key. In production, never tell a visitor their
     // inquiry was sent when it was silently dropped — surface the form's
     // normal error state and log the misconfiguration instead.
     if (process.env.NODE_ENV !== "production") {
-      console.info(`[form:${formName}] SMTP is not configured — email not sent`, inquiry);
+      console.info(`[form:${formName}] Resend is not configured — email not sent`, inquiry);
       return { success: true };
     }
-    console.error(`[form:${formName}] SMTP is not configured — inquiry email not sent`);
+    console.error(`[form:${formName}] Resend is not configured — inquiry email not sent`);
     return { success: false, error: "Something went wrong — please try again." };
   }
 
@@ -129,12 +135,82 @@ async function submitInquiryEmail(
     await sendInquiryEmail(inquiry);
     return { success: true };
   } catch (error) {
-    // Short message only — never the submitted data or SMTP credentials.
+    // Short message only — never the submitted data or the API key.
     console.error(
       `[form:${formName}] inquiry email failed:`,
       error instanceof Error ? error.message : "unknown error"
     );
     return { success: false, error: "Something went wrong — please try again." };
+  }
+}
+
+const GENERIC_ERROR = "Something went wrong — please try again.";
+
+// Native <input type="date"> value (YYYY-MM-DD) -> the mm/dd/yyyy the
+// Tripleseat lead form itself submits.
+function toTripleseatDate(value: string): string {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  return match ? `${match[2]}/${match[3]}/${match[1]}` : value;
+}
+
+// Native <input type="time"> value (HH:MM, 24h) -> Tripleseat's own time
+// format, e.g. "18:00" -> "6:00pm".
+function toTripleseatTime(value: string): string {
+  const match = /^(\d{1,2}):(\d{2})$/.exec(value);
+  if (!match) return value;
+  const hours = Number(match[1]);
+  return `${hours % 12 || 12}:${match[2]}${hours >= 12 ? "pm" : "am"}`;
+}
+
+// Group Events: every "lead[...]" field from GroupEventForm.tsx (named
+// after Tripleseat's own params) is forwarded to Tripleseat along with the
+// visitor's reCAPTCHA answer, which Tripleseat requires for this lead form.
+// Success is returned ONLY when Tripleseat confirms it created the lead —
+// a validation error, failed robot check, network error or unexpected
+// response all surface the form's error state instead.
+async function submitGroupEventLead(payload: Record<string, unknown>): Promise<FormSubmitResult> {
+  const firstName = field(payload, "lead[first_name]");
+  const lastName = field(payload, "lead[last_name]");
+  const email = field(payload, "lead[email_address]");
+  const phone = field(payload, "lead[phone_number]", 50);
+  if (!firstName || !lastName || !EMAIL_PATTERN.test(email) || !phone) {
+    return { success: false, error: "Please fill in all required fields." };
+  }
+
+  const recaptchaResponse = field(payload, "g-recaptcha-response", 4000);
+  if (!recaptchaResponse) {
+    return { success: false, error: "Please confirm you're not a robot." };
+  }
+
+  const eventsNeeded = Boolean(payload["lead[booking_events_needed]"]);
+  const fields: Record<string, string> = { "g-recaptcha-response": recaptchaResponse };
+  for (const name of Object.keys(payload)) {
+    if (!name.startsWith("lead[") || name === "lead[booking_events_needed]") continue;
+    const isEventField = name.startsWith("lead[lead_booking_events_attributes]");
+    if (isEventField && !eventsNeeded) continue;
+    let value = field(payload, name, 5000);
+    if (name.endsWith("_date]")) value = toTripleseatDate(value);
+    if (name.endsWith("_time]")) value = toTripleseatTime(value);
+    fields[name] = value;
+  }
+  fields["lead[booking_events_needed]"] = eventsNeeded ? "1" : "0";
+
+  try {
+    const result = await submitTripleseatLead(fields);
+    if (result.ok) {
+      return { success: true };
+    }
+    // Tripleseat's own visitor-facing validation messages (e.g. "Phone
+    // Number can't be blank") — no submitted data.
+    console.error("[form:group-event] Tripleseat rejected the lead:", result.errors.join("; "));
+    return { success: false, error: result.errors.join(" ") || GENERIC_ERROR };
+  } catch (error) {
+    // Short message only — never the submitted data.
+    console.error(
+      "[form:group-event] Tripleseat submission failed:",
+      error instanceof Error ? error.message : "unknown error"
+    );
+    return { success: false, error: GENERIC_ERROR };
   }
 }
 

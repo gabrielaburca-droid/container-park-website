@@ -134,6 +134,15 @@ export const MOCK_REVIEWS_BY_BUSINESS_SLUG: Record<string, Review[]> = {
   ],
   "downtown-terrace": [
     {
+      id: "downtown-terrace-9",
+      authorName: "araceli99817",
+      date: "September 4, 2026 1:50 pm",
+      rating: 5.0,
+      title: "100000/10 Best Brunch place in Downtown Las Vegas",
+      body: "Food was delicious a service was great. they are very welcomely. Caprice Grill Cheese and Chilaquiles are the best. Mimosas and Palomas are delicious.",
+      reactions: { interesting: 0, lol: 0, love: 0 },
+    },
+    {
       id: "downtown-terrace-1",
       authorName: "nsancheZ12313",
       date: "October 8, 2022 4:47 pm",
@@ -227,6 +236,15 @@ export const MOCK_REVIEWS_BY_BUSINESS_SLUG: Record<string, Review[]> = {
     },
   ],
   "gimme-5": [
+    {
+      id: "gimme-5-13",
+      authorName: "tteiez66",
+      date: "September 12, 2026 10:02 pm",
+      rating: 1.0,
+      title: "Awful",
+      body: "Went on vacation to LV, first night there we went downtown and found this place. The lady was rude, hateful, just a bad attitude.",
+      reactions: { interesting: 0, lol: 0, love: 0 },
+    },
     {
       id: "gimme-5-1",
       authorName: "ttgofulurself46",

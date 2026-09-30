@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageHero } from "@/components/layout/PageHero";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -41,15 +42,13 @@ export default async function VisitUsPage() {
           Hero treatment already established on Events/Leasing/Group
           Events/Contact (no small eyebrow above the H1, per the attached
           design) and wired in the real hero-visit.jpg asset.
-          Title/titleAccent/description text values are exactly what was
-          already there; nothing about the actual copy changed. */}
+          No fallback description: the live /visit/ hero is the title
+          alone (the leasing-style line that used to sit here is not on
+          the live page). */}
       <PageHero
         title={page?.hero?.heading || "VISIT US"}
         titleAccent="DOWNTOWN LAS VEGAS"
-        description={
-          page?.hero?.subheading ||
-          "Join a vibrant community of local businesses in the heart of Downtown Las Vegas."
-        }
+        description={page?.hero?.subheading}
         imageUrl="/assets/images/all/hero-visit.jpg"
         large
       />
@@ -73,16 +72,29 @@ export default async function VisitUsPage() {
 
         <div className="mt-8 space-y-1 text-sm text-muted">
           <p className="font-semibold text-foreground">Contact</p>
+          {/* Same five lines, in the same order, as the live /visit/
+              page: the first two link to their pages, the rest are the
+              live page's own mailto addresses. */}
           <p>
-            Bookings:{" "}
-            <a href="mailto:bookings@downtowncontainerpark.com" className="hover:underline">
-              bookings@downtowncontainerpark.com
-            </a>
+            <Link href="/contact" className="hover:underline">
+              General Information
+            </Link>
+          </p>
+          <p>
+            <Link href="/leasing" className="hover:underline">
+              Leasing Inquiries
+            </Link>
           </p>
           <p>
             Event &amp; Venue Reservations:{" "}
             <a href="mailto:events@downtownproject.com" className="hover:underline">
               events@downtownproject.com
+            </a>
+          </p>
+          <p>
+            Booking Inquiries:{" "}
+            <a href="mailto:bookings@downtowncontainerpark.com" className="hover:underline">
+              bookings@downtowncontainerpark.com
             </a>
           </p>
           <p>
@@ -150,17 +162,40 @@ export default async function VisitUsPage() {
                     <div className="space-y-3">
                       <p>
                         The Container Park parking lot is conveniently located across the street at
-                        118 S. 7th Street, or the Llama parking is located just a block away at 910
+                        118 S. 7th Street or the Llama parking is located just a block away at 910
                         Fremont Street.
                       </p>
-                      <ul className="list-disc space-y-1 pl-5">
-                        <li>Container Park Lot — 118 S. 7th Street — $3/hour, max of 5 hours</li>
-                        <li>Downtowner Lot — 108 N. 8th Street — $2/hour, $10 flat rate</li>
+                      <ul className="space-y-3">
                         <li>
-                          Llama Lot — 910 Fremont Street — $1/hour, $6 daily maximum, $5 flat rate
-                          on nights (after 6pm) and weekends
+                          <span className="font-semibold">Container Park Lot</span>
+                          <br />
+                          118 S. 7th Street
+                          <br />
+                          $3 Per Hour with Max of 5 hours
                         </li>
-                        <li>Place on 7th Lot — 115 7th Street — $3/hour</li>
+                        <li>
+                          <span className="font-semibold">Downtowner Lot</span>
+                          <br />
+                          108 N. 8th Street
+                          <br />
+                          $2/hour – $10 flat rate
+                        </li>
+                        <li>
+                          <span className="font-semibold">Llama Lot</span>
+                          <br />
+                          910 Fremont Street
+                          <br />
+                          $1/hour – $6 daily maximum
+                          <br />
+                          $5 flat rate on nights (after 6pm) and weekends
+                        </li>
+                        <li>
+                          <span className="font-semibold">Place on 7th Lot</span>
+                          <br />
+                          115 7th Street
+                          <br />
+                          $3/hour
+                        </li>
                       </ul>
                     </div>
                   ),
@@ -169,11 +204,31 @@ export default async function VisitUsPage() {
                   id: "parking-mobile-app",
                   title: "Parking Mobile App",
                   content: (
-                    <p>
-                      PassportParking is the best and easiest way to pay for parking using your
-                      mobile phone. No more quarters, no more running to the parking meters — in no
-                      time you can park, pay, and be on your way. Available for iOS and Android.
-                    </p>
+                    <div className="space-y-3">
+                      <p>
+                        PassportParking is the best and easiest way to pay for parking using your
+                        mobile phone. No more quarters. No more running to the parking meters. In no
+                        time, you can park, pay, and be on your way.
+                      </p>
+                      <p className="flex flex-wrap gap-x-6 gap-y-2">
+                        <a
+                          href="https://itunes.apple.com/us/app/passportparking%C2%ADmobile-pay/id501324867?mt=8"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="underline"
+                        >
+                          Download for iOS
+                        </a>
+                        <a
+                          href="https://play.google.com/store/apps/details?id=com.passportparking.mobile&hl=en"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="underline"
+                        >
+                          Download for Android
+                        </a>
+                      </p>
+                    </div>
                   ),
                 },
                 {

@@ -111,6 +111,7 @@ export default async function EventDetailPage({ params }: EventPageProps) {
   const googleCalendarUrl = buildGoogleCalendarUrl(event, calendarExtras);
   const icsUrl = buildIcsDataUrl(event, calendarExtras);
   const eventTypeLabel = event.isRecurring ? "Recurring" : "Featured";
+  const moreInfoUrl = event.ticketUrl || event.moreInfoUrl;
 
   const eventImageUrl = event.heroImage?.asset
     ? urlForImage(event.heroImage).width(1200).height(630).url()
@@ -360,6 +361,31 @@ export default async function EventDetailPage({ params }: EventPageProps) {
                     <div>
                       <p className="text-xs font-medium uppercase text-muted">Time</p>
                       <p className="font-bold">{event.time}</p>
+                    </div>
+                  </div>
+                )}
+                {/* Live detail pages' own "More Info" / "Read More" row —
+                    the event's real ticket or organiser link, only when it
+                    has one. */}
+                {moreInfoUrl && (
+                  <div className="flex items-start gap-3 py-4">
+                    <Image
+                      src="/assets/images/all/icon-web.svg"
+                      alt=""
+                      width={21}
+                      height={21}
+                      className="h-6 w-6 shrink-0"
+                    />
+                    <div>
+                      <p className="text-xs font-medium uppercase text-muted">More Info</p>
+                      <a
+                        href={moreInfoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-bold underline"
+                      >
+                        Read More
+                      </a>
                     </div>
                   </div>
                 )}

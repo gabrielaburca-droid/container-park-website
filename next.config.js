@@ -1,9 +1,10 @@
 /** @type {import('next').NextConfig} */
 const redirects = require("./src/data/redirects.json");
 
-// `redirects` is intentionally empty in Phase 1 — see src/data/redirects.json.
-// The mechanism is wired up now so real redirect decisions can be dropped in
-// later without any code changes.
+// Approved redirects only — see src/data/redirects.json (currently the two
+// renamed live URLs, /visit and /book-an-event, each with and without its
+// trailing slash). Further redirect decisions
+// can be dropped in there without any code changes.
 const nextConfig = {
   reactStrictMode: true,
   output: "standalone",
@@ -22,17 +23,6 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "cdn.sanity.io",
-      },
-      // TEMPORARY — the live site's own WP Engine media host. Business
-      // gallery photos are real images pulled live from each business's
-      // actual listing page (see data/mock/businesses.ts) rather than
-      // downloaded and committed locally — there are ~230 of them across
-      // the real businesses, too many to vendor into this repo for a
-      // still-unconnected-to-Sanity phase. Safe to remove once real
-      // gallery assets are migrated into Sanity.
-      {
-        protocol: "https",
-        hostname: "containerpark.wpenginepowered.com",
       },
       // Instagram Graph API media/thumbnail URLs (see
       // src/lib/instagram/queries.ts) resolve to Facebook's own CDN, not a
@@ -70,8 +60,19 @@ const nextConfig = {
     contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
+  // Next's built-in "strip the trailing slash" redirect always runs before
+  // the redirects below, which turned the old site's /visit/ and
+  // /book-an-event/ into two hops (/visit/ -> /visit -> /visit-us). It is
+  // switched off here and re-added, unchanged, as the LAST rule in
+  // redirects() so the approved redirects can match the trailing-slash URL
+  // first and answer in a single hop.
+  skipTrailingSlashRedirect: true,
   async redirects() {
-    return redirects;
+    return [
+      ...redirects,
+      // Same rule Next applies by default (see above): /shop/ -> /shop.
+      { source: "/:path+/", destination: "/:path+", permanent: true },
+    ];
   },
 };
 

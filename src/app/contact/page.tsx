@@ -19,7 +19,9 @@ const PAGE_ID = "page-contact";
 // Leasing's text, but it read as the same kind of "join our tenant
 // community" pitch, wrong for a page whose real purpose is just contact
 // info. Replaced with client-supplied, deliberately factual copy.
-const CONTACT_TITLE = "Contact Downtown Container Park | Downtown Las Vegas";
+// Title restored to the live site's own (launch QA, SEO parity); the
+// description below is still the client-supplied copy.
+const CONTACT_TITLE = "Contact - Downtown Container Park";
 const CONTACT_DESCRIPTION =
   "Get in touch with Downtown Container Park in Las Vegas. Find our location, contact information and hours of operation.";
 

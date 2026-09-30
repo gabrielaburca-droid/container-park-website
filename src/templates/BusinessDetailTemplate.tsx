@@ -10,6 +10,16 @@ import type { Review } from "@/components/business/ReviewCard";
 import type { Business } from "@/lib/sanity/types";
 import { buildDirectionsUrl, buildMapsEmbedUrl } from "@/lib/maps";
 import { getOpenStatus, getTodayHours, getNextOpenLabel, formatDisplayTime } from "@/lib/business/openStatus";
+import { urlForImage } from "@/lib/sanity/image";
+
+// Only the networks the live listing pages actually link to. Rendered in
+// this order, and only for links present in the business's own data.
+const SOCIAL_LINK_LABELS = [
+  { key: "facebook", label: "Facebook" },
+  { key: "instagram", label: "Instagram" },
+  { key: "twitter", label: "X" },
+  { key: "youtube", label: "YouTube" },
+] as const;
 
 interface BusinessDetailTemplateProps {
   business: Business;
@@ -60,6 +70,10 @@ export function BusinessDetailTemplate({
   // so this is never guessed for a business with no real closing time.
   const closesAtLabel =
     openStatus === "open" && todayHours?.close ? formatDisplayTime(todayHours.close) : null;
+  const socialLinks = SOCIAL_LINK_LABELS.flatMap(({ key, label }) => {
+    const href = business.socialLinks?.[key];
+    return href ? [{ key, label, href }] : [];
+  });
 
   return (
     <>
@@ -185,6 +199,44 @@ export function BusinessDetailTemplate({
                 <p className="mt-4 text-sm text-muted">Keywords: {business.tags.join(", ")}</p>
               )}
 
+              {/* Headed image from the live listing page's own body (see
+                  Business.featureImage) — shown at its natural aspect
+                  ratio (its real pixel size), not cropped. */}
+              {business.featureImage?.image.asset && (
+                <div className="mt-8">
+                  <h2 className="font-display text-2xl uppercase lg:text-[36px]">
+                    {business.featureImage.heading}
+                  </h2>
+                  <Image
+                    src={urlForImage(business.featureImage.image).url()}
+                    alt={business.featureImage.image.alt || business.featureImage.heading}
+                    width={business.featureImage.width}
+                    height={business.featureImage.height}
+                    sizes="(min-width: 448px) 448px, 100vw"
+                    className="mt-4 h-auto w-full max-w-md"
+                  />
+                </div>
+              )}
+
+              {/* Live listing page's "Quick questions" block. */}
+              {business.faq && business.faq.length > 0 && (
+                <div className="mt-8">
+                  <h2 className="font-display text-2xl uppercase lg:text-[36px]">Quick questions</h2>
+                  <dl className="mt-4 space-y-4 text-sm sm:text-base">
+                    {business.faq.map((item) => (
+                      <div key={item.question}>
+                        <dt className="font-bold">{item.question}</dt>
+                        {item.answer.map((line) => (
+                          <dd key={line} className="text-muted">
+                            {line}
+                          </dd>
+                        ))}
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+              )}
+
               {/* Single white box for ALL Reviews content (heading, rating
                   summary, individual review cards, and the review form) —
                   not a separate box per part. Sits on top of the section's
@@ -211,7 +263,9 @@ export function BusinessDetailTemplate({
                 per spec rather than incidental). No new wrapper divs. */}
             <aside className="space-y-6 lg:max-w-[400px]">
               <div className="border border-border bg-white p-6">
-                {business.hours && business.hours.length > 0 ? (
+                {/* No hours block at all for a listing without hours — same as
+                    the live listing pages (e.g. The Mantis). */}
+                {business.hours && business.hours.length > 0 && (
                   <>
                     {/* Real-time, not a stored field — see
                         lib/business/openStatus.ts. Same real clock icon
@@ -263,12 +317,10 @@ export function BusinessDetailTemplate({
                       ))}
                     </ul>
                   </>
-                ) : (
-                  <p className="text-sm text-black">Hours not yet available.</p>
                 )}
 
                 {(business.phone || business.website) && (
-                  <div className="mt-4 space-y-2 text-sm text-black">
+                  <div className="space-y-2 text-sm text-black [&:not(:first-child)]:mt-4">
                     {business.phone && (
                       <p className="flex items-center gap-2">
                         {/* Real project asset (icon-phone.svg), rendered at
@@ -317,7 +369,7 @@ export function BusinessDetailTemplate({
                 )}
 
                 {business.address && (
-                  <address className="mt-4 flex items-start gap-2 text-sm not-italic text-black">
+                  <address className="flex items-start gap-2 text-sm not-italic text-black [&:not(:first-child)]:mt-4">
                     <span className="relative mt-0.5 h-[21px] w-[21px] shrink-0">
                       <Image
                         src="/assets/images/all/icon-location.svg"
@@ -351,6 +403,40 @@ export function BusinessDetailTemplate({
                       )}
                     </span>
                   </address>
+                )}
+
+                {/* The business's own social profiles, as linked from its
+                    live listing page — only the ones it actually has. */}
+                {socialLinks.length > 0 && (
+                  <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-2 border-t border-border pt-4 text-sm text-black">
+                    {socialLinks.map(({ key, label, href }) => (
+                      <li key={key}>
+                        <a
+                          href={href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${business.name} on ${label}`}
+                          className="underline underline-offset-2"
+                        >
+                          {label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                {business.amenities && business.amenities.length > 0 && (
+                  <div className="mt-4 border-t border-border pt-4 text-sm text-black">
+                    <p className="font-bold uppercase tracking-wide">Additional Details</p>
+                    <ul className="mt-2 space-y-1">
+                      {business.amenities.map((item) => (
+                        <li key={item.label} className="flex justify-between gap-4">
+                          <span>{item.label}</span>
+                          <span className="font-bold">{item.value}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
               </div>
               {/* Real, interactive Google Maps embed (keyless — see

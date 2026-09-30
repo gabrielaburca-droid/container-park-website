@@ -1,7 +1,23 @@
 import type { Metadata } from "next";
 
 export const SITE_NAME = "Downtown Container Park";
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const PRODUCTION_SITE_URL = "https://downtowncontainerpark.com";
+
+// Canonical/OG/sitemap/robots base. NEXT_PUBLIC_SITE_URL wins when set;
+// otherwise a production build uses the real domain and only `next dev`
+// falls back to localhost. A localhost value is also ignored in a
+// production build (e.g. one copied over from a local env file), so
+// production metadata can never point at localhost.
+function resolveSiteUrl(): string {
+  const configured = process.env.NEXT_PUBLIC_SITE_URL?.trim().replace(/\/+$/, "");
+  const isProduction = process.env.NODE_ENV === "production";
+  if (configured && !(isProduction && /\/\/(localhost|127\.0\.0\.1)/.test(configured))) {
+    return configured;
+  }
+  return isProduction ? PRODUCTION_SITE_URL : "http://localhost:3000";
+}
+
+export const SITE_URL = resolveSiteUrl();
 export const DEFAULT_DESCRIPTION =
   "Downtown Container Park is a boutique shopping, dining, and entertainment destination in downtown Las Vegas, Nevada.";
 

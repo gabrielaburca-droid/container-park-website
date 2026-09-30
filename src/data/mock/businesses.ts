@@ -41,6 +41,9 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-bin-702",
     name: "Bin 702",
     slug: { current: "bin-702" },
+    tagline: "Craft beer, assorted wines, grilled sandwiches, chacuterie and more",
+    // Page <title> casing as on the live listing page.
+    seo: { title: "BIN 702" },
     description: [
       {
         _type: "block",
@@ -67,36 +70,39 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "Bin 702 — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/container.park-9-of-95.jpg"
+        "/assets/images/businesses/gallery/bin-702/container.park-9-of-95.jpg"
       ),
       realImage(
         "Bin 702 — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/container.park-10-of-95.jpg"
+        "/assets/images/businesses/gallery/bin-702/container.park-10-of-95.jpg"
       ),
       realImage(
         "Bin 702 — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/bin702pic2.jpg"
+        "/assets/images/businesses/gallery/bin-702/bin702pic2.jpg"
       ),
       realImage(
         "Bin 702 — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/container.park-43-of-95.jpg"
+        "/assets/images/businesses/gallery/bin-702/container.park-43-of-95.jpg"
       ),
       realImage(
         "Bin 702 — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/Bin702-pic.jpg"
+        "/assets/images/businesses/gallery/bin-702/Bin702-pic.jpg"
       ),
       realImage(
         "Bin 702 — gallery photo 6 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/montaditos-2.jpg"
+        "/assets/images/businesses/gallery/bin-702/montaditos-2.jpg"
       ),
       realImage(
         "Bin 702 — gallery photo 7 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/bin702pic3.jpg"
+        "/assets/images/businesses/gallery/bin-702/bin702pic3.jpg"
       ),
     ],
     phone: "+1 702-826-2702",
     website: "https://bin702.com/",
-    socialLinks: { facebook: "https://www.facebook.com/Bin-702-616108155106146/" },
+    socialLinks: {
+      facebook: "https://www.facebook.com/Bin-702-616108155106146/",
+      instagram: "https://instagram.com/bin702",
+    },
     hours: [
       { day: "Monday", open: "12:00 PM", close: "10:00 PM" },
       { day: "Tuesday", open: "12:00 PM", close: "10:00 PM" },
@@ -106,13 +112,16 @@ export const MOCK_BUSINESSES: Business[] = [
       { day: "Saturday", open: "12:00 PM", close: "12:00 AM" },
       { day: "Sunday", open: "12:00 PM", close: "07:00 PM" },
     ],
-    address: PARK_ADDRESS,
+    // Unit-level street line exactly as shown on this listing's live page.
+    address: { ...PARK_ADDRESS, street: "707 E Fremont Street, #1220" },
     status: "open",
   },
   {
     _id: "real-black-spade-tattoo-permanent-makeup",
     name: "Black Spade Tattoo & Permanent Makeup",
     slug: { current: "black-spade-tattoo-permanent-makeup" },
+    // Page <title> casing as on the live listing page.
+    seo: { title: "BLACK SPADE TATTOO & PERMANENT MAKEUP" },
     description: [
       {
         _type: "block",
@@ -141,60 +150,63 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "Black Spade Tattoo & Permanent Makeup — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/IMG-5756.jpg"
+        "/assets/images/businesses/gallery/black-spade-tattoo-permanent-makeup/IMG-5756.jpg"
       ),
       realImage(
         "Black Spade Tattoo & Permanent Makeup — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/IMG-5754.jpg"
+        "/assets/images/businesses/gallery/black-spade-tattoo-permanent-makeup/IMG-5754.jpg"
       ),
       realImage(
         "Black Spade Tattoo & Permanent Makeup — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/container.park-75-of-95.jpg"
+        "/assets/images/businesses/gallery/black-spade-tattoo-permanent-makeup/container.park-75-of-95.jpg"
       ),
       realImage(
         "Black Spade Tattoo & Permanent Makeup — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/Bones.jpg"
+        "/assets/images/businesses/gallery/black-spade-tattoo-permanent-makeup/Bones.jpg"
       ),
       realImage(
         "Black Spade Tattoo & Permanent Makeup — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/IMG-5753.jpg"
+        "/assets/images/businesses/gallery/black-spade-tattoo-permanent-makeup/IMG-5753.jpg"
       ),
       realImage(
         "Black Spade Tattoo & Permanent Makeup — gallery photo 6 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/container.park-30-of-95.jpg"
+        "/assets/images/businesses/gallery/black-spade-tattoo-permanent-makeup/container.park-30-of-95.jpg"
       ),
       realImage(
         "Black Spade Tattoo & Permanent Makeup — gallery photo 7 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/IMG-5766.jpg"
+        "/assets/images/businesses/black-spade-tattoo-permanent-makeup.jpg"
       ),
       realImage(
         "Black Spade Tattoo & Permanent Makeup — gallery photo 8 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/container.park-32-of-95.jpg"
+        "/assets/images/businesses/gallery/black-spade-tattoo-permanent-makeup/container.park-32-of-95.jpg"
       ),
       realImage(
         "Black Spade Tattoo & Permanent Makeup — gallery photo 9 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/IMG_2730.jpg"
+        "/assets/images/businesses/gallery/black-spade-tattoo-permanent-makeup/IMG_2730.jpg"
       ),
       realImage(
         "Black Spade Tattoo & Permanent Makeup — gallery photo 10 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/IMG-5757.jpg"
+        "/assets/images/businesses/gallery/black-spade-tattoo-permanent-makeup/IMG-5757.jpg"
       ),
       realImage(
         "Black Spade Tattoo & Permanent Makeup — gallery photo 11 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/2016tigereyes.jpg"
+        "/assets/images/businesses/gallery/black-spade-tattoo-permanent-makeup/2016tigereyes.jpg"
       ),
       realImage(
         "Black Spade Tattoo & Permanent Makeup — gallery photo 12 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/IMG_1952.jpg"
+        "/assets/images/businesses/gallery/black-spade-tattoo-permanent-makeup/IMG_1952.jpg"
       ),
       realImage(
         "Black Spade Tattoo & Permanent Makeup — gallery photo 13 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/IMG-5755.jpg"
+        "/assets/images/businesses/gallery/black-spade-tattoo-permanent-makeup/IMG-5755.jpg"
       ),
     ],
     phone: "+1 702-413-7076",
     website: "https://blackspadetattoo.com/",
-    socialLinks: { facebook: "https://www.facebook.com/blackspade1140" },
+    socialLinks: {
+      facebook: "https://www.facebook.com/blackspade1140",
+      instagram: "https://www.instagram.com/blackspadetattoo/",
+    },
     hours: [
       { day: "Monday", open: "11:00 AM", close: "09:00 PM" },
       { day: "Tuesday", open: "11:00 AM", close: "09:00 PM" },
@@ -211,6 +223,11 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-cinloco",
     name: "CinloCo",
     slug: { current: "cinloco" },
+    socialLinks: {
+      instagram: "https://www.instagram.com/cinlo_co/",
+    },
+    // Page <title> casing as on the live listing page.
+    seo: { title: "CinloCo" },
     categories: ["shop"] as Business["categories"],
     tagline:
       "Permanent Jewelry experience in 14K solid gold, sterling silver and gold filled. CinloCo also offers a jewelry line + accessories.",
@@ -231,27 +248,27 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "CinloCo — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2023/02/DSCF1905-scaled.jpg"
+        "/assets/images/businesses/gallery/cinloco/DSCF1905-scaled.jpg"
       ),
       realImage(
         "CinloCo — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2023/02/DSCF1939-scaled.jpg"
+        "/assets/images/businesses/gallery/cinloco/DSCF1939-scaled.jpg"
       ),
       realImage(
         "CinloCo — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2023/02/DSCF8837-scaled.jpeg"
+        "/assets/images/businesses/gallery/cinloco/DSCF8837-scaled.jpeg"
       ),
       realImage(
         "CinloCo — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2023/02/image_6483441-2.jpg"
+        "/assets/images/businesses/gallery/cinloco/image_6483441-2.jpg"
       ),
       realImage(
         "CinloCo — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2023/02/image_67214849-scaled.jpg"
+        "/assets/images/businesses/gallery/cinloco/image_67214849-scaled.jpg"
       ),
       realImage(
         "CinloCo — gallery photo 6 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2023/02/image_67223041-scaled.jpg"
+        "/assets/images/businesses/gallery/cinloco/image_67223041-scaled.jpg"
       ),
     ],
     phone: "(725)726-0257",
@@ -272,6 +289,11 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-coming-soon-boutique-aztlan",
     name: "Boutique Aztlan",
     slug: { current: "coming-soon-boutique-aztlan" },
+    socialLinks: {
+      instagram: "https://www.instagram.com/boutiqueaztlan/",
+    },
+    // Page <title> casing as on the live listing page.
+    seo: { title: "BOUTIQUE AZTLAN" },
     description: [
       {
         _type: "block",
@@ -308,6 +330,9 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-downtown-terrace",
     name: "Downtown Terrace",
     slug: { current: "downtown-terrace" },
+    tagline: "Gourmet Quick Service Restaurant",
+    // Page <title> casing as on the live listing page.
+    seo: { title: "DOWNTOWN TERRACE" },
     description: [
       {
         _type: "block",
@@ -340,7 +365,7 @@ export const MOCK_BUSINESSES: Business[] = [
     ],
     categories: ["eat-drink"] as Business["categories"],
     rating: 4.4,
-    reviewCount: 8,
+    reviewCount: 9,
     heroImage: realImage(
       "Downtown Terrace storefront photo (from live site)",
       "/assets/images/businesses/downtown-terrace.jpg"
@@ -348,99 +373,104 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "Downtown Terrace — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/container.park-56-of-95.jpg"
+        "/assets/images/businesses/gallery/downtown-terrace/container.park-56-of-95.jpg"
       ),
       realImage(
         "Downtown Terrace — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/Happier-Hours_-1080x1920-update.jpg"
+        "/assets/images/businesses/gallery/downtown-terrace/Happier-Hours_-1080x1920-update.jpg"
       ),
       realImage(
         "Downtown Terrace — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/DSC9655.jpg"
+        "/assets/images/businesses/gallery/downtown-terrace/DSC9655.jpg"
       ),
       realImage(
         "Downtown Terrace — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/Downtown-Terrace-Las-Vegas-1117-1.jpg"
+        "/assets/images/businesses/gallery/downtown-terrace/Downtown-Terrace-Las-Vegas-1117-1.jpg"
       ),
       realImage(
         "Downtown Terrace — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2024/10/CP-Kareoke-1080x1080-1.jpg"
+        "/assets/images/businesses/gallery/downtown-terrace/CP-Kareoke-1080x1080-1.jpg"
       ),
       realImage(
         "Downtown Terrace — gallery photo 6 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/DSC9615.jpg"
+        "/assets/images/businesses/gallery/downtown-terrace/DSC9615.jpg"
       ),
       realImage(
         "Downtown Terrace — gallery photo 7 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/Downtown-Terrace-Las-Vegas-1070.jpg"
+        "/assets/images/businesses/gallery/downtown-terrace/Downtown-Terrace-Las-Vegas-1070.jpg"
       ),
       realImage(
         "Downtown Terrace — gallery photo 8 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/DSC9646.jpg"
+        "/assets/images/businesses/gallery/downtown-terrace/DSC9646.jpg"
       ),
       realImage(
         "Downtown Terrace — gallery photo 9 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/container.park-47-of-95.jpg"
+        "/assets/images/businesses/gallery/downtown-terrace/container.park-47-of-95.jpg"
       ),
       realImage(
         "Downtown Terrace — gallery photo 10 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/DSC9683.jpg"
+        "/assets/images/businesses/gallery/downtown-terrace/DSC9683.jpg"
       ),
       realImage(
         "Downtown Terrace — gallery photo 11 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/container.park-59-of-95.jpg"
+        "/assets/images/businesses/gallery/downtown-terrace/container.park-59-of-95.jpg"
       ),
       realImage(
         "Downtown Terrace — gallery photo 12 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/Downtown-Terrace-Las-Vegas-1048.jpg"
+        "/assets/images/businesses/gallery/downtown-terrace/Downtown-Terrace-Las-Vegas-1048.jpg"
       ),
       realImage(
         "Downtown Terrace — gallery photo 13 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/DSC9649.jpg"
+        "/assets/images/businesses/gallery/downtown-terrace/DSC9649.jpg"
       ),
       realImage(
         "Downtown Terrace — gallery photo 14 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/Downtown-Terrace-Las-Vegas-1049.jpg"
+        "/assets/images/businesses/gallery/downtown-terrace/Downtown-Terrace-Las-Vegas-1049.jpg"
       ),
       realImage(
         "Downtown Terrace — gallery photo 15 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/DSC0933-scaled.jpg"
+        "/assets/images/businesses/gallery/downtown-terrace/DSC0933-scaled.jpg"
       ),
       realImage(
         "Downtown Terrace — gallery photo 16 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/DSC9662.jpg"
+        "/assets/images/businesses/gallery/downtown-terrace/DSC9662.jpg"
       ),
       realImage(
         "Downtown Terrace — gallery photo 17 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/Downtown-Terrace-Las-Vegas-1062.jpg"
+        "/assets/images/businesses/gallery/downtown-terrace/Downtown-Terrace-Las-Vegas-1062.jpg"
       ),
       realImage(
         "Downtown Terrace — gallery photo 18 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/DSC9680.jpg"
+        "/assets/images/businesses/gallery/downtown-terrace/DSC9680.jpg"
       ),
       realImage(
         "Downtown Terrace — gallery photo 19 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/Downtown-Terrace-Las-Vegas-1089.jpg"
+        "/assets/images/businesses/gallery/downtown-terrace/Downtown-Terrace-Las-Vegas-1089.jpg"
       ),
       realImage(
         "Downtown Terrace — gallery photo 20 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/Downtown-Terrace-Las-Vegas-1102.jpg"
+        "/assets/images/businesses/gallery/downtown-terrace/Downtown-Terrace-Las-Vegas-1102.jpg"
       ),
       realImage(
         "Downtown Terrace — gallery photo 21 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/DSC9623.jpg"
+        "/assets/images/businesses/gallery/downtown-terrace/DSC9623.jpg"
       ),
       realImage(
         "Downtown Terrace — gallery photo 22 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/DSC9672.jpg"
+        "/assets/images/businesses/gallery/downtown-terrace/DSC9672.jpg"
       ),
       realImage(
         "Downtown Terrace — gallery photo 23 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/DSC0947-scaled.jpg"
+        "/assets/images/businesses/gallery/downtown-terrace/DSC0947-scaled.jpg"
       ),
     ],
     phone: "+1 702-854-1418",
-    socialLinks: { facebook: "https://www.facebook.com/downtownterracelv" },
+    socialLinks: {
+      facebook: "https://www.facebook.com/downtownterracelv",
+      instagram: "https://www.instagram.com/downtownterracelv/",
+      twitter: "https://twitter.com/downtownterrace",
+      youtube: "https://www.youtube.com/watch?v=qdMvAe2kOkY",
+    },
     hours: [
       { day: "Monday", open: "11:00 AM", close: "08:00 PM" },
       { day: "Tuesday", open: "11:00 AM", close: "08:00 PM" },
@@ -457,6 +487,11 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-dream-dancenv",
     name: "Dream Dance NV",
     slug: { current: "dream-dancenv" },
+    socialLinks: {
+      instagram: "https://instagram.com/Dreamdancenv",
+    },
+    // Page <title> casing as on the live listing page.
+    seo: { title: "DREAM DANCE NV" },
     description: [
       {
         _type: "block",
@@ -512,55 +547,55 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "Dream Dance NV — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/956272A1-04F7-4001-A581-D4631CA58E3C.jpg"
+        "/assets/images/businesses/gallery/dream-dancenv/956272A1-04F7-4001-A581-D4631CA58E3C.jpg"
       ),
       realImage(
         "Dream Dance NV — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/IMG_4583.jpg"
+        "/assets/images/businesses/gallery/dream-dancenv/IMG_4583.jpg"
       ),
       realImage(
         "Dream Dance NV — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/FullSizeRender.jpeg"
+        "/assets/images/businesses/gallery/dream-dancenv/FullSizeRender.jpeg"
       ),
       realImage(
         "Dream Dance NV — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/IMG_4263.jpg"
+        "/assets/images/businesses/gallery/dream-dancenv/IMG_4263.jpg"
       ),
       realImage(
         "Dream Dance NV — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/IMG_2819.jpg"
+        "/assets/images/businesses/gallery/dream-dancenv/IMG_2819.jpg"
       ),
       realImage(
         "Dream Dance NV — gallery photo 6 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/IMG_2756.jpg"
+        "/assets/images/businesses/gallery/dream-dancenv/IMG_2756.jpg"
       ),
       realImage(
         "Dream Dance NV — gallery photo 7 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/IMG_2783.jpg"
+        "/assets/images/businesses/gallery/dream-dancenv/IMG_2783.jpg"
       ),
       realImage(
         "Dream Dance NV — gallery photo 8 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/IMG_4055.jpg"
+        "/assets/images/businesses/gallery/dream-dancenv/IMG_4055.jpg"
       ),
       realImage(
         "Dream Dance NV — gallery photo 9 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/IMG_4580.jpg"
+        "/assets/images/businesses/gallery/dream-dancenv/IMG_4580.jpg"
       ),
       realImage(
         "Dream Dance NV — gallery photo 10 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/IMG_4144.jpg"
+        "/assets/images/businesses/gallery/dream-dancenv/IMG_4144.jpg"
       ),
       realImage(
         "Dream Dance NV — gallery photo 11 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/IMG_5345.jpg"
+        "/assets/images/businesses/gallery/dream-dancenv/IMG_5345.jpg"
       ),
       realImage(
         "Dream Dance NV — gallery photo 12 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/IMG_4547.jpg"
+        "/assets/images/businesses/gallery/dream-dancenv/IMG_4547.jpg"
       ),
       realImage(
         "Dream Dance NV — gallery photo 13 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/IMG_5351.jpg"
+        "/assets/images/businesses/gallery/dream-dancenv/IMG_5351.jpg"
       ),
     ],
     phone: "(702) 490-9423",
@@ -581,6 +616,8 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-dtlv-merch",
     name: "DTLV Merch",
     slug: { current: "dtlv-merch" },
+    // Page <title> casing as on the live listing page.
+    seo: { title: "DTLV Merch" },
     description: [
       {
         _type: "block",
@@ -607,23 +644,23 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "DTLV Merch — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/10/CPcouple_1944x.jpg"
+        "/assets/images/businesses/gallery/dtlv-merch/CPcouple_1944x.jpg"
       ),
       realImage(
         "DTLV Merch — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/10/GS5_1944x.jpg"
+        "/assets/images/businesses/gallery/dtlv-merch/GS5_1944x.jpg"
       ),
       realImage(
         "DTLV Merch — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/10/O_IPatio_1000x.jpg"
+        "/assets/images/businesses/gallery/dtlv-merch/O_IPatio_1000x.jpg"
       ),
       realImage(
         "DTLV Merch — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/10/IMG_7804_1000x.jpg"
+        "/assets/images/businesses/gallery/dtlv-merch/IMG_7804_1000x.jpg"
       ),
       realImage(
         "DTLV Merch — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/10/CP3_1000x.jpg"
+        "/assets/images/businesses/gallery/dtlv-merch/CP3_1000x.jpg"
       ),
     ],
     website: "https://dtlvmerch.com",
@@ -643,6 +680,11 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-erinn-water-design",
     name: "Erinn Water Design",
     slug: { current: "erinn-water-design" },
+    socialLinks: {
+      instagram: "https://www.instagram.com/erinnwater/",
+    },
+    // Page <title> casing as on the live listing page.
+    seo: { title: "ERINN WATER DESIGN" },
     description: [
       {
         _type: "block",
@@ -739,27 +781,27 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "Erinn Water Design — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2025/11/2_Gatsby_Steampunk_SQR.png"
+        "/assets/images/businesses/gallery/erinn-water-design/2_Gatsby_Steampunk_SQR.png"
       ),
       realImage(
         "Erinn Water Design — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2025/11/3_Crystal-Pearls-Sterling-Freshwater_SQR.png"
+        "/assets/images/businesses/gallery/erinn-water-design/3_Crystal-Pearls-Sterling-Freshwater_SQR.png"
       ),
       realImage(
         "Erinn Water Design — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2025/11/4_Scarves_SQR.png"
+        "/assets/images/businesses/gallery/erinn-water-design/4_Scarves_SQR.png"
       ),
       realImage(
         "Erinn Water Design — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2025/11/5_Butterfly-Resin-Purse_SQR.png"
+        "/assets/images/businesses/gallery/erinn-water-design/5_Butterfly-Resin-Purse_SQR.png"
       ),
       realImage(
         "Erinn Water Design — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2025/11/6_KTW_SQR.png"
+        "/assets/images/businesses/gallery/erinn-water-design/6_KTW_SQR.png"
       ),
       realImage(
         "Erinn Water Design — gallery photo 6 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2025/11/7_Quartz_Moonstone_SQR.png"
+        "/assets/images/businesses/gallery/erinn-water-design/7_Quartz_Moonstone_SQR.png"
       ),
     ],
     website: "https://erinnwaterdesign.com",
@@ -779,6 +821,8 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-gimme-5",
     name: "Gimmie 5",
     slug: { current: "gimme-5" },
+    // Page <title> casing as on the live listing page.
+    seo: { title: "GIMMIE 5" },
     description: [
       {
         _type: "block",
@@ -797,8 +841,8 @@ export const MOCK_BUSINESSES: Business[] = [
     ],
     categories: ["shop"] as Business["categories"],
     tagline: "Everything $5 or less. Gifts and Souvenirs",
-    rating: 3.8,
-    reviewCount: 12,
+    rating: 3.5,
+    reviewCount: 13,
     claimed: true,
     heroImage: realImage(
       "Gimmie 5 storefront photo (from live site)",
@@ -807,23 +851,23 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "Gimmie 5 — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/DSCF9265-scaled.jpg"
+        "/assets/images/businesses/gallery/gimme-5/DSCF9265-scaled.jpg"
       ),
       realImage(
         "Gimmie 5 — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/DSCF9264-scaled.jpg"
+        "/assets/images/businesses/gallery/gimme-5/DSCF9264-scaled.jpg"
       ),
       realImage(
         "Gimmie 5 — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/1000023308.png"
+        "/assets/images/businesses/gimme-5.png"
       ),
       realImage(
         "Gimmie 5 — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/DSCF9263-scaled.jpg"
+        "/assets/images/businesses/gallery/gimme-5/DSCF9263-scaled.jpg"
       ),
       realImage(
         "Gimmie 5 — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/08/DSCF9262-scaled.jpg"
+        "/assets/images/businesses/gallery/gimme-5/DSCF9262-scaled.jpg"
       ),
     ],
     phone: "702-502-4626",
@@ -843,6 +887,9 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-krp-boutique",
     name: "Krp Boutique",
     slug: { current: "krp-boutique" },
+    // No page for this business exists on the live site — kept out of the
+    // Shop listing (see getBusinessesByCategory) without deleting its data.
+    unlisted: true,
     description: [
       {
         _type: "block",
@@ -871,35 +918,35 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "Krp Boutique — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/01/KRP_CP2.jpg"
+        "/assets/images/businesses/krp-boutique.jpg"
       ),
       realImage(
         "Krp Boutique — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/01/IMG-9314-scaled.jpg"
+        "/assets/images/businesses/gallery/krp-boutique/IMG-9314-scaled.jpg"
       ),
       realImage(
         "Krp Boutique — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/01/DSCF9202-scaled.jpg"
+        "/assets/images/businesses/gallery/krp-boutique/DSCF9202-scaled.jpg"
       ),
       realImage(
         "Krp Boutique — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/01/IMG-9316-scaled.jpg"
+        "/assets/images/businesses/gallery/krp-boutique/IMG-9316-scaled.jpg"
       ),
       realImage(
         "Krp Boutique — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/01/DSCF9203-scaled.jpg"
+        "/assets/images/businesses/gallery/krp-boutique/DSCF9203-scaled.jpg"
       ),
       realImage(
         "Krp Boutique — gallery photo 6 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/01/IMG-9313-scaled.jpg"
+        "/assets/images/businesses/gallery/krp-boutique/IMG-9313-scaled.jpg"
       ),
       realImage(
         "Krp Boutique — gallery photo 7 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/01/IMG-0119-e1583193364810.jpg"
+        "/assets/images/businesses/gallery/krp-boutique/IMG-0119-e1583193364810.jpg"
       ),
       realImage(
         "Krp Boutique — gallery photo 8 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/01/IMG-9315-scaled.jpg"
+        "/assets/images/businesses/gallery/krp-boutique/IMG-9315-scaled.jpg"
       ),
     ],
     phone: "702-608-8183",
@@ -919,6 +966,14 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-lovo-cigars",
     name: "Lovo Cigars",
     slug: { current: "lovo-cigars" },
+    // Page <title> casing as on the live listing page.
+    seo: { title: "LOVO CIGARS" },
+    // "Additional Details" block from the live listing page.
+    amenities: [
+      { label: "Cash", value: "Yes" },
+      { label: "Credit Card Acceptable", value: "Yes" },
+      { label: "Wifi Service", value: "Yes" },
+    ],
     description: [
       {
         _type: "block",
@@ -947,36 +1002,40 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "Lovo Cigars — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/20170504_115254.jpg"
+        "/assets/images/businesses/gallery/lovo-cigars/20170504_115254.jpg"
       ),
       realImage(
         "Lovo Cigars — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/20170530_135445.jpg"
+        "/assets/images/businesses/gallery/lovo-cigars/20170530_135445.jpg"
       ),
       realImage(
         "Lovo Cigars — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/20170414_133810.jpg"
+        "/assets/images/businesses/gallery/lovo-cigars/20170414_133810.jpg"
       ),
       realImage(
         "Lovo Cigars — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/20170602_135817.jpg"
+        "/assets/images/businesses/gallery/lovo-cigars/20170602_135817.jpg"
       ),
       realImage(
         "Lovo Cigars — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/IMG_20170911_105258_188.jpg"
+        "/assets/images/businesses/gallery/lovo-cigars/IMG_20170911_105258_188.jpg"
       ),
       realImage(
         "Lovo Cigars — gallery photo 6 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/Cigars-for-Warriors-Camo.jpg"
+        "/assets/images/businesses/gallery/lovo-cigars/Cigars-for-Warriors-Camo.jpg"
       ),
       realImage(
         "Lovo Cigars — gallery photo 7 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/IMG_20171010_165037_368.jpg"
+        "/assets/images/businesses/gallery/lovo-cigars/IMG_20171010_165037_368.jpg"
       ),
     ],
     phone: "+1 702-308-4682",
     website: "https://www.lovocigars.com/",
-    socialLinks: { facebook: "https://www.facebook.com/LovoLasVegas/" },
+    socialLinks: {
+      facebook: "https://www.facebook.com/LovoLasVegas/",
+      instagram: "https://www.instagram.com/lovolasvegas/",
+      twitter: "https://twitter.com/LovoLas",
+    },
     hours: [
       { day: "Monday", open: "11:00 AM", close: "09:00 PM" },
       { day: "Tuesday", open: "11:00 AM", close: "09:00 PM" },
@@ -993,6 +1052,11 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-luna-devina-co",
     name: "Luna Divina Co.",
     slug: { current: "luna-devina-co" },
+    socialLinks: {
+      instagram: "https://www.instagram.com/lunadivinaco_/",
+    },
+    // Page <title> casing as on the live listing page.
+    seo: { title: "LUNA DIVINA CO." },
     description: [
       {
         _type: "block",
@@ -1020,23 +1084,23 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "Luna Divina Co. — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2025/03/DSC09743-scaled.jpg"
+        "/assets/images/businesses/gallery/luna-devina-co/DSC09743-scaled.jpg"
       ),
       realImage(
         "Luna Divina Co. — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2025/03/DSC09748-scaled.jpg"
+        "/assets/images/businesses/gallery/luna-devina-co/DSC09748-scaled.jpg"
       ),
       realImage(
         "Luna Divina Co. — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2025/03/DSC09758-scaled.jpg"
+        "/assets/images/businesses/gallery/luna-devina-co/DSC09758-scaled.jpg"
       ),
       realImage(
         "Luna Divina Co. — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2025/03/DSC09763-scaled.jpg"
+        "/assets/images/businesses/gallery/luna-devina-co/DSC09763-scaled.jpg"
       ),
       realImage(
         "Luna Divina Co. — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2025/03/IMG_0469-scaled.jpg"
+        "/assets/images/businesses/gallery/luna-devina-co/IMG_0469-scaled.jpg"
       ),
     ],
     phone: "(725) 247-2110",
@@ -1057,6 +1121,9 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-mikaelas-taste-of-asia",
     name: "Mikaelas Taste of Asia",
     slug: { current: "mikaelas-taste-of-asia" },
+    tagline: "THE BEST ASIAN FOOD IN LAS VEGAS",
+    // Page <title> casing as on the live listing page.
+    seo: { title: "MIKAELAS TASTE OF ASIA" },
     description: [
       {
         _type: "block",
@@ -1095,35 +1162,39 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "Mikaelas Taste of Asia — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2026/08/Screenshot-2026-08-12-at-1.30.05-AM.png"
+        "/assets/images/businesses/gallery/mikaelas-taste-of-asia/Screenshot-2026-08-12-at-1.30.05-AM.png"
       ),
       realImage(
         "Mikaelas Taste of Asia — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2026/08/Screenshot-2026-08-12-at-1.30.27-AM.png"
+        "/assets/images/businesses/gallery/mikaelas-taste-of-asia/Screenshot-2026-08-12-at-1.30.27-AM.png"
       ),
       realImage(
         "Mikaelas Taste of Asia — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2026/08/Screenshot-2026-08-12-at-1.30.43-AM.png"
+        "/assets/images/businesses/gallery/mikaelas-taste-of-asia/Screenshot-2026-08-12-at-1.30.43-AM.png"
       ),
       realImage(
         "Mikaelas Taste of Asia — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2026/08/Screenshot-2026-08-12-at-1.30.53-AM.png"
+        "/assets/images/businesses/gallery/mikaelas-taste-of-asia/Screenshot-2026-08-12-at-1.30.53-AM.png"
       ),
       realImage(
         "Mikaelas Taste of Asia — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2026/08/Screenshot-2026-08-12-at-1.31.09-AM.png"
+        "/assets/images/businesses/gallery/mikaelas-taste-of-asia/Screenshot-2026-08-12-at-1.31.09-AM.png"
       ),
       realImage(
         "Mikaelas Taste of Asia — gallery photo 6 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2026/08/Screenshot-2026-08-12-at-1.31.28-AM.png"
+        "/assets/images/businesses/gallery/mikaelas-taste-of-asia/Screenshot-2026-08-12-at-1.31.28-AM.png"
       ),
       realImage(
         "Mikaelas Taste of Asia — gallery photo 7 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2026/08/Screenshot-2026-08-12-at-1.32.02-AM.png"
+        "/assets/images/businesses/gallery/mikaelas-taste-of-asia/Screenshot-2026-08-12-at-1.32.02-AM.png"
       ),
     ],
     website: "https://www.mikaelaslv.com/",
-    socialLinks: { facebook: "https://www.facebook.com/p/Mikaelas-Las-Vegas-61557001104897/" },
+    socialLinks: {
+      facebook: "https://www.facebook.com/p/Mikaelas-Las-Vegas-61557001104897/",
+      instagram: "https://www.instagram.com/mikaelaslasvegas",
+      youtube: "https://www.youtube.com/@mikaelasgaming",
+    },
     hours: [
       { day: "Monday", open: "11:30 AM", close: "07:30 PM" },
       { day: "Tuesday", open: "11:30 AM", close: "07:30 PM" },
@@ -1140,6 +1211,11 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-ninth-island-gourmet",
     name: "Ninth Island Gourmet",
     slug: { current: "ninth-island-gourmet" },
+    socialLinks: {
+      instagram: "https://www.instagram.com/9thislandgourmet/",
+    },
+    // Page <title> casing as on the live listing page.
+    seo: { title: "NINTH ISLAND GOURMET" },
     description: [
       {
         _type: "block",
@@ -1166,23 +1242,23 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "Ninth Island Gourmet — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2025/09/DSC00681-2-scaled.jpg"
+        "/assets/images/businesses/gallery/ninth-island-gourmet/DSC00681-2-scaled.jpg"
       ),
       realImage(
         "Ninth Island Gourmet — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2025/09/DSC00689-2-scaled.jpg"
+        "/assets/images/businesses/gallery/ninth-island-gourmet/DSC00689-2-scaled.jpg"
       ),
       realImage(
         "Ninth Island Gourmet — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2025/09/DSC00676-2-scaled.jpg"
+        "/assets/images/businesses/gallery/ninth-island-gourmet/DSC00676-2-scaled.jpg"
       ),
       realImage(
         "Ninth Island Gourmet — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2025/09/DSC00668-2-scaled.jpg"
+        "/assets/images/businesses/gallery/ninth-island-gourmet/DSC00668-2-scaled.jpg"
       ),
       realImage(
         "Ninth Island Gourmet — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2025/09/DSC00673-2-1-scaled.jpg"
+        "/assets/images/businesses/gallery/ninth-island-gourmet/DSC00673-2-1-scaled.jpg"
       ),
     ],
     website: "https://ninth-island-gourmet.square.site",
@@ -1200,6 +1276,9 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-oak-ivy",
     name: "Oak & Ivy",
     slug: { current: "oak-ivy" },
+    tagline: "An American Whiskey Bar",
+    // Page <title> casing as on the live listing page.
+    seo: { title: "OAK & IVY" },
     description: [
       {
         _type: "block",
@@ -1240,55 +1319,59 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "Oak & Ivy — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2017/12/20170713_OakIvy_web-16.jpg"
+        "/assets/images/businesses/gallery/oak-ivy/20170713_OakIvy_web-16.jpg"
       ),
       realImage(
         "Oak & Ivy — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2017/12/IMG-3332-1.jpeg"
+        "/assets/images/businesses/gallery/oak-ivy/IMG-3332-1.jpeg"
       ),
       realImage(
         "Oak & Ivy — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2017/12/container.park-7-of-95.jpg"
+        "/assets/images/businesses/gallery/oak-ivy/container.park-7-of-95.jpg"
       ),
       realImage(
         "Oak & Ivy — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2017/12/IMG-3372.jpeg"
+        "/assets/images/businesses/gallery/oak-ivy/IMG-3372.jpeg"
       ),
       realImage(
         "Oak & Ivy — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2017/12/20170713_OakIvy_web-13.jpg"
+        "/assets/images/businesses/gallery/oak-ivy/20170713_OakIvy_web-13.jpg"
       ),
       realImage(
         "Oak & Ivy — gallery photo 6 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2017/12/IMG-3058.jpeg"
+        "/assets/images/businesses/gallery/oak-ivy/IMG-3058.jpeg"
       ),
       realImage(
         "Oak & Ivy — gallery photo 7 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2017/12/metalachi-78-of-88.jpg"
+        "/assets/images/businesses/gallery/oak-ivy/metalachi-78-of-88.jpg"
       ),
       realImage(
         "Oak & Ivy — gallery photo 8 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2017/12/20170713_OakIvy_web-11.jpg"
+        "/assets/images/businesses/gallery/oak-ivy/20170713_OakIvy_web-11.jpg"
       ),
       realImage(
         "Oak & Ivy — gallery photo 9 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2017/12/metalachi-9-of-88.jpg"
+        "/assets/images/businesses/gallery/oak-ivy/metalachi-9-of-88.jpg"
       ),
       realImage(
         "Oak & Ivy — gallery photo 10 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2017/12/BulbStirTight2.jpg"
+        "/assets/images/businesses/gallery/oak-ivy/BulbStirTight2.jpg"
       ),
       realImage(
         "Oak & Ivy — gallery photo 11 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2017/12/20170713_OakIvy_web-7.jpg"
+        "/assets/images/businesses/gallery/oak-ivy/20170713_OakIvy_web-7.jpg"
       ),
       realImage(
         "Oak & Ivy — gallery photo 12 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2017/12/20170713_OakIvy_web-9.jpg"
+        "/assets/images/businesses/gallery/oak-ivy/20170713_OakIvy_web-9.jpg"
       ),
     ],
     phone: "702-553-2549",
-    socialLinks: { facebook: "https://www.facebook.com/oakandivydtlv/" },
+    socialLinks: {
+      facebook: "https://www.facebook.com/oakandivydtlv/",
+      instagram: "https://www.instagram.com/oakandivydtlv/",
+      twitter: "https://twitter.com/oakandivydtlv",
+    },
     hours: [
       { day: "Monday", open: "12:00 PM", close: "11:00 PM" },
       { day: "Tuesday", open: "12:00 PM", close: "11:00 PM" },
@@ -1305,6 +1388,8 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-pizza-zazza",
     name: "Mob Pie",
     slug: { current: "pizza-zazza" },
+    // Page <title> casing as on the live listing page.
+    seo: { title: "MOB PIE" },
     description: [
       {
         _type: "block",
@@ -1331,51 +1416,54 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "Mob Pie — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/IMG_3838-1.jpg"
+        "/assets/images/businesses/gallery/pizza-zazza/IMG_3838-1.jpg"
       ),
       realImage(
         "Mob Pie — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/container.park-11-of-95.jpg"
+        "/assets/images/businesses/gallery/pizza-zazza/container.park-11-of-95.jpg"
       ),
       realImage(
         "Mob Pie — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/IMG-9169-1.jpg"
+        "/assets/images/businesses/gallery/pizza-zazza/IMG-9169-1.jpg"
       ),
       realImage(
         "Mob Pie — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/PizzaZazza_LoadedBrownie_20201910-01-1-scaled.jpg"
+        "/assets/images/businesses/gallery/pizza-zazza/PizzaZazza_LoadedBrownie_20201910-01-1-scaled.jpg"
       ),
       realImage(
         "Mob Pie — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/PizzaZazza_Peperoni_20201910-01-1-scaled.jpg"
+        "/assets/images/businesses/gallery/pizza-zazza/PizzaZazza_Peperoni_20201910-01-1-scaled.jpg"
       ),
       realImage(
         "Mob Pie — gallery photo 6 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/DSC0261-2-scaled.jpg"
+        "/assets/images/businesses/gallery/pizza-zazza/DSC0261-2-scaled.jpg"
       ),
       realImage(
         "Mob Pie — gallery photo 7 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/container.park-12-of-95.jpg"
+        "/assets/images/businesses/gallery/pizza-zazza/container.park-12-of-95.jpg"
       ),
       realImage(
         "Mob Pie — gallery photo 8 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/DSC0266-2-scaled.jpg"
+        "/assets/images/businesses/gallery/pizza-zazza/DSC0266-2-scaled.jpg"
       ),
       realImage(
         "Mob Pie — gallery photo 9 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/PizzaZazza_Silvio_20201910-01-2-scaled.jpg"
+        "/assets/images/businesses/gallery/pizza-zazza/PizzaZazza_Silvio_20201910-01-2-scaled.jpg"
       ),
       realImage(
         "Mob Pie — gallery photo 10 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/PizzaZazza2-scaled.jpg"
+        "/assets/images/businesses/gallery/pizza-zazza/PizzaZazza2-scaled.jpg"
       ),
       realImage(
         "Mob Pie — gallery photo 11 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/PizzaZazza_Capone_20201910-03-1-scaled.jpg"
+        "/assets/images/businesses/gallery/pizza-zazza/PizzaZazza_Capone_20201910-03-1-scaled.jpg"
       ),
     ],
     phone: "702-769-3600",
-    socialLinks: { facebook: "https://www.facebook.com/Pizza-zazza-370198120408267/" },
+    socialLinks: {
+      facebook: "https://www.facebook.com/Pizza-zazza-370198120408267/",
+      instagram: "https://www.instagram.com/pizzazazzavegas",
+    },
     hours: [
       { day: "Monday", open: "12:00 PM", close: "08:00 PM" },
       { day: "Tuesday", open: "12:00 PM", close: "08:00 PM" },
@@ -1392,6 +1480,12 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-run-it-back",
     name: "Keep It Classic Las Vegas",
     slug: { current: "run-it-back" },
+    socialLinks: {
+      instagram: "https://www.instagram.com/runitbacklv/",
+    },
+    tagline: "Vintage Clothing/Retro Video Games",
+    // Page <title> casing as on the live listing page.
+    seo: { title: "KEEP IT CLASSIC LAS VEGAS" },
     categories: ["shop"] as Business["categories"],
     // PROPOSED COPY (client feedback round 2, business descriptions pass)
     // — a plain sentence built from the live listing's own real descriptor
@@ -1407,63 +1501,63 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "Keep It Classic Las Vegas — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2024/01/Screenshot-2024-01-01-at-3.17.04-PM.png"
+        "/assets/images/businesses/gallery/run-it-back/Screenshot-2024-01-01-at-3.17.04-PM.png"
       ),
       realImage(
         "Keep It Classic Las Vegas — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2024/01/Screenshot-2024-01-01-at-3.17.52-PM.png"
+        "/assets/images/businesses/gallery/run-it-back/Screenshot-2024-01-01-at-3.17.52-PM.png"
       ),
       realImage(
         "Keep It Classic Las Vegas — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2024/01/Screenshot-2024-01-01-at-3.18.32-PM.png"
+        "/assets/images/businesses/gallery/run-it-back/Screenshot-2024-01-01-at-3.18.32-PM.png"
       ),
       realImage(
         "Keep It Classic Las Vegas — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2024/01/Screenshot-2024-01-01-at-3.19.01-PM.png"
+        "/assets/images/businesses/gallery/run-it-back/Screenshot-2024-01-01-at-3.19.01-PM.png"
       ),
       realImage(
         "Keep It Classic Las Vegas — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2024/01/Screenshot-2024-01-01-at-3.19.18-PM.png"
+        "/assets/images/businesses/gallery/run-it-back/Screenshot-2024-01-01-at-3.19.18-PM.png"
       ),
       realImage(
         "Keep It Classic Las Vegas — gallery photo 6 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2024/01/Screenshot-2024-01-01-at-3.19.32-PM.png"
+        "/assets/images/businesses/gallery/run-it-back/Screenshot-2024-01-01-at-3.19.32-PM.png"
       ),
       realImage(
         "Keep It Classic Las Vegas — gallery photo 7 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2024/01/Screenshot-2024-01-01-at-3.20.40-PM.png"
+        "/assets/images/businesses/gallery/run-it-back/Screenshot-2024-01-01-at-3.20.40-PM.png"
       ),
       realImage(
         "Keep It Classic Las Vegas — gallery photo 8 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2024/01/Screenshot-2024-01-01-at-3.20.52-PM.png"
+        "/assets/images/businesses/gallery/run-it-back/Screenshot-2024-01-01-at-3.20.52-PM.png"
       ),
       realImage(
         "Keep It Classic Las Vegas — gallery photo 9 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2024/01/Screenshot-2024-01-01-at-3.21.15-PM.png"
+        "/assets/images/businesses/gallery/run-it-back/Screenshot-2024-01-01-at-3.21.15-PM.png"
       ),
       realImage(
         "Keep It Classic Las Vegas — gallery photo 10 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2024/01/Screenshot-2024-01-01-at-3.22.53-PM.png"
+        "/assets/images/businesses/gallery/run-it-back/Screenshot-2024-01-01-at-3.22.53-PM.png"
       ),
       realImage(
         "Keep It Classic Las Vegas — gallery photo 11 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2024/01/Screenshot-2024-01-01-at-3.23.38-PM.png"
+        "/assets/images/businesses/gallery/run-it-back/Screenshot-2024-01-01-at-3.23.38-PM.png"
       ),
       realImage(
         "Keep It Classic Las Vegas — gallery photo 12 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2024/01/Screenshot-2024-01-01-at-3.15.54-PM.png"
+        "/assets/images/businesses/gallery/run-it-back/Screenshot-2024-01-01-at-3.15.54-PM.png"
       ),
       realImage(
         "Keep It Classic Las Vegas — gallery photo 13 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2024/01/Screenshot-2024-01-01-at-3.16.13-PM.png"
+        "/assets/images/businesses/gallery/run-it-back/Screenshot-2024-01-01-at-3.16.13-PM.png"
       ),
       realImage(
         "Keep It Classic Las Vegas — gallery photo 14 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2024/01/Screenshot-2024-01-01-at-3.16.31-PM.png"
+        "/assets/images/businesses/gallery/run-it-back/Screenshot-2024-01-01-at-3.16.31-PM.png"
       ),
       realImage(
         "Keep It Classic Las Vegas — gallery photo 15 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2024/01/Screenshot-2024-01-01-at-3.16.50-PM.png"
+        "/assets/images/businesses/gallery/run-it-back/Screenshot-2024-01-01-at-3.16.50-PM.png"
       ),
     ],
     phone: "7026053332",
@@ -1483,6 +1577,8 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-segway-las-vegas",
     name: "Segway Las Vegas",
     slug: { current: "segway-las-vegas" },
+    // Page <title> casing as on the live listing page.
+    seo: { title: "SEGWAY LAS VEGAS" },
     description: [
       {
         _type: "block",
@@ -1508,23 +1604,23 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "Segway Las Vegas — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2020/11/WP_20180719_16_57_49_Pro.jpg"
+        "/assets/images/businesses/gallery/segway-las-vegas/WP_20180719_16_57_49_Pro.jpg"
       ),
       realImage(
         "Segway Las Vegas — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2020/11/WP_20160902_08_10_56_Pro.jpg"
+        "/assets/images/businesses/gallery/segway-las-vegas/WP_20160902_08_10_56_Pro.jpg"
       ),
       realImage(
         "Segway Las Vegas — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2020/11/IMG-2390.jpg"
+        "/assets/images/businesses/segway-las-vegas.jpg"
       ),
       realImage(
         "Segway Las Vegas — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2020/11/WP_20160429_12_11_17_Pro.jpg"
+        "/assets/images/businesses/gallery/segway-las-vegas/WP_20160429_12_11_17_Pro.jpg"
       ),
       realImage(
         "Segway Las Vegas — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2020/11/kimandsteve-scaled.jpg"
+        "/assets/images/businesses/gallery/segway-las-vegas/kimandsteve-scaled.jpg"
       ),
     ],
     phone: "702-596-1111",
@@ -1545,6 +1641,8 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-shop-mama-sage",
     name: "Shop Mama Sage",
     slug: { current: "shop-mama-sage" },
+    // Page <title> casing as on the live listing page.
+    seo: { title: "SHOP MAMA SAGE" },
     categories: ["shop"] as Business["categories"],
     tagline: "A Vibey Little Shop!",
     // PROPOSED COPY (client feedback round 2, business descriptions pass)
@@ -1563,47 +1661,50 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "Shop Mama Sage — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2022/05/IMG-7569.jpg"
+        "/assets/images/businesses/gallery/shop-mama-sage/IMG-7569.jpg"
       ),
       realImage(
         "Shop Mama Sage — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2022/05/IMG-7603.jpg"
+        "/assets/images/businesses/gallery/shop-mama-sage/IMG-7603.jpg"
       ),
       realImage(
         "Shop Mama Sage — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2022/05/IMG-7605.jpg"
+        "/assets/images/businesses/gallery/shop-mama-sage/IMG-7605.jpg"
       ),
       realImage(
         "Shop Mama Sage — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2022/05/IMG-7577.jpg"
+        "/assets/images/businesses/gallery/shop-mama-sage/IMG-7577.jpg"
       ),
       realImage(
         "Shop Mama Sage — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2022/05/IMG-7578.jpg"
+        "/assets/images/businesses/gallery/shop-mama-sage/IMG-7578.jpg"
       ),
       realImage(
         "Shop Mama Sage — gallery photo 6 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2022/05/IMG-7604.jpg"
+        "/assets/images/businesses/gallery/shop-mama-sage/IMG-7604.jpg"
       ),
       realImage(
         "Shop Mama Sage — gallery photo 7 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2022/05/IMG-7575.jpg"
+        "/assets/images/businesses/gallery/shop-mama-sage/IMG-7575.jpg"
       ),
       realImage(
         "Shop Mama Sage — gallery photo 8 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2022/05/IMG-7574.jpg"
+        "/assets/images/businesses/gallery/shop-mama-sage/IMG-7574.jpg"
       ),
       realImage(
         "Shop Mama Sage — gallery photo 9 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2022/05/IMG-7606.jpg"
+        "/assets/images/businesses/gallery/shop-mama-sage/IMG-7606.jpg"
       ),
       realImage(
         "Shop Mama Sage — gallery photo 10 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2022/05/IMG-7572.jpg"
+        "/assets/images/businesses/gallery/shop-mama-sage/IMG-7572.jpg"
       ),
     ],
     website: "https://shopmamasage.com",
-    socialLinks: { facebook: "https://www.facebook.com/Shopmamasage" },
+    socialLinks: {
+      facebook: "https://www.facebook.com/Shopmamasage",
+      instagram: "https://www.instagram.com/shopmamasage/",
+    },
     hours: [
       { day: "Monday", open: "11:30 AM", close: "08:00 PM" },
       { day: "Tuesday", open: "11:30 AM", close: "08:00 PM" },
@@ -1620,6 +1721,8 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-sugar-shop-candy-and-gifts",
     name: "Sugar Shop Candy & Gifts",
     slug: { current: "sugar-shop-candy-and-gifts" },
+    // Page <title> casing as on the live listing page.
+    seo: { title: "SUGAR SHOP CANDY & GIFTS" },
     description: [
       {
         _type: "block",
@@ -1648,61 +1751,61 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "Sugar Shop Candy & Gifts — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/container.park-78-of-95.jpg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/container.park-78-of-95.jpg"
       ),
       realImage(
         "Sugar Shop Candy & Gifts — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/19105504_1451280038261814_3928786670641331182_n.jpg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/19105504_1451280038261814_3928786670641331182_n.jpg"
       ),
       realImage(
         "Sugar Shop Candy & Gifts — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/47D11B2A-8283-45FA-99BE-DC101C821DA4.jpg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/47D11B2A-8283-45FA-99BE-DC101C821DA4.jpg"
       ),
       realImage(
         "Sugar Shop Candy & Gifts — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/18920231_1446416735414811_1955510436781338433_n.jpg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/18920231_1446416735414811_1955510436781338433_n.jpg"
       ),
       realImage(
         "Sugar Shop Candy & Gifts — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/23905484_1609148852474931_1417746449847935509_n.jpg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/23905484_1609148852474931_1417746449847935509_n.jpg"
       ),
       realImage(
         "Sugar Shop Candy & Gifts — gallery photo 6 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/unnamed-4.jpg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/unnamed-4.jpg"
       ),
       realImage(
         "Sugar Shop Candy & Gifts — gallery photo 7 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/24176932_1616015181788298_8873212378808309112_n.jpg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/24176932_1616015181788298_8873212378808309112_n.jpg"
       ),
       realImage(
         "Sugar Shop Candy & Gifts — gallery photo 8 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/IMG-6543.jpg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/IMG-6543.jpg"
       ),
       realImage(
         "Sugar Shop Candy & Gifts — gallery photo 9 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/15995301_1301066066616546_3876002036539588654_o.jpg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/15995301_1301066066616546_3876002036539588654_o.jpg"
       ),
       realImage(
         "Sugar Shop Candy & Gifts — gallery photo 10 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/unnamed-3.jpg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/unnamed-3.jpg"
       ),
       realImage(
         "Sugar Shop Candy & Gifts — gallery photo 11 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/7E552586-BD1B-4F4D-83F5-FCAC36901384.jpg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/7E552586-BD1B-4F4D-83F5-FCAC36901384.jpg"
       ),
       realImage(
         "Sugar Shop Candy & Gifts — gallery photo 12 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/16708659_1333078030082016_3649715194482348104_n.jpg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/16708659_1333078030082016_3649715194482348104_n.jpg"
       ),
       realImage(
         "Sugar Shop Candy & Gifts — gallery photo 13 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/unnamed-2.jpg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/unnamed-2.jpg"
       ),
     ],
     website: "https://www.sugarshoplv.com",
     socialLinks: {
-      facebook:
-        "https://www.facebook.com/SugarShopCandyStore/?__tn__=%2Cd%2CP-R&#038;eid=ARAOGiqMb08C8-Byx-OQ08PbgA7pwLLb1vp_sy8x3qjOeAjcW315kRFu9YjiNvfZ63aQyPT9fTqgXSfD",
+      facebook: "https://www.facebook.com/SugarShopCandyStore/",
+      instagram: "https://www.instagram.com/sugarshoplasvegas/",
     },
     hours: [
       { day: "Monday", open: "12:00 PM", close: "08:00 PM" },
@@ -1713,7 +1816,8 @@ export const MOCK_BUSINESSES: Business[] = [
       { day: "Saturday", open: "12:00 PM", close: "10:00 PM" },
       { day: "Sunday", open: "12:00 PM", close: "07:00 PM" },
     ],
-    address: PARK_ADDRESS,
+    // Unit-level street line exactly as shown on this listing's live page.
+    address: { ...PARK_ADDRESS, street: "707 Fremont St # 1290" },
     status: "open",
   },
   {
@@ -1722,25 +1826,48 @@ export const MOCK_BUSINESSES: Business[] = [
     // business name — matches this entry's `name` field exactly, so no
     // change was needed there.
     //
-    // The underlying content conflict below is still unresolved and is a
-    // separate question from the name itself: the live site's current
-    // Shop listing shows this same URL (/listing/sunnys/) with an H1/title
-    // of "Pole Fitness Studio & Boutique", but its own body paragraph
-    // still describes Sunnys as a swimwear company founded in 2017, and
-    // its "Keywords" line lists both swimwear AND pole-fitness terms
-    // together — the live site itself doesn't consistently know which
-    // business this is. Deliberately NOT given a shortDescription/
-    // description here: anything written to match the confirmed name
-    // "Sunny's" would contradict the live page's current H1/title;
-    // anything written to match "Pole Fitness Studio & Boutique" would
-    // contradict this entry's own (now client-confirmed) `name` field.
-    // Still needs client/tenant confirmation of the business's actual
-    // current services/identity before a description can be safely
-    // added — left showing the generic sitewide description in the
-    // meantime rather than guessing.
+    // The live listing (/listing/sunnys/) titles this business "Pole
+    // Fitness Studio & Boutique" while its own body copy still calls it
+    // Sunnys. Per launch QA: `name` stays the client-confirmed "Sunny's",
+    // the live title is kept as the tagline/descriptor, and the live body
+    // copy + hours note are restored verbatim below.
     _id: "real-sunnys",
     name: "Sunny's",
     slug: { current: "sunnys" },
+    // Live page's own descriptor (its H1/title) — shown as the tagline badge;
+    // `name` stays the client-confirmed "Sunny's".
+    tagline: "POLE FITNESS STUDIO & BOUTIQUE",
+    // Body copy and hours note verbatim from the live listing page.
+    description: [
+      {
+        _type: "block",
+        _key: "sunnysb1",
+        style: "normal",
+        markDefs: [],
+        children: [
+          {
+            _type: "span",
+            _key: "sunnyss2",
+            text: "Sunnys started out as a swimwear company in 2017 serving looks that ranged from super sexy to super conservative. Once located in a Shopping Mall in Las Vegas, exotic dancewear was added and the brand quickly expanded. With the expansion came the pole fitness studio and the rest is history! Providing people all over the world beautifully hand crafted outfits, ravewear as well as vintage nightgowns, Sunnys is spreading love day after day. This is where self love meets sexpression! Be amazing, be great, be confident… in Sunnys.",
+            marks: [],
+          },
+        ],
+      },
+      {
+        _type: "block",
+        _key: "sunnysb3",
+        style: "normal",
+        markDefs: [],
+        children: [
+          {
+            _type: "span",
+            _key: "sunnyss4",
+            text: "Hours: 12pm-7pm (Or later depending on classes)",
+            marks: [],
+          },
+        ],
+      },
+    ],
     categories: ["shop"] as Business["categories"],
     rating: 5,
     reviewCount: 1,
@@ -1752,51 +1879,54 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "Sunny's — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2020/03/044261_2_470x.jpg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/044261_2_470x.jpg"
       ),
       realImage(
         "Sunny's — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2020/03/60488594120__002CE75E-AB3F-4D01-B87A-2202AAAED24C-1-scaled.jpg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/60488594120__002CE75E-AB3F-4D01-B87A-2202AAAED24C-1-scaled.jpg"
       ),
       realImage(
         "Sunny's — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2020/03/IMG-5494.jpg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/IMG-5494.jpg"
       ),
       realImage(
         "Sunny's — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2020/03/Bodyd_470x.jpg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/Bodyd_470x.jpg"
       ),
       realImage(
         "Sunny's — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2020/03/Champdress_470x.jpg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/Champdress_470x.jpg"
       ),
       realImage(
         "Sunny's — gallery photo 6 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2020/03/080263-_1_470x.jpg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/080263-_1_470x.jpg"
       ),
       realImage(
         "Sunny's — gallery photo 7 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2020/03/049300_1_470x.jpg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/049300_1_470x.jpg"
       ),
       realImage(
         "Sunny's — gallery photo 8 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2020/03/a70159_10_470x.jpg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/a70159_10_470x.jpg"
       ),
       realImage(
         "Sunny's — gallery photo 9 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2020/03/Greeky_470x.jpg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/Greeky_470x.jpg"
       ),
       realImage(
         "Sunny's — gallery photo 10 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2020/03/B5D3B369-E314-4941-86DB-3E1CB23734BE_900x.jpeg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/B5D3B369-E314-4941-86DB-3E1CB23734BE_900x.jpeg"
       ),
       realImage(
         "Sunny's — gallery photo 11 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2020/03/handzon_900x.jpg"
+        "/assets/images/businesses/gallery/sugar-shop-candy-and-gifts/handzon_900x.jpg"
       ),
     ],
     website: "https://sunnysvegas.com",
-    socialLinks: { facebook: "https://www.facebook.com/sunnysvegas/" },
+    socialLinks: {
+      facebook: "https://www.facebook.com/sunnysvegas/",
+      instagram: "https://www.instagram.com/sunnysvegas/",
+    },
     hours: [
       { day: "Tuesday", open: "02:00 AM", close: "07:00 PM" },
       { day: "Wednesday", open: "02:00 AM", close: "07:00 PM" },
@@ -1812,6 +1942,8 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-taste-buzz-food-tours",
     name: "Taste Buzz Food Tours",
     slug: { current: "taste-buzz-food-tours" },
+    // Page <title> casing as on the live listing page.
+    seo: { title: "TASTE BUZZ FOOD TOURS" },
     // VERIFIED LIVE CONTENT (client feedback round 2, business
     // descriptions pass) — the listing's own real body description,
     // transcribed verbatim from the live page, not invented. Stops this
@@ -1847,48 +1979,52 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "Taste Buzz Food Tours — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2023/07/Downtown-BBQ-tasting.jpg"
+        "/assets/images/businesses/gallery/taste-buzz-food-tours/Downtown-BBQ-tasting.jpg"
       ),
       realImage(
         "Taste Buzz Food Tours — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2023/07/Downtown-arts-alley-scaled.jpg"
+        "/assets/images/businesses/gallery/taste-buzz-food-tours/Downtown-arts-alley-scaled.jpg"
       ),
       realImage(
         "Taste Buzz Food Tours — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2023/07/Downtown-dessert-stop.jpg"
+        "/assets/images/businesses/gallery/taste-buzz-food-tours/Downtown-dessert-stop.jpg"
       ),
       realImage(
         "Taste Buzz Food Tours — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2023/07/Downtown-local-history.jpg"
+        "/assets/images/businesses/gallery/taste-buzz-food-tours/Downtown-local-history.jpg"
       ),
       realImage(
         "Taste Buzz Food Tours — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2023/07/Strip-pizza.jpg"
+        "/assets/images/businesses/gallery/taste-buzz-food-tours/Strip-pizza.jpg"
       ),
       realImage(
         "Taste Buzz Food Tours — gallery photo 6 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2023/07/20220430_135316-scaled.jpg"
+        "/assets/images/businesses/gallery/taste-buzz-food-tours/20220430_135316-scaled.jpg"
       ),
       realImage(
         "Taste Buzz Food Tours — gallery photo 7 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2023/07/Souvenir-photo-Vegas-Mural-scaled.jpg"
+        "/assets/images/businesses/gallery/taste-buzz-food-tours/Souvenir-photo-Vegas-Mural-scaled.jpg"
       ),
       realImage(
         "Taste Buzz Food Tours — gallery photo 8 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2023/07/Pork-Belly-Taco.jpg"
+        "/assets/images/businesses/gallery/taste-buzz-food-tours/Pork-Belly-Taco.jpg"
       ),
       realImage(
         "Taste Buzz Food Tours — gallery photo 9 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2023/07/Downtown-Fergusons.jpg"
+        "/assets/images/businesses/gallery/taste-buzz-food-tours/Downtown-Fergusons.jpg"
       ),
       realImage(
         "Taste Buzz Food Tours — gallery photo 10 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2023/07/Street-Food-Dirt-Dog.jpg"
+        "/assets/images/businesses/gallery/taste-buzz-food-tours/Street-Food-Dirt-Dog.jpg"
       ),
     ],
     phone: "702-909-0337",
     website: "https://www.tastebuzzvegas.com/",
-    socialLinks: { facebook: "https://www.facebook.com/tastebuzzfoodtours" },
+    socialLinks: {
+      facebook: "https://www.facebook.com/tastebuzzfoodtours",
+      instagram: "https://www.instagram.com/tastebuzzfoodtours/",
+      youtube: "https://www.youtube.com/@tastebuzzfoodtours/",
+    },
     address: PARK_ADDRESS,
     status: "open",
   },
@@ -1896,6 +2032,8 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-the-lawn",
     name: "The Lawn",
     slug: { current: "the-lawn" },
+    // Page <title> casing as on the live listing page.
+    seo: { title: "The Lawn" },
     description: [
       {
         _type: "block",
@@ -1920,35 +2058,35 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "The Lawn — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2022/03/222344374_349562996779968_8915138313680035224_n-1.jpg"
+        "/assets/images/businesses/gallery/the-lawn/222344374_349562996779968_8915138313680035224_n-1.jpg"
       ),
       realImage(
         "The Lawn — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2022/03/274785802_4440587116045683_8158164360774857072_n.jpg"
+        "/assets/images/businesses/gallery/the-lawn/274785802_4440587116045683_8158164360774857072_n.jpg"
       ),
       realImage(
         "The Lawn — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2022/03/272195736_298562092328566_3530448245691377253_n.jpg"
+        "/assets/images/businesses/gallery/the-lawn/272195736_298562092328566_3530448245691377253_n.jpg"
       ),
       realImage(
         "The Lawn — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2022/03/242426341_4462015313837581_1071928760963612612_n.jpg"
+        "/assets/images/businesses/gallery/the-lawn/242426341_4462015313837581_1071928760963612612_n.jpg"
       ),
       realImage(
         "The Lawn — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2022/03/266820720_598410711429679_7700228725437050172_n.jpg"
+        "/assets/images/businesses/gallery/the-lawn/266820720_598410711429679_7700228725437050172_n.jpg"
       ),
       realImage(
         "The Lawn — gallery photo 6 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2022/03/241314817_540798570480340_3259907536691598858_n.jpg"
+        "/assets/images/businesses/gallery/the-lawn/241314817_540798570480340_3259907536691598858_n.jpg"
       ),
       realImage(
         "The Lawn — gallery photo 7 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2022/03/SherylCrowCP-139.jpeg"
+        "/assets/images/businesses/gallery/the-lawn/SherylCrowCP-139.jpeg"
       ),
       realImage(
         "The Lawn — gallery photo 8 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2022/03/The-Lawn-twilight-3.jpeg"
+        "/assets/images/businesses/gallery/the-lawn/The-Lawn-twilight-3.jpeg"
       ),
     ],
     hours: [
@@ -1967,6 +2105,25 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-the-mantis",
     name: "The Mantis",
     slug: { current: "the-mantis" },
+    // Page <title> casing as on the live listing page.
+    seo: { title: "The Mantis" },
+    // Live listing page: "Fun Facts About The Mantis" heading + infographic,
+    // and its "Quick questions" block.
+    featureImage: {
+      heading: "Fun Facts About The Mantis",
+      image: realImage(
+        "Fun Facts About The Mantis infographic (from live site)",
+        "/assets/images/businesses/the-mantis-fun-facts.jpg"
+      ),
+      width: 1000,
+      height: 1500,
+    },
+    faq: [
+      {
+        question: "When is The Mantis show?",
+        answer: ["Sunday-Thursday - Sundown to 11:00p", "Friday/Saturday - Sundown to 1:00a"],
+      },
+    ],
     description: [
       {
         _type: "block",
@@ -2007,15 +2164,15 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "The Mantis — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2022/03/273491391_740763106896170_6157285395825608629_n-1.jpg"
+        "/assets/images/businesses/gallery/the-mantis/273491391_740763106896170_6157285395825608629_n-1.jpg"
       ),
       realImage(
         "The Mantis — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2022/03/mantis.jpeg"
+        "/assets/images/businesses/gallery/the-mantis/mantis.jpeg"
       ),
       realImage(
         "The Mantis — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2022/03/CP-MS-2-scaled.jpg"
+        "/assets/images/businesses/gallery/the-mantis/CP-MS-2-scaled.jpg"
       ),
     ],
     address: PARK_ADDRESS,
@@ -2025,6 +2182,8 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-the-nail-buzz",
     name: "The Nail Buzz",
     slug: { current: "the-nail-buzz" },
+    // Page <title> casing as on the live listing page.
+    seo: { title: "THE NAIL BUZZ" },
     description: [
       {
         _type: "block",
@@ -2053,39 +2212,39 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "The Nail Buzz — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/03/o.jpg"
+        "/assets/images/businesses/gallery/the-nail-buzz/o.jpg"
       ),
       realImage(
         "The Nail Buzz — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/03/o1.jpg"
+        "/assets/images/businesses/gallery/the-nail-buzz/o1.jpg"
       ),
       realImage(
         "The Nail Buzz — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/17884208_2030366860523510_9006894652471680378_n.jpg"
+        "/assets/images/businesses/gallery/the-nail-buzz/17884208_2030366860523510_9006894652471680378_n.jpg"
       ),
       realImage(
         "The Nail Buzz — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/15284901_1957821967778000_93085362853992288_n.jpg"
+        "/assets/images/businesses/gallery/the-nail-buzz/15284901_1957821967778000_93085362853992288_n.jpg"
       ),
       realImage(
         "The Nail Buzz — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/13895277_1894352520791612_208215902222272720_n.jpg"
+        "/assets/images/businesses/gallery/the-nail-buzz/13895277_1894352520791612_208215902222272720_n.jpg"
       ),
       realImage(
         "The Nail Buzz — gallery photo 6 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/19060211_2059957444231118_4306067694511686916_n.jpg"
+        "/assets/images/businesses/gallery/the-nail-buzz/19060211_2059957444231118_4306067694511686916_n.jpg"
       ),
       realImage(
         "The Nail Buzz — gallery photo 7 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/16708254_1997085173851679_106963278052522432_n.jpg"
+        "/assets/images/businesses/gallery/the-nail-buzz/16708254_1997085173851679_106963278052522432_n.jpg"
       ),
       realImage(
         "The Nail Buzz — gallery photo 8 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/03/NailBuzz.jpg"
+        "/assets/images/businesses/gallery/the-nail-buzz/NailBuzz.jpg"
       ),
       realImage(
         "The Nail Buzz — gallery photo 9 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2019/03/o2.jpg"
+        "/assets/images/businesses/gallery/the-nail-buzz/o2.jpg"
       ),
     ],
     phone: "(702) 483-5636",
@@ -2099,13 +2258,16 @@ export const MOCK_BUSINESSES: Business[] = [
       { day: "Saturday", open: "11:00 AM", close: "07:00 PM" },
       { day: "Sunday", open: "11:00 AM", close: "07:00 PM" },
     ],
-    address: PARK_ADDRESS,
+    // Unit-level street line exactly as shown on this listing's live page.
+    address: { ...PARK_ADDRESS, street: "707 Fremont Street 3rd floor unit 3290" },
     status: "open",
   },
   {
     _id: "real-the-poke-shack-grill",
     name: "The Poke Shack & Grill",
     slug: { current: "the-poke-shack-grill" },
+    // Page <title> casing as on the live listing page.
+    seo: { title: "THE POKE SHACK & GRILL" },
     description: [
       {
         _type: "block",
@@ -2132,28 +2294,29 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "The Poke Shack & Grill — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2025/11/Screenshot-2025-11-24-at-7.45.56-PM.png"
+        "/assets/images/businesses/gallery/the-poke-shack-grill/Screenshot-2025-11-24-at-7.45.56-PM.png"
       ),
       realImage(
         "The Poke Shack & Grill — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2025/11/Screenshot-2025-11-24-at-7.46.06-PM.png"
+        "/assets/images/businesses/gallery/the-poke-shack-grill/Screenshot-2025-11-24-at-7.46.06-PM.png"
       ),
       realImage(
         "The Poke Shack & Grill — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2025/11/Screenshot-2025-11-24-at-7.46.17-PM.png"
+        "/assets/images/businesses/gallery/the-poke-shack-grill/Screenshot-2025-11-24-at-7.46.17-PM.png"
       ),
       realImage(
         "The Poke Shack & Grill — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2025/11/Screenshot-2025-11-24-at-7.46.30-PM.png"
+        "/assets/images/businesses/gallery/the-poke-shack-grill/Screenshot-2025-11-24-at-7.46.30-PM.png"
       ),
       realImage(
         "The Poke Shack & Grill — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2025/11/Screenshot-2025-11-24-at-7.46.59-PM.png"
+        "/assets/images/businesses/gallery/the-poke-shack-grill/Screenshot-2025-11-24-at-7.46.59-PM.png"
       ),
     ],
     website: "https://pokeshacklv.com",
     socialLinks: {
       facebook: "https://www.facebook.com/p/The-Poke-Shack-And-Grill-61552899462149/",
+      instagram: "https://www.instagram.com/thepokeshacklv/",
     },
     hours: [
       { day: "Monday", open: "11:30 AM", close: "07:30 PM" },
@@ -2171,6 +2334,9 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-waffelato",
     name: "Waffelato",
     slug: { current: "waffelato" },
+    tagline: "Delicious Gelato",
+    // Page <title> casing as on the live listing page.
+    seo: { title: "WAFFELATO" },
     description: [
       {
         _type: "block",
@@ -2197,43 +2363,46 @@ export const MOCK_BUSINESSES: Business[] = [
     gallery: [
       realImage(
         "Waffelato — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/IMG_0626.jpg"
+        "/assets/images/businesses/gallery/waffelato/IMG_0626.jpg"
       ),
       realImage(
         "Waffelato — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/Waffle.jpg"
+        "/assets/images/businesses/gallery/waffelato/Waffle.jpg"
       ),
       realImage(
         "Waffelato — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/Cake1.jpg"
+        "/assets/images/businesses/gallery/waffelato/Cake1.jpg"
       ),
       realImage(
         "Waffelato — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/IMG-9335.jpg"
+        "/assets/images/businesses/gallery/waffelato/IMG-9335.jpg"
       ),
       realImage(
         "Waffelato — gallery photo 5 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/Park-Screen.jpg"
+        "/assets/images/businesses/gallery/waffelato/Park-Screen.jpg"
       ),
       realImage(
         "Waffelato — gallery photo 6 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/waffle2.jpg"
+        "/assets/images/businesses/gallery/waffelato/waffle2.jpg"
       ),
       realImage(
         "Waffelato — gallery photo 7 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/Gelato1.jpg"
+        "/assets/images/businesses/gallery/waffelato/Gelato1.jpg"
       ),
       realImage(
         "Waffelato — gallery photo 8 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/IMG-9334.jpg"
+        "/assets/images/businesses/gallery/waffelato/IMG-9334.jpg"
       ),
       realImage(
         "Waffelato — gallery photo 9 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2018/01/IMG-9333.jpg"
+        "/assets/images/businesses/gallery/waffelato/IMG-9333.jpg"
       ),
     ],
     phone: "(208) 520 0740",
-    socialLinks: { facebook: "https://www.facebook.com/waffelatolv/" },
+    socialLinks: {
+      facebook: "https://www.facebook.com/waffelatolv/",
+      instagram: "https://www.instagram.com/waffelatodtlv/",
+    },
     hours: [
       { day: "Friday", open: "11:00 AM", close: "10:00 PM" },
       { day: "Saturday", open: "11:00 AM", close: "10:00 PM" },
@@ -2250,6 +2419,11 @@ export const MOCK_BUSINESSES: Business[] = [
     _id: "real-chicali-bites",
     name: "Chicali Bites",
     slug: { current: "chicali-bites" },
+    socialLinks: {
+      instagram: "https://www.instagram.com/chicalibites/",
+    },
+    // Page <title> casing as on the live listing page.
+    seo: { title: "CHICALI BITES" },
     description: [
       {
         _type: "block",
@@ -2298,24 +2472,24 @@ export const MOCK_BUSINESSES: Business[] = [
     tagline: "“Hecho fresco con amor” — “Made fresh with love”",
     heroImage: realImage(
       "Chicali Bites storefront photo (from live site)",
-      "https://containerpark.wpenginepowered.com/wp-content/uploads/2026/09/image0-1-350x450.png"
+      "/assets/images/businesses/gallery/chicali-bites/image0-1-350x450.png"
     ),
     gallery: [
       realImage(
         "Chicali Bites — gallery photo 1 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2026/09/image1-1-350x450.png"
+        "/assets/images/businesses/gallery/chicali-bites/image1-1-350x450.png"
       ),
       realImage(
         "Chicali Bites — gallery photo 2 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2026/09/image2-1-350x450.png"
+        "/assets/images/businesses/gallery/chicali-bites/image2-1-350x450.png"
       ),
       realImage(
         "Chicali Bites — gallery photo 3 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2026/09/image3-1-350x450.png"
+        "/assets/images/businesses/gallery/chicali-bites/image3-1-350x450.png"
       ),
       realImage(
         "Chicali Bites — gallery photo 4 (from live site)",
-        "https://containerpark.wpenginepowered.com/wp-content/uploads/2026/09/image4-1-350x450.png"
+        "/assets/images/businesses/gallery/chicali-bites/image4-1-350x450.png"
       ),
     ],
     phone: "702-245-8866",

@@ -20,9 +20,9 @@ export interface Partner {
 //    of its rendered HTML), and
 //  - the DTP real-estate portfolio page (https://dtplv.com/real-estate/,
 //    itself one of these verified partner links), whose own footer logo
-//    gallery confirmed "701 Bridger" and "The Bar" both link to the DTP
-//    parent site (https://dtplv.com) rather than a dedicated property
-//    domain — a real, existing destination, not a placeholder.
+//    gallery confirmed "701 Bridger" links to the DTP parent site
+//    (https://dtplv.com) rather than a dedicated property domain — a real,
+//    existing destination, not a placeholder.
 //
 // "Oasis at Gold Spike" (logo-partner01.png) had no matching entry in
 // either source and was removed from this list entirely at the user's
@@ -46,9 +46,11 @@ export const PARTNERS: Partner[] = [
   },
   { name: "Gold Spike", logoUrl: "/assets/images/all/logo-partner03.png" },
   {
+    // The live footer's own "The Bar" logo links here (launch QA, checked
+    // against the live partner strip), not to the DTP parent site.
     name: "The Bar",
     logoUrl: "/assets/images/all/logo-partner04.png",
-    link: "https://dtplv.com",
+    link: "https://dtlvevents.com/",
   },
   {
     name: "Explore DTLV",

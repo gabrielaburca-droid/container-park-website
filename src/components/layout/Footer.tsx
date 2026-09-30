@@ -118,6 +118,15 @@ export function Footer({ settings }: { settings: SiteSettings | null }) {
               );
             })}
           </div>
+          {/* Park phone on every page, as in the live site's footer. */}
+          {settings?.phone && (
+            <p className="mt-5 text-sm">
+              Phone:{" "}
+              <a href={`tel:+1${settings.phone.replace(/\D/g, "")}`} className="hover:underline">
+                {settings.phone}
+              </a>
+            </p>
+          )}
         </div>
 
         <FooterColumn title="Explore" links={exploreLinks} />
@@ -146,8 +155,7 @@ export function Footer({ settings }: { settings: SiteSettings | null }) {
       </div>
 
       <div className="border-t border-border px-4 py-6 text-center text-xs text-muted">
-        {/* Source copy preserved exactly, including its casing/spacing, per instruction. */}© 2026
-        Downtown container park. Allrights reserved.
+        © 2026 Downtown Container Park. All rights reserved.
       </div>
     </footer>
   );

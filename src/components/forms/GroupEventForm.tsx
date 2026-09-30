@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { TextField, TextareaField, SelectField } from "./fields";
 import { Button } from "@/components/ui/Button";
 import { useFormSubmit } from "./useFormSubmit";
@@ -14,13 +14,13 @@ import { EYEBROW_CLASSES } from "@/lib/ui/typography";
 // field/label/option/required-flag below is transcribed directly from
 // that rendered widget's markup — nothing invented.
 //
-// Two things are intentionally NOT reproduced: the Tripleseat-hosted
-// reCAPTCHA (a third-party anti-spam mechanism tied to Tripleseat's own
-// backend, not this project's own submit pipeline) and its "Private Event
-// Software powered by Tripleseat" attribution link (this form does not
-// actually submit to Tripleseat, so that attribution would be false).
-// Everything else — every field, label, option, and the required/optional
-// split — matches the live widget.
+// Submissions go to that same Tripleseat lead form (see
+// src/lib/forms/submit.ts -> src/lib/tripleseat/client.ts). Tripleseat
+// rejects any lead without its reCAPTCHA answer, so the same "I'm not a
+// robot" checkbox the live widget shows is rendered here too (see
+// useRecaptcha below), along with the widget's "powered by Tripleseat"
+// attribution. Every field, label, option, and the required/optional split
+// matches the live widget.
 //
 // Two implementation choices favor this project's existing architecture
 // over a byte-for-byte widget clone, per instruction ("preserve the
@@ -53,8 +53,77 @@ interface EventEntry {
   id: number;
 }
 
+// The reCAPTCHA site key Tripleseat's own lead-form widget uses (public —
+// it is in the widget markup on the live page). The answer it produces is
+// verified by Tripleseat, not by this project.
+const RECAPTCHA_SITE_KEY = "6LeC4CkUAAAAAK39iB_y_XhgS1EhvArMwecdZmCr";
+const RECAPTCHA_SCRIPT_ID = "tripleseat-recaptcha-script";
+const RECAPTCHA_ONLOAD = "__tripleseatRecaptchaReady";
+
+interface Recaptcha {
+  render: (container: HTMLElement, options: { sitekey: string }) => number;
+  reset: (widgetId?: number) => void;
+  getResponse: (widgetId?: number) => string;
+}
+
+type RecaptchaWindow = Window & {
+  grecaptcha?: Recaptcha;
+  [RECAPTCHA_ONLOAD]?: () => void;
+};
+
+// Explicit render (not the script's auto-scan) so the checkbox also appears
+// when this form mounts after a client-side navigation, when the script
+// may already be loaded. The widget adds its own "g-recaptcha-response"
+// field inside the container, so it is submitted with the form's other
+// fields.
+function useRecaptcha() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const widgetId = useRef<number | null>(null);
+
+  useEffect(() => {
+    const win = window as RecaptchaWindow;
+
+    function render() {
+      if (!containerRef.current || widgetId.current !== null || !win.grecaptcha?.render) return;
+      widgetId.current = win.grecaptcha.render(containerRef.current, {
+        sitekey: RECAPTCHA_SITE_KEY,
+      });
+    }
+
+    if (win.grecaptcha?.render) {
+      render();
+      return;
+    }
+    win[RECAPTCHA_ONLOAD] = render;
+    if (!document.getElementById(RECAPTCHA_SCRIPT_ID)) {
+      const script = document.createElement("script");
+      script.id = RECAPTCHA_SCRIPT_ID;
+      script.src = `https://www.google.com/recaptcha/api.js?onload=${RECAPTCHA_ONLOAD}&render=explicit`;
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+    }
+  }, []);
+
+  function getResponse(): string {
+    const recaptcha = (window as RecaptchaWindow).grecaptcha;
+    return widgetId.current !== null && recaptcha ? recaptcha.getResponse(widgetId.current) : "";
+  }
+
+  // A reCAPTCHA answer can only be used once — clear it after every attempt.
+  function reset() {
+    const recaptcha = (window as RecaptchaWindow).grecaptcha;
+    if (widgetId.current !== null && recaptcha) recaptcha.reset(widgetId.current);
+  }
+
+  return { containerRef, getResponse, reset };
+}
+
 export function GroupEventForm() {
   const { status, handleSubmit } = useFormSubmit("group-event");
+  const { containerRef, getResponse, reset } = useRecaptcha();
+  const [robotCheckMissing, setRobotCheckMissing] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>();
   const [referralSource, setReferralSource] = useState("");
   const [eventsNeeded, setEventsNeeded] = useState(false);
   // Mirrors the live widget's own repeatable "Add Event" / "Remove Event"
@@ -62,8 +131,20 @@ export function GroupEventForm() {
   // one event block once "Events Needed" is checked, same as live.
   const [events, setEvents] = useState<EventEntry[]>([{ id: 0 }]);
 
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    if (!getResponse()) {
+      event.preventDefault();
+      setRobotCheckMissing(true);
+      return;
+    }
+    setRobotCheckMissing(false);
+    const result = await handleSubmit(event);
+    setErrorMessage(result.success ? undefined : result.error);
+    reset();
+  }
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-8 bg-white p-6 sm:p-8">
+    <form onSubmit={onSubmit} className="space-y-8 bg-white p-6 sm:p-8">
       <div>
         <p className={EYEBROW_CLASSES}>Private Events</p>
         <h3 className="mt-1 font-display text-xl uppercase leading-none lg:text-[36px]">
@@ -217,10 +298,29 @@ export function GroupEventForm() {
         )}
       </fieldset>
 
+      <div>
+        <div ref={containerRef} />
+        {robotCheckMissing && (
+          <p role="alert" className="mt-2 text-sm font-semibold text-status-closed">
+            Please confirm you&apos;re not a robot.
+          </p>
+        )}
+      </div>
+
       <Button type="submit" disabled={status === "submitting"}>
         {status === "submitting" ? "Submitting..." : "Submit"}
       </Button>
-      <FormStatusMessage status={status} />
+      <FormStatusMessage status={status} errorMessage={errorMessage} />
+      <p className="text-xs text-muted">
+        <a
+          href="https://www.tripleseat.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline"
+        >
+          Private Event Software powered by Tripleseat
+        </a>
+      </p>
     </form>
   );
 }

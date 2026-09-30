@@ -18,7 +18,9 @@ import { buildMetadata } from "@/lib/seo/metadata";
 // description string was literally identical in both places, so leaving
 // the visible copy unchanged would have shown the exact wording the
 // client flagged as needing rewriting, right on the page itself.
-const EVENTS_TITLE = "Events in Downtown Las Vegas | Downtown Container Park";
+// Title restored to the live site's own (launch QA, SEO parity); the
+// description below is still the client-supplied copy.
+const EVENTS_TITLE = "Events Archive - Downtown Container Park";
 const EVENTS_DESCRIPTION =
   "Discover live music, family-friendly events, entertainment and special experiences at Downtown Container Park in Las Vegas.";
 

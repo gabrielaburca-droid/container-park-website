@@ -49,7 +49,7 @@ import { portableText } from "./portableText";
 // effectively-unbounded pagination, not an invented shortcut on any
 // individual event's content. This is what makes "Load More" on our own
 // Events page (see EventsListingClient) a real, non-trivial feature
-// rather than a formality: ~237 real occurrences across 14 real events.
+// rather than a formality: ~238 real occurrences across 15 real events.
 //
 // One correction from the live data itself: "Pop Rocks" describes itself
 // as happening "the first Saturdays of every month," and its own next
@@ -225,9 +225,14 @@ type EventSeries = SeriesTiming & {
   // than guessing one.
   location?: string;
   ticketUrl?: string;
+  // Live detail page's "More Info" link when it isn't a ticket page (e.g.
+  // an organiser's Instagram).
+  moreInfoUrl?: string;
   externalUrl?: string;
   price?: string;
   partnerOffers?: { businessName: string; offerText: string }[];
+  // Live page's own <title> wording/casing, when it differs from `title`.
+  seoTitle?: string;
 };
 
 // Real tag label + real slug, scraped verbatim from each event's own live
@@ -245,6 +250,7 @@ const SERIES: EventSeries[] = [
     // (confirmed directly against the live page's own <title>: "THE
     // MANTIS - Downtown Container Park").
     id: "community-sunset-drum-circle",
+    seoTitle: "THE MANTIS",
     title: "The Mantis",
     slug: "community-sunset-drum-circle",
     category: "attractions",
@@ -257,7 +263,7 @@ const SERIES: EventSeries[] = [
     shortDescription:
       "The Mantis is 40 feet tall and 30 feet wide. She throws giant fire flames reaching six stories high.",
     description: portableText([
-      "The Mantis is 40 feet tall and 30 feet wide. She throws giant fire flames reaching six stories high. Built with a 4,000 watt surround sound system, can speak more than 20 different languages, and is operated by a team of trained, licensed professionals.",
+      "The Mantis is 40 feet tall and 30 feet wide. She throws giant fire flames reaching six stories high. Built in 4,000 watt surround sound system, can speak more than 20 different languages, and is operated by a team of trained, licensed professionals.",
       "(Weather permitting)",
     ]),
     tags: [
@@ -314,6 +320,7 @@ const SERIES: EventSeries[] = [
   },
   {
     id: "whiskey-wine-wednesday",
+    seoTitle: "WHISKEY & WINE WEDNESDAY",
     title: "Whiskey & Wine Wednesday",
     slug: "whiskey-wine-wednesday",
     category: "eat-drink",
@@ -326,7 +333,10 @@ const SERIES: EventSeries[] = [
     shortDescription: "Come in and enjoy whiskey and wine specials throughout the park.",
     description: portableText([
       "Come in and enjoy whiskey and wine specials throughout the park.",
-      "$30 rotating whiskey flight at Oak & Ivy. Wine specials at Bin 702. Power Hour: bottomless $12 draft beers, mimosas, house margaritas, or sangria from 6PM to 7PM with a $15 food order at Downtown Terrace. No mixing and matching, choose wisely!",
+      "*$30 rotating whiskey flight at Oak n Ivy",
+      "*Wine specials at Bin 702",
+      "*Power Hour bottomless $12 draft beers, mimosas, house margaritas or sangria from 6PM to 7PM with $15 food order at Downtown Terrace. No mixing and matching, choose wisely!",
+      "See you soon!",
     ]),
     tags: [
       tag(
@@ -342,6 +352,7 @@ const SERIES: EventSeries[] = [
   },
   {
     id: "canvas-and-cocktails-dtlv",
+    seoTitle: "CANVAS AND COCKTAILS DTLV",
     title: "Canvas and Cocktails DTLV",
     slug: "canvas-and-cocktails-dtlv",
     category: "eat-drink",
@@ -355,9 +366,14 @@ const SERIES: EventSeries[] = [
       "Canvas and Cocktails DTLV specializes in using different mediums to bring art to life with a personal touch.",
     description: portableText([
       "Canvas and Cocktails DTLV specializes in using different mediums to bring art to life with a personal touch.",
-      "We provide the supplies and guidance to create a personal masterpiece while allowing the venue to showcase their food and cocktails to keep the party going.",
-      "Our goal is to make sure that each individual feels like their own personal artist. We want all of our new artists to walk away with a sense of confidence, and we found that good food and liquid courage always helps with these scenarios.",
-      "$25 includes all supplies and a complimentary cocktail. Classes are every Wednesday. Party starts at 7:00pm. You paint when you arrive. You create your own design.",
+      "We provide the supplies and guidance to create a personal masterpiece while allowing the venue to showcase their food and Cocktails to keep the party going.",
+      "Our Goal is to make sure that each individual feels like their own personal artist. We want all of our new artists to walk away with a sense of confidence and we found that good food and Liquid courage always helps with these scenarios.",
+      "$25 includes all supplies and a complimentary cocktail",
+      "CLASSES ARE EVERY WEDNESDAY",
+      "PARTY STARTS AT 7:00PM",
+      "YOU PAINT WHEN YOU ARRIVE",
+      "YOU CREATE YOUR OWN DESIGN",
+      "SEE ADDITIONAL SPECIALS LISTED BELOW",
     ]),
     tags: [
       tag("DRINK", "drink"),
@@ -383,11 +399,12 @@ const SERIES: EventSeries[] = [
       { businessName: "Mob Pie", offerText: "$5 Cheese Slice" },
       {
         businessName: "Waffelato",
-        offerText: "Couples Waffelato — 2 half sized Waffelatos for $10 (must mention this ad)",
+        offerText:
+          "Couples Waffelato, 2 half sized Waffelatos for $10 – (Must mention this ad to receive special)",
       },
-      { businessName: "Dream Dance NV", offerText: "10% off First Month" },
+      { businessName: "Dream Dance NV", offerText: "10%off First Month" },
       {
-        businessName: "Sunny's",
+        businessName: "Sunny’s",
         offerText: "15% off any retail purchase or 15% off any Pole Fitness class/Pole Party",
       },
       { businessName: "Bin 702", offerText: "Happy Hour 3p-6p" },
@@ -395,6 +412,7 @@ const SERIES: EventSeries[] = [
   },
   {
     id: "pop-rocks",
+    seoTitle: "POP ROCKS 90’S POP ROCK & ALT ROCK NIGHT",
     title: "Pop Rocks 90's Pop Rock & Alt Rock Night",
     slug: "pop-rocks",
     category: "general",
@@ -408,10 +426,10 @@ const SERIES: EventSeries[] = [
     recurrence: { type: "monthly", weekday: 6, nth: 1 },
     shortDescription: "Come by on the first Saturdays of every month and enjoy Pop Rocks!",
     description: portableText([
-      "Come by on the first Saturdays of every month and enjoy Pop Rocks!",
-      "Take a trip back to the loud, raw, and unforgettable sounds of the 1990's with the DiDi West Band. 3 hours of high energy setlist packed with grunge, alternative rock and nu-metal classics.",
-      "Live music from 6:30pm to 9:30pm by DiDi West Band playing 90's pop rock and alt rock.",
-      "Food and drink specials throughout the park!",
+      "COME BY ON THE FIRST SATURDAYS OF EVERY MONTH AND ENJOY POP ROCKS!",
+      "TAKE A TRIP BACK TO THE LOUD, RAW, AND UNFORGETTABLE SOUNDS OF THE 1990’S WITH THE DIDI WEST BAND. 3 HOURS OF HIGH ENERGY SETLIST PACKED WITH GRUNGE, ALTERNATIVE ROCK AND NU-METAL CLASSICS.",
+      "LIVE MUSIC FROM 630P TO 930P BY DIDI WEST BAND PLAYING 90’S POP ROCK AND ALT ROCK.",
+      "FOOD AND DRINK SPECIALS THROUGHOUT THE PARK!",
     ]),
     tags: [tag("90'S ALT ROCK POP", "90s-alt-rock-pop")],
     location: "Container Park - Stage and Lawn",
@@ -447,7 +465,48 @@ const SERIES: EventSeries[] = [
     ),
   },
   {
+    // One-off event, live at /events/usa-vs-mexico-watch-party/. Copy is
+    // verbatim from that page; the Eventbrite link is the one its card on
+    // the live events archive points to.
+    id: "usa-vs-mexico-watch-party",
+    seoTitle: "USA VS MEXICO WATCH PARTY",
+    title: "USA vs Mexico Watch Party",
+    slug: "usa-vs-mexico-watch-party",
+    category: "general",
+    isRecurring: false,
+    startTime: "7:00 PM",
+    endTime: "10:00 PM",
+    timeLabel: "07:00 PM - 10:00 PM",
+    anchorDate: new Date(2026, 9, 3),
+    recurrence: { type: "none" },
+    shortDescription:
+      "STOP IN AND ENJOY THE GAME ON OUR 18FT LED SCREEN WITH HIFI AUDIO! WEAR YOUR FAVORITE USA OR MEXICO GEAR!",
+    description: portableText([
+      "STOP IN AND ENJOY THE GAME ON OUR 18FT LED SCREEN WITH HIFI AUDIO! WEAR YOUR FAVORITE USA OR MEXICO GEAR!",
+      "WITH A ALL YOU CAN DRINK BEERS FOR $35 OPTION.",
+      "USA VS MEXICO",
+      "SOCCER VS FUTBOL",
+      "PBR VS MODELO",
+      "ENJOY PBR, MODELO, CORONA, PACIFICO AND MORE!",
+      "ALSO HAVING 702 MARKET BRINGING IN VENDORS. SOMETHING FOR EVERYONE.",
+    ]),
+    tags: [
+      tag(
+        "SOCCER FUTBOL ALL YOU CAN DRINK WATCH PARTY",
+        "soccer-futbol-all-you-can-drink-watch-party"
+      ),
+    ],
+    location: "Container Park Stage and Lawn",
+    ticketUrl:
+      "https://www.eventbrite.com/e/watch-party-usa-vs-mexico-soccer-vs-futbol-pbr-vs-modelo-tickets-2001066487732",
+    heroImage: realImage(
+      "USA vs Mexico Watch Party flyer (from live site)",
+      "/assets/images/events/usa-vs-mexico-watch-party.jpg"
+    ),
+  },
+  {
     id: "yoga-in-the-park-6",
+    seoTitle: "YOGA IN THE PARK SUNDAY MORNING",
     title: "Yoga in the Park — Sunday Morning",
     slug: "yoga-in-the-park-6",
     category: "general",
@@ -460,8 +519,10 @@ const SERIES: EventSeries[] = [
     shortDescription:
       "Downtown Yoga In The Park — Ashtanga-style classes for all levels, taught by Rayce Rayos.",
     description: portableText([
-      "Young & old, active or sedentary — everyone is capable of reaching their unique challenge. Downtown Yoga In The Park is entering its fourth year of promoting health & wellness in the Las Vegas community.",
-      "These Saturday & Sunday recurring classes unfold at a welcoming pace for all, and are taught in the Ashtanga style by Rayce Rayos (RYT200 / CPT-ACE / BS-Kinesiology).",
+      "Young & old, active or sedentary- everyone is capable of reaching their unique challenge. Downtown Yoga In The Park is entering its fourth year of promoting health & wellness in the Las Vegas community.",
+      "These Saturday & Sunday recurring classes unfold at a welcoming pace for all, & are taught in the Ashtanga style by Rayce Rayos (RYT200/ CPT-ACE/ BS-Kinesiology). Each position, or asana, assumed during class lasts several breathing cycles to allow practitioners to ease themselves into form without getting left behind, yet requires purposeful concentration throughout. Breathwork techniques, known as Pranayama, will be introduced, & Pratyahara (sensory withdrawal) is attempted as we all venture closer toward the self.",
+      "WATER + MAT + FRIENDS + AN OPEN MIND …",
+      "ALL RECOMMENDED !",
     ]),
     tags: [tag("YOGA ON THE LAWN", "yoga-on-the-lawn")],
     location: "Container Park - Lawn",
@@ -474,6 +535,7 @@ const SERIES: EventSeries[] = [
   },
   {
     id: "yoga-in-the-park-5",
+    seoTitle: "YOGA IN THE PARK MONDAY NIGHTS",
     title: "Yoga in the Park — Monday Nights",
     slug: "yoga-in-the-park-5",
     category: "general",
@@ -486,8 +548,10 @@ const SERIES: EventSeries[] = [
     shortDescription:
       "Downtown Yoga In The Park — Ashtanga-style classes for all levels, taught by Rayce Rayos.",
     description: portableText([
-      "Young & old, active or sedentary — everyone is capable of reaching their unique challenge. Downtown Yoga In The Park is entering its fourth year of promoting health & wellness in the Las Vegas community.",
-      "These recurring classes unfold at a welcoming pace for all, and are taught in the Ashtanga style by Rayce Rayos (RYT200 / CPT-ACE / BS-Kinesiology).",
+      "Young & old, active or sedentary- everyone is capable of reaching their unique challenge. Downtown Yoga In The Park is entering its fourth year of promoting health & wellness in the Las Vegas community.",
+      "These Saturday & Sunday recurring classes unfold at a welcoming pace for all, & are taught in the Ashtanga style by Rayce Rayos (RYT200/ CPT-ACE/ BS-Kinesiology). Each position, or asana, assumed during class lasts several breathing cycles to allow practitioners to ease themselves into form without getting left behind, yet requires purposeful concentration throughout. Breathwork techniques, known as Pranayama, will be introduced, & Pratyahara (sensory withdrawal) is attempted as we all venture closer toward the self.",
+      "WATER + MAT + FRIENDS + AN OPEN MIND …",
+      "ALL RECOMMENDED !",
     ]),
     tags: [tag("YOGA ON THE LAWN", "yoga-on-the-lawn")],
     location: "Container Park - Lawn",
@@ -500,6 +564,7 @@ const SERIES: EventSeries[] = [
   },
   {
     id: "slow-jams-saturdaze",
+    seoTitle: "SLOW JAMS SATURDAZE",
     title: "Slow Jams Saturdaze",
     slug: "slow-jams-saturdaze",
     category: "general",
@@ -511,9 +576,9 @@ const SERIES: EventSeries[] = [
     recurrence: { type: "monthly", weekday: 6, nth: 2 },
     shortDescription: "Come by on the second Saturdays of every month and enjoy Slow Jams Saturdaze!",
     description: portableText([
-      "Come by on the second Saturdays of every month and enjoy Slow Jams Saturdaze!",
-      "Live music from 6:30pm to 9:30pm by Strings & Beats playing your favorite R&B, hip-hop, and love songs.",
-      "Food and drink specials throughout the park!",
+      "COME BY ON THE SECOND SATURDAYS OF EVERY MONTH AND ENJOY SLOW JAMS SATURDAZE!",
+      "LIVE MUSIC FROM 630P TO 930P BY STRINGS & BEATS PLAYING YOUR FAVORITE R&B + HIP-HOP + LOVE SONGS.",
+      "FOOD AND DRINK SPECIALS THROUGHOUT THE PARK!",
     ]),
     tags: [tag("SLOW JAM LOVE SONGS DATE NIGHT", "slow-jam-love-songs-date-night")],
     location: "Container Park - Stage and Lawn",
@@ -524,6 +589,7 @@ const SERIES: EventSeries[] = [
   },
   {
     id: "second-sunday-3",
+    seoTitle: "SECOND SUNDAY ART & ENTERTAINMENT",
     title: "Second Sunday Art & Entertainment",
     slug: "second-sunday-3",
     category: "attractions",
@@ -545,6 +611,7 @@ const SERIES: EventSeries[] = [
       tag("SMALL VENDORS", "small-vendors"),
     ],
     location: "Container Park",
+    moreInfoUrl: "https://www.instagram.com/the_isi_group/",
     heroImage: realImage(
       "Second Sunday Art & Entertainment flyer (from live site)",
       "/assets/images/events/second-sunday.jpg"
@@ -552,6 +619,7 @@ const SERIES: EventSeries[] = [
   },
   {
     id: "modelo-margaritas-football-mondays",
+    seoTitle: "MODELO & MARGARITAS FOOTBALL MONDAYS",
     title: "Modelo & Margaritas Football Mondays",
     slug: "modelo-margaritas-football-mondays",
     category: "eat-drink",
@@ -580,6 +648,7 @@ const SERIES: EventSeries[] = [
   },
   {
     id: "noche-latina",
+    seoTitle: "NOCHE LATINA",
     title: "Noche Latina",
     slug: "noche-latina",
     category: "general",
@@ -591,8 +660,9 @@ const SERIES: EventSeries[] = [
     recurrence: { type: "monthly", weekday: 6, nth: 3 },
     shortDescription: "Come by on the third Saturdays of every month and enjoy Noche Latina!",
     description: portableText([
-      "Come by on the third Saturdays of every month and enjoy Noche Latina!",
-      "Live music from 6:30pm to 9:30pm playing Latin sounds. Food and drink specials throughout the park!",
+      "COME BY ON THE THIRD SATURDAYS OF EVERY MONTH AND ENJOY NOCHE LATINA!",
+      "LIVE MUSIC FROM 630P TO 930P PLAYING LATIN SOUNDS.",
+      "FOOD AND DRINK SPECIALS THROUGHOUT THE PARK!",
     ]),
     tags: [
       tag("LATIN LATINA NOCHE MARGARITA MODELO", "latin-latina-noche-margarita-modelo"),
@@ -601,6 +671,7 @@ const SERIES: EventSeries[] = [
   },
   {
     id: "island-ohana-night",
+    seoTitle: "ISLAND OHANA NIGHT",
     title: "Island Ohana Night",
     slug: "island-ohana-night",
     category: "general",
@@ -613,8 +684,10 @@ const SERIES: EventSeries[] = [
     shortDescription:
       "Come by on the last Saturdays of every month for live island music and food specials.",
     description: portableText([
-      "Come by on the last Saturdays of every month and enjoy Island Ohana Night!",
-      "Live music from 6:30pm to 9:30pm, with food specials from Ninth Island Gourmet and The Poke Shack & Grill, plus drink specials and tiki drinks at the bars!",
+      "COME BY ON THE LAST SATURDAYS OF EVERY MONTH AND ENJOY ISLAND OHANA NIGHT!",
+      "LIVE MUSIC FROM 630P TO 930P",
+      "WITH FOOD SPECIALS FROM NINTH ISLAND GOURMET AND THE POKE SHACK & GRILL!",
+      "PLUS DRINK SPECIALS & TIKI DRINKS AT THE BARS!",
     ]),
     tags: [tag("ISLAND OHANA REGGAE", "island-ohana-reggae")],
     location: "Container Park Lawn and Stage",
@@ -685,6 +758,8 @@ function expandSeries(series: EventSeries): EventDoc[] {
           }
         : undefined,
       ticketUrl: series.ticketUrl,
+      moreInfoUrl: series.moreInfoUrl,
+      seo: series.seoTitle ? { title: series.seoTitle } : undefined,
       externalUrl: series.externalUrl,
       price: series.price,
       partnerOffers: series.partnerOffers,
